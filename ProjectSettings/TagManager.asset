@@ -8,6 +8,7 @@ TagManager:
   - WeaponHead
   - bullet
   - Ground
+  - Enemy
   layers:
   - Default
   - TransparentFX

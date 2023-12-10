@@ -1,42 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnEnemies : MonoBehaviour
 {
-    [SerializeField] GameObject objectToSpawn;
-    [SerializeField] GameObject placeToSpawn;
-    [SerializeField] float minX, maxX, minZ, maxZ;
-    [SerializeField] float spawnInterval = 2f; // Time interval between spawns
-    [SerializeField] int maxEnemyCount = 30;
-    [SerializeField] int currentCount=0;
+    [SerializeField] private GameObject objectToSpawn;
+    [SerializeField] private GameObject placeToSpawn;
+    [SerializeField] private float minX, maxX, minZ, maxZ;
+    [SerializeField] private float spawnInterval = 2f;
+    [SerializeField] private int maxEnemyCount = 30;
+    private int currentCount = 0;
 
     private float nextSpawnTime;
 
-    // Start is called before the first frame update
     void Start()
     {
         nextSpawnTime = Time.time + spawnInterval;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Time.time >= nextSpawnTime && OccupationManager.valueToDecrease > 0  && currentCount < maxEnemyCount)
+        if (Time.time >= nextSpawnTime && currentCount < maxEnemyCount)
         {
             Spawn();
             nextSpawnTime = Time.time + spawnInterval;
         }
+        Debug.Log($"Current enemy count: {currentCount}, Time until next spawn: {nextSpawnTime - Time.time}");
     }
 
     private void Spawn()
     {
         Vector3 randomPosition = new Vector3(
-            placeToSpawn.transform.position.x + Random.Range(minX, maxX),
-            0f, placeToSpawn.transform.position.z + Random.Range(minZ, maxZ)
-        );
+            Random.Range(minX, maxX),
+            0f,
+            Random.Range(minZ, maxZ)
+        ) + placeToSpawn.transform.position;
 
         Instantiate(objectToSpawn, randomPosition, Quaternion.identity);
         currentCount++;
+
+        Debug.Log($"Spawned enemy at {randomPosition}. Total enemies: {currentCount}");
     }
 }
