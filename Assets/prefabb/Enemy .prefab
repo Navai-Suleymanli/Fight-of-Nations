@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4831269933451386741}
   - component: {fileID: 3764687196192105377}
   - component: {fileID: 2891667171498426174}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: 'Enemy '
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -162,3 +162,18 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  realShootVector: {x: 0, y: 0, z: 0}
+  player: {fileID: 0}
+  shootRange: 100

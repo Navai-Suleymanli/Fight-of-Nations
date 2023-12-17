@@ -15,13 +15,19 @@ public class Enemy : MonoBehaviour
     [Header("AI System")]
     [SerializeField] private float stopDistance = 5.0f;
     public GameObject[] destinations;
-
     private NavMeshAgent agent;
     private Barrier currentTargetBarrier = null;
+
+    [Header("Shooting at Player")]
+    [SerializeField] private Vector3 realShootVector;
+    [SerializeField] private Vector3 shootVector;
+    [SerializeField] GameObject player;
+    [SerializeField] private float shootRange = 100f;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        
         GoToRandomDestination();
     }
 
@@ -44,6 +50,21 @@ public class Enemy : MonoBehaviour
             if (distanceToCurrentBarrier <= stopDistance)
             {
                 agent.isStopped = true;
+
+                // Enemy Shooting stuff:
+                realShootVector = player.transform.position - gameObject.transform.position;
+                shootVector = realShootVector + new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), Random.Range(-10f, 10f));
+                Vector3 startPoint = gameObject.transform.position;
+                Vector3 endPoint = startPoint + shootVector;
+                RaycastHit hit; // raycast element
+                if(Physics.Raycast(gameObject.transform.position,shootVector, out hit, shootRange) && hit.transform.tag == "Player")
+                {
+                    Debug.Log(hit.transform.tag);
+                    // Draws a blue line from this transform to the target
+                    Debug.DrawLine(startPoint, endPoint, Color.green, 0.1f);
+                }
+
+
             }
             else if (distanceToCurrentBarrier > stopDistance)
             {
@@ -80,6 +101,7 @@ public class Enemy : MonoBehaviour
             currentTargetBarrier = selectedBarrier;
             currentTargetBarrier.AddEnemy();  // add enemy safely when chosen the current barrier
             agent.isStopped = false;
+            
         }
         else
         {
