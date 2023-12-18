@@ -672,8 +672,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Dark Morning
-  metroPackageVersion: 
+  metroPackageName: DarkMorning
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -681,7 +681,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Dark Morning
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Dark Morning
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0
