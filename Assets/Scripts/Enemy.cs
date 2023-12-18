@@ -23,6 +23,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Vector3 shootVector;
     [SerializeField] GameObject player;
     [SerializeField] private float shootRange = 100f;
+    [SerializeField] private int enemyDamage = 10;
+
 
     [Header("Health System")]
     [SerializeField] private int health = 100;
@@ -63,6 +65,12 @@ public class Enemy : MonoBehaviour
                 if(Physics.Raycast(gameObject.transform.position,shootVector, out hit, shootRange) && hit.transform.tag == "Player")
                 {
                     Debug.Log(hit.transform.tag);
+
+                    PlayerManager player = hit.transform.GetComponent<PlayerManager>();
+                    if (player != null)
+                    {
+                        player.TakeDamage(enemyDamage);
+                    }
                     // Draws a blue line from this transform to the target
                     Debug.DrawLine(startPoint, endPoint, Color.green, 0.1f);
                 }
