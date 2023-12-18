@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] GameObject player;
     [SerializeField] private float shootRange = 100f;
 
+    [Header("Health System")]
+    [SerializeField] private int health = 100;
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -123,5 +126,20 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         currentTargetBarrier?.RemoveEnemy();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        // Handle enemy death here (e.g., play animation, remove from game, etc.)
+        gameObject.SetActive(false);
     }
 }

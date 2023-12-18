@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SpawnEnemies : MonoBehaviour
 {
-    [SerializeField] private GameObject objectToSpawn;
+    public GameObject objectToSpawn;
     [SerializeField] private GameObject placeToSpawn;
     [SerializeField] private float minX, maxX, minZ, maxZ;
     [SerializeField] private float spawnInterval = 2f;
