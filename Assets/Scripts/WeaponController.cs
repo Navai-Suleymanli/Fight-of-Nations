@@ -1,6 +1,8 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 public class WeaponController : MonoBehaviour
 {
@@ -23,6 +25,15 @@ public class WeaponController : MonoBehaviour
     [SerializeField] GameObject bulletShell;
     [SerializeField] Transform spawnPoint2;
 
+    //rotation
+    [Header("Weapon Rotation")]
+    [SerializeField] private Transform weaponTransform;
+
+    [Header("crosshair")]
+    [SerializeField] private RawImage cross;
+    Rect rect;
+    float width;
+    float height;
 
 
 
@@ -53,7 +64,9 @@ public class WeaponController : MonoBehaviour
     {
         InitializeAnimator();
         FindRecoilScript();
+        //FindWeaponTransform();
         audioSource = GetComponent<AudioSource>();
+        
     }
 
     private void Update()
@@ -61,6 +74,8 @@ public class WeaponController : MonoBehaviour
         HandleShooting();
         HandleAiming();
         HandleReloading();
+        getImageSize();
+        
 
         isSprinting = Input.GetKey(KeyCode.LeftShift)?true:false;
         //Empty();
@@ -68,7 +83,32 @@ public class WeaponController : MonoBehaviour
 
     }
 
-    
+    public void getImageSize()
+    {
+        rect = cross.rectTransform.rect;
+        width = rect.width;
+        height = rect.height;
+
+    }
+
+    public void setImageSize()
+    {
+        if(width<100 && height < 100)
+        {
+            cross.rectTransform.sizeDelta = new Vector2(width += 10f, height += 10f);
+
+        }
+
+    }
+
+    public void resetImageSize()
+    {
+        while(height>50f && width> 50f)
+        {
+            cross.rectTransform.sizeDelta = new Vector2(width -= 10f, height -= 10f);
+        }
+    }
+
     private void InitializeAnimator()
     {
         animator = GetComponent<Animator>();
@@ -109,6 +149,7 @@ public class WeaponController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             animator.SetBool("shooting", false);
+            resetImageSize();
         }
     }
 
@@ -120,11 +161,14 @@ public class WeaponController : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse1))
         {
             animator.SetBool("aiming", true);
+            cross.gameObject.SetActive(false);
+
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             animator.SetBool("aiming", false);
+            cross.gameObject.SetActive(true);
         }
     }
 
@@ -182,6 +226,8 @@ public class WeaponController : MonoBehaviour
         ProcessRaycast();
         recoil_script.recoilFire();
         animator.SetBool("shooting", true);
+        setImageSize();
+
     }
 
     private void Reload()
@@ -221,6 +267,10 @@ public class WeaponController : MonoBehaviour
         isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
+
+    
+
+
 
     private void ProcessRaycast()
     {
