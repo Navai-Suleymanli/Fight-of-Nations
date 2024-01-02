@@ -14,6 +14,11 @@ public class RecoilAndSway : MonoBehaviour
     [SerializeField] private float snappiness;
     [SerializeField] private float returnSpeed;
 
+    [Header("Recoil Increase Settings")]
+    [SerializeField] private float recoilIncreaseFactor = 1.1f; // Factor by which recoil increases
+    [SerializeField] private float maxRecoilMultiplier = 3f; // Maximum recoil multiplier
+    private float recoilMultiplier = 1f; // Current recoil multiplier
+
     [Header("Sway Settings")]
     [SerializeField] private float smooth;
     [SerializeField] private float multiplier;
@@ -43,14 +48,27 @@ public class RecoilAndSway : MonoBehaviour
 
     public void recoilFire()
     {
-        if (Input.GetKey(KeyCode.Mouse1))
+        float recoilFactorX = recoilX * recoilMultiplier;
+        float recoilFactorY = recoilY * recoilMultiplier;
+        float recoilFactorZ = recoilZ * recoilMultiplier;
+
+        if (Input.GetKey(KeyCode.Mouse1)) // Aiming
         {
-            targetRotation += new Vector3(recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+            targetRotation += new Vector3(recoilFactorX, Random.Range(-recoilFactorY, recoilFactorY), Random.Range(-recoilFactorZ, recoilFactorZ));
         }
-        else 
+        else // Not aiming
         {
-            targetRotation += new Vector3(recoilX*3, Random.Range(-recoilY * 2, recoilY * 2), Random.Range(-recoilZ * 2, recoilZ * 2));           
+            targetRotation += new Vector3(recoilFactorX * 3, Random.Range(-recoilFactorY * 2, recoilFactorY * 2), Random.Range(-recoilFactorZ * 2, recoilFactorZ * 2));
         }
-        
+
+        // Increase the recoil over time
+        recoilMultiplier *= recoilIncreaseFactor;
+        recoilMultiplier = Mathf.Min(recoilMultiplier, maxRecoilMultiplier);
+
+        // Reset recoilMultiplier if not shooting
+        if (!Input.GetKey(KeyCode.Mouse0))
+        {
+            recoilMultiplier = 1f;
+        }
     }
 }

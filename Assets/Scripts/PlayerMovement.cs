@@ -15,13 +15,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private bool isAiming = false;
 
+
+
+
+    private AudioSource audioSource;
+    [SerializeField] AudioClip playerBreath;
+    [SerializeField] AudioClip playerRunningBreath;
+    private bool isAudioPlaying = false;
+
     private float gravityValue = -9.81f; // Gravity value
     private float verticalVelocity = 0f; // Vertical velocity due to gravity
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -70,5 +78,52 @@ public class PlayerMovement : MonoBehaviour
         // Apply gravity
         verticalVelocity += gravityValue * Time.deltaTime;
         controller.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
+
+        HandleAudio();
+    }
+
+    void HandleAudio()
+    {
+        if (isRunning && !isAiming)
+        {
+            if (!isAudioPlaying || audioSource.clip != playerRunningBreath)
+            {
+                audioSource.clip = playerRunningBreath;
+                audioSource.loop = true;
+                audioSource.Play();
+                isAudioPlaying = true;
+            }
+        }
+        else if (!isRunning)
+        {
+            if (!isAudioPlaying || audioSource.clip != playerBreath)
+            {
+                audioSource.clip = playerBreath;
+                audioSource.loop = true;
+                audioSource.Play();
+                isAudioPlaying = true;
+            }
+        }
+        else if (isRunning && isAiming)
+        {
+
+            if (!isAudioPlaying || audioSource.clip != playerBreath)
+            {
+                audioSource.clip = playerBreath;
+                audioSource.loop = true;
+                audioSource.Play();
+                isAudioPlaying = true;
+            }
+        }
+        else
+        {
+            // Stop the audio if none of the conditions are met
+            if (isAudioPlaying)
+            {
+                audioSource.Stop();
+                isAudioPlaying = false;
+            }
+        }
     }
 }
+

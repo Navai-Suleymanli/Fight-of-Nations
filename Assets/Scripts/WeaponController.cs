@@ -35,6 +35,9 @@ public class WeaponController : MonoBehaviour
     float width;
     float height;
 
+    public Camera mainCamera; // Reference to the main camera in the scene
+    public RectTransform xHitEffectUI; // Assuming it's a RectTransform (like for an Image or Text)
+
 
 
     private float nextTimeToShoot;
@@ -142,7 +145,7 @@ public class WeaponController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && isEmpty == true && !isReloading && !isSprinting)  //------------------
         {
-            audioSource.PlayOneShot(emptyhot, 1f); 
+            audioSource.PlayOneShot(emptyhot, 1f);
         }
 
 
@@ -268,7 +271,7 @@ public class WeaponController : MonoBehaviour
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
 
-    
+
 
 
 
@@ -277,6 +280,7 @@ public class WeaponController : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(weaponHead.transform.position, weaponHead.transform.forward, out hit, shootRange))
         {
+            // ... existing code ...
             Debug.Log(hit.transform.tag);
             if (hit.rigidbody != null)
             {
@@ -293,8 +297,29 @@ public class WeaponController : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(20); // Decrease health by 20
+
+                    // Convert the hit point to a screen position and show the X hit effect
+                    ShowXHitEffectAtPosition(hit.point);
                 }
             }
         }
+    }
+
+    private void ShowXHitEffectAtPosition(Vector3 worldPosition)
+    {
+        Vector2 screenPosition = mainCamera.WorldToScreenPoint(worldPosition);
+
+        // Move the X hit effect UI element to the calculated screen position
+        xHitEffectUI.gameObject.SetActive(true);
+        xHitEffectUI.position = screenPosition;
+
+        // Optionally, you can start a coroutine to hide this effect after some time
+        StartCoroutine(HideXHitEffect());
+    }
+
+    IEnumerator HideXHitEffect()
+    {
+        yield return new WaitForSeconds(0.2f); // Duration for which the effect is shown, adjust as needed
+        xHitEffectUI.gameObject.SetActive(false);
     }
 }

@@ -29,15 +29,29 @@ public class Enemy : MonoBehaviour
     [Header("Health System")]
     [SerializeField] private int health = 100;
 
+    [SerializeField] private float fireRate1 = 0.5f;
+    [SerializeField] private float fireRate2 = 1f;
+    private float nextTimeToShoot;
+
+    [Header("Gun Shot Stuff")]
+    AudioSource audioSource;
+    [SerializeField] AudioClip[] gunShot;
+
+
+
+
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         
         GoToRandomDestination();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
+        
         // occupation ststem  ----------------------------------
         isOccupation = Physics.CheckSphere(transform.position, distance, groundLayer);
         if (isOccupation && !isDecreasing)
@@ -49,32 +63,20 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate() 
     {
+        
         if (currentTargetBarrier != null) // if currenttarget barrier is defined(not null)
         {
-            float distanceToCurrentBarrier = Vector3.Distance(transform.position, currentTargetBarrier.transform.position); // calculating distace to teh current barrier
+            float distanceToCurrentBarrier = Vector3.Distance(transform.position, currentTargetBarrier.transform.position); // calculating distace to the current barrier
             if (distanceToCurrentBarrier <= stopDistance)
             {
                 agent.isStopped = true;
 
-                // Enemy Shooting stuff:
-                realShootVector = player.transform.position - gameObject.transform.position;
-                shootVector = realShootVector + new Vector3(Random.Range(-10f, 10f), Random.Range(-10f, 10f), Random.Range(-10f, 10f));
-                Vector3 startPoint = gameObject.transform.position;
-                Vector3 endPoint = startPoint + shootVector;
-                RaycastHit hit; // raycast element
-                if(Physics.Raycast(gameObject.transform.position,shootVector, out hit, shootRange) && hit.transform.tag == "Player")
+                // enemy shooting
+                if(Time.time >= nextTimeToShoot)
                 {
-                    Debug.Log(hit.transform.tag);
-
-                    PlayerManager player = hit.transform.GetComponent<PlayerManager>();
-                    if (player != null)
-                    {
-                        player.TakeDamage(enemyDamage);
-                    }
-                    // Draws a blue line from this transform to the target
-                    Debug.DrawLine(startPoint, endPoint, Color.green, 0.1f);
+                    nextTimeToShoot = Time.time + 1f / Random.Range(fireRate1, fireRate2);
+                    shootPlayer();
                 }
-
 
             }
             else if (distanceToCurrentBarrier > stopDistance)
@@ -86,6 +88,38 @@ public class Enemy : MonoBehaviour
         {
             GoToRandomDestination();  //this will set a barrier to the currentactive barrier. that abrrier will be chosen randomly from the list of active barriers
         }
+    }
+
+
+    public void shootPlayer()
+    {
+        // Enemy Shooting stuff:
+        realShootVector = player.transform.position - gameObject.transform.position;
+        shootVector = realShootVector + new Vector3(Random.Range(-2f, 2f), Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+        Vector3 startPoint = gameObject.transform.position;
+        Vector3 endPoint = startPoint + shootVector;
+        RaycastHit hit; // raycast element
+        
+        if (Physics.Raycast(gameObject.transform.position, shootVector, out hit, shootRange) && hit.transform.tag == "Player")
+        {
+            Debug.Log(hit.transform.tag);
+            
+            PlayerManager player = hit.transform.GetComponent<PlayerManager>();
+            if (player != null)
+            {
+                player.TakeDamage(enemyDamage);
+            }
+            // Draws a blue line from this transform to the target
+            Debug.DrawLine(startPoint, endPoint, Color.green, 0.1f);
+
+        }
+        else
+        {
+            Debug.DrawLine(startPoint, endPoint, Color.red, 0.1f);
+
+        }
+        int i = Random.Range(0, 5);
+        audioSource.PlayOneShot(gunShot[i], 1f);
     }
 
     private void GoToRandomDestination()

@@ -9,11 +9,13 @@ public class PlayerManager : MonoBehaviour
 {
 
     [SerializeField] private int playerHealth = 100;
+    private AudioSource audioSource;
+    [SerializeField] AudioClip playerAhhVoice;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -25,6 +27,7 @@ public class PlayerManager : MonoBehaviour
     public void TakeDamage(int damage)
     {
         playerHealth -= damage;
+        audioSource.PlayOneShot(playerAhhVoice, 1f);
         if (playerHealth <= 0)
         {
             Die();
