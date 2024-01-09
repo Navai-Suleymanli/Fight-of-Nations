@@ -7,6 +7,8 @@ public class OccupationManager : MonoBehaviour
 {
     public static int EnemyPercentage = 0;
     public Image enemyTakenArea;
+    public GameObject youLost;
+    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +24,8 @@ public class OccupationManager : MonoBehaviour
         if (EnemyPercentage >= 100)
         {
             Debug.Log("YOU LOST THE TERRITOYRY!!!");
+            youLost.SetActive(true);
+            player.SetActive(false);
         }
     }
 }
