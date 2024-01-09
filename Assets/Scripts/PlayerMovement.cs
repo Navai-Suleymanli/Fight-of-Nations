@@ -23,7 +23,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] AudioClip playerRunningBreath;
     private bool isAudioPlaying = false;
 
-    private float gravityValue = -9.81f; // Gravity value
+    private float gravityValue = -19.62f; // Gravity value
     private float verticalVelocity = 0f; // Vertical velocity due to gravity
 
     // Start is called before the first frame update
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         {
             controller.Move(move * walkSpeed * Time.deltaTime);
         }
-        if (isRunning && !isAiming)
+        if (isRunning )
         {
             controller.Move(move * sprintSpeed * Time.deltaTime);
         }
