@@ -29,30 +29,31 @@ public class BlendTree : MonoBehaviour
 
     }
 
-    private void UpdateVelocity(bool forwardPressed, bool runPressed, bool backPressed, float currentMaxVelocity, bool aimPressed)
+
+    private void UpdateVelocity(bool forwardPressed, bool runPressed, bool backPressed, float currentMaxVelocity, bool aimPressed, bool canNotShoot)  // add bool canNotShoot
     {
-        if (forwardPressed && velocityZ < currentMaxVelocity)
-        {
-            velocityZ += Time.deltaTime * acceleration; // Accelerate forward.
-        }
-        if (backPressed && velocityZ > -currentMaxVelocity /*&& aimPressed == false*/ && runPressed==false)  // ERROR MIGHT BE IN THERE!!!!
-        {
-            velocityZ -= Time.deltaTime * acceleration; // Accelerate backward.
-        }
-        if (forwardPressed && runPressed && velocityZ < currentMaxVelocity)  
+        // Check if running
+        if (forwardPressed && runPressed && velocityZ < maxRunVelocity)
         {
             velocityZ += Time.deltaTime * acceleration;
         }
-
-
-        if (aimPressed && velocityX < maxAimValue)
+        else if (forwardPressed && !runPressed && velocityZ < maxWalkVelocity)
         {
-            velocityX += Time.deltaTime * aimAccelertion; // Accelerate forward.
+            velocityZ += Time.deltaTime * acceleration; // Accelerate forward at walking speed.
         }
 
-        if (aimPressed)  //---------
+        if (backPressed && velocityZ > -currentMaxVelocity)
         {
-            Debug.Log("AIMING");
+            velocityZ -= Time.deltaTime * acceleration; // Accelerate backward.
+        }
+
+        if (aimPressed && velocityX < maxAimValue && !canNotShoot)
+        {
+            velocityX += Time.deltaTime * aimAccelertion;
+        }
+        if ((!aimPressed && velocityX > 0.0f) || canNotShoot)
+        {
+            velocityX -= Time.deltaTime * aimDeceleration;
         }
 
 
@@ -60,35 +61,39 @@ public class BlendTree : MonoBehaviour
         {
             velocityZ -= Time.deltaTime * deceleration; // Decelerate forward.
         }
-        if (forwardPressed && !runPressed && velocityZ > 0.3f)  /////
-        {
-            velocityZ -= Time.deltaTime * deceleration;
-        }
         if (!backPressed && velocityZ < 0.0f)
         {
             velocityZ += Time.deltaTime * deceleration; // Decelerate backward.
         }
 
 
-        if (!aimPressed && velocityX > 0.0f)
-        {
-            velocityX -= Time.deltaTime * aimDeceleration;
-        }
+
+
     }
 
-    private void LockOrResetVelocity(bool forwardPressed, bool runPressed, bool backPressed, float currentMaxVelocity, bool aimPressed)
+    private void LockOrResetVelocity(bool forwardPressed, bool runPressed, bool backPressed, float currentMaxVelocity, bool aimPressed, bool canNotShoot)
     {
+        // --------------------------------------------------------------
         if (aimPressed && velocityX > maxAimValue)
         {
-            velocityX -= Time.deltaTime * aimDeceleration;
+            //velocityX -= Time.deltaTime * aimDeceleration;
+            velocityX = maxAimValue;
         }
-        if (!aimPressed && velocityX > 0)
+        if (!aimPressed && velocityX > 0.0f || canNotShoot && velocityX > 0.0f)
         {
             velocityX -= Time.deltaTime * aimDeceleration;
         }
-
+        if(velocityX < 0.0f)
+        {
+            velocityX = 0.0f;
+        }
+        // --------------------------------------------------------------
 
         if (forwardPressed && runPressed && velocityZ > currentMaxVelocity)
+        {
+            velocityZ -= Time.deltaTime * deceleration;
+        }
+        if (velocityZ > currentMaxVelocity)
         {
             velocityZ -= Time.deltaTime * deceleration;
         }
@@ -128,11 +133,13 @@ public class BlendTree : MonoBehaviour
         bool aimPressed = Input.GetKey(KeyCode.Mouse1); //Check is right mouse button is pressed
         //bool left_rightPressed = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A);
         bool runPressed = Input.GetKey(KeyCode.LeftShift) ? true : false; // Check if the run key is pressed.
-        bool aiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
+       
+        bool canNotShoot = runPressed && forwardPressed ? true : false;
+        bool aiming = Input.GetKey(KeyCode.Mouse1) && !canNotShoot ? true : false;
 
         float currentMaxVelocity = runPressed && !aiming ? maxRunVelocity : maxWalkVelocity; // Determine the maximum velocity based on whether the run key is pressed or not
-        UpdateVelocity(forwardPressed, runPressed, backPressed, currentMaxVelocity, aimPressed); // Update the current velocity based on input.
-        LockOrResetVelocity(forwardPressed, runPressed, backPressed, currentMaxVelocity, aimPressed); // Lock or reset the velocity based on input.
+        UpdateVelocity(forwardPressed, runPressed, backPressed, currentMaxVelocity, aimPressed, canNotShoot); // Update the current velocity based on input.
+        LockOrResetVelocity(forwardPressed, runPressed, backPressed, currentMaxVelocity, aimPressed, canNotShoot); // Lock or reset the velocity based on input.
 
         UpdateAnimator(); // Update the animator parameters based on the current velocity.
     }

@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
             verticalVelocity = 0f; // Reset vertical velocity if on the ground
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W))
         {
             isRunning = true;
         }
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleAudio()
     {
-        if (isRunning && !isAiming)
+        if (isRunning && !isAiming && Input.GetKey(KeyCode.W))  //-------------------------------------------------
         {
             if (!isAudioPlaying || audioSource.clip != playerRunningBreath)
             {

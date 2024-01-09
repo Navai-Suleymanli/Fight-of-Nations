@@ -56,6 +56,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("bools")]
     [SerializeField] bool isSprinting;
+    [SerializeField] bool isMoving;
 
     // empty code:
     [SerializeField] bool isAiming;
@@ -81,6 +82,7 @@ public class WeaponController : MonoBehaviour
         
 
         isSprinting = Input.GetKey(KeyCode.LeftShift)?true:false;
+        isMoving =  Input.GetKey(KeyCode.W) ? true : false;
         //Empty();
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
 
@@ -132,27 +134,23 @@ public class WeaponController : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && isEmpty == false && !isReloading && !isSprinting)
+        bool canNotShoot = isSprinting && isMoving || isReloading;
+
+        if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
         {
             nextTimeToShoot = Time.time + 1f / fireRate;
             Shoot();
-        }
-        if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && isEmpty == false && !isReloading && isSprinting && isAiming)
-        {
-            nextTimeToShoot = Time.time + 1f / fireRate;
-            Shoot();
+            animator.SetBool("shooting", true); 
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && isEmpty == true && !isReloading && !isSprinting)  //------------------
+        else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot)
+        {
+            animator.SetBool("shooting", false); 
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
         {
             audioSource.PlayOneShot(emptyhot, 1f);
-        }
-
-
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            animator.SetBool("shooting", false);
-            resetImageSize();
         }
     }
 
@@ -228,7 +226,8 @@ public class WeaponController : MonoBehaviour
 
         ProcessRaycast();
         recoil_script.recoilFire();
-        animator.SetBool("shooting", true);
+
+        //animator.SetBool("shooting", true);
         setImageSize();
 
     }
