@@ -40,6 +40,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] AudioClip impactSound;
 
 
+    
+
 
 
 
@@ -162,13 +164,14 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    // ---------------------------------------------------------------------------------------------- //
     private IEnumerator DecreaseValue()
     {
         isDecreasing = true;
-        while (OccupationManager.valueToDecrease > 0)
+        while (OccupationManager.EnemyPercentage < 100)
         {
-            OccupationManager.valueToDecrease -= 1;
-            yield return new WaitForSeconds(2f);
+            OccupationManager.EnemyPercentage += 1;
+            yield return new WaitForSeconds(5f);
         }
         isDecreasing = false;
     }
