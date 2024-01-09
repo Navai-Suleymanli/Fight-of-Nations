@@ -5985,7 +5985,7 @@ Transform:
   m_GameObject: {fileID: 1430506122}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 17.3, y: 13.18, z: 38.4}
+  m_LocalPosition: {x: 17.3, y: 12.45, z: 38.4}
   m_LocalScale: {x: 1, y: 18.04818, z: 1.0052}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9787,6 +9787,10 @@ PrefabInstance:
       propertyPath: spawnPoint
       value: 
       objectReference: {fileID: 3803289514932644687}
+    - target: {fileID: 7199278958347725822, guid: fc73106efb52c434d97337c1865da9d9, type: 3}
+      propertyPath: weaponHead
+      value: 
+      objectReference: {fileID: 74325838}
     - target: {fileID: 7199278958347725822, guid: fc73106efb52c434d97337c1865da9d9, type: 3}
       propertyPath: audioSource
       value: 

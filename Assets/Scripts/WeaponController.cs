@@ -145,7 +145,8 @@ public class WeaponController : MonoBehaviour
 
         else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot)
         {
-            animator.SetBool("shooting", false); 
+            animator.SetBool("shooting", false);
+            resetImageSize();
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
