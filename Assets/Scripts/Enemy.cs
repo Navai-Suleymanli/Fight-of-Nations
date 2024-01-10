@@ -36,6 +36,7 @@ public class Enemy : MonoBehaviour
     [Header("Gun Shot Stuff")]
     AudioSource audioSource;
     [SerializeField] AudioClip[] gunShot;
+    public GameObject impactEffect;
 
 
 
@@ -116,6 +117,9 @@ public class Enemy : MonoBehaviour
         else
         {
             Debug.DrawLine(startPoint, endPoint, Color.red, 0.1f);
+
+            GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactGo,2f);
 
         }
         int i = Random.Range(0, 5);
