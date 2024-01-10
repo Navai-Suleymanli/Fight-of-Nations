@@ -10029,6 +10029,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2958912399440469697, guid: 4b8c961cbe5cc1041876d96f71cbc1b5, type: 3}
     - target: {fileID: 7199278958347725822, guid: fc73106efb52c434d97337c1865da9d9, type: 3}
+      propertyPath: impactEffect
+      value: 
+      objectReference: {fileID: 100002, guid: f75efcef4bb42054abf94f8e5c701adc, type: 3}
+    - target: {fileID: 7199278958347725822, guid: fc73106efb52c434d97337c1865da9d9, type: 3}
       propertyPath: gunShot.Array.size
       value: 6
       objectReference: {fileID: 0}

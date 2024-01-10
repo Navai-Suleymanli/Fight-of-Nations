@@ -36,6 +36,9 @@ public class Enemy : MonoBehaviour
     [Header("Gun Shot Stuff")]
     AudioSource audioSource;
     [SerializeField] AudioClip[] gunShot;
+    public GameObject impactEffect;
+    [SerializeField] AudioClip impactSound;
+
 
 
 
@@ -44,14 +47,14 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        
+
         GoToRandomDestination();
         audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
     {
-        
+
         // occupation ststem  ----------------------------------
         isOccupation = Physics.CheckSphere(transform.position, distance, groundLayer);
         if (isOccupation && !isDecreasing)
@@ -61,9 +64,9 @@ public class Enemy : MonoBehaviour
         // -----------------------------------------------------
     }
 
-    private void FixedUpdate() 
+    private void FixedUpdate()
     {
-        
+
         if (currentTargetBarrier != null) // if currenttarget barrier is defined(not null)
         {
             float distanceToCurrentBarrier = Vector3.Distance(transform.position, currentTargetBarrier.transform.position); // calculating distace to the current barrier
@@ -72,7 +75,7 @@ public class Enemy : MonoBehaviour
                 agent.isStopped = true;
 
                 // enemy shooting
-                if(Time.time >= nextTimeToShoot)
+                if (Time.time >= nextTimeToShoot)
                 {
                     nextTimeToShoot = Time.time + 1f / Random.Range(fireRate1, fireRate2);
                     shootPlayer();
@@ -99,11 +102,11 @@ public class Enemy : MonoBehaviour
         Vector3 startPoint = gameObject.transform.position;
         Vector3 endPoint = startPoint + shootVector;
         RaycastHit hit; // raycast element
-        
+
         if (Physics.Raycast(gameObject.transform.position, shootVector, out hit, shootRange) && hit.transform.tag == "Player")
         {
             Debug.Log(hit.transform.tag);
-            
+
             PlayerManager player = hit.transform.GetComponent<PlayerManager>();
             if (player != null)
             {
@@ -116,6 +119,11 @@ public class Enemy : MonoBehaviour
         else
         {
             Debug.DrawLine(startPoint, endPoint, Color.red, 0.1f);
+
+            GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            Destroy(impactGo, 2f);
+
+            AudioSource.PlayClipAtPoint(impactSound, hit.point);
 
         }
         int i = Random.Range(0, 5);
@@ -146,7 +154,7 @@ public class Enemy : MonoBehaviour
             currentTargetBarrier = selectedBarrier;
             currentTargetBarrier.AddEnemy();  // add enemy safely when chosen the current barrier
             agent.isStopped = false;
-            
+
         }
         else
         {
