@@ -125,7 +125,7 @@ public class Enemy : MonoBehaviour
             GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGo, 2f);
 
-            AudioSource.PlayClipAtPoint(impactSound, hit.point,0f);
+            AudioSource.PlayClipAtPoint(impactSound, hit.point,0.4f);
 
         }
         int i = Random.Range(0, 5);
