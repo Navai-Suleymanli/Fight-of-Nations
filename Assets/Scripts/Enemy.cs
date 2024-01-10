@@ -123,11 +123,12 @@ public class Enemy : MonoBehaviour
             GameObject impactGo = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGo, 2f);
 
-            AudioSource.PlayClipAtPoint(impactSound, hit.point);
+            AudioSource.PlayClipAtPoint(impactSound, hit.point,0f);
 
         }
         int i = Random.Range(0, 5);
-        audioSource.PlayOneShot(gunShot[i], 1f);
+        AudioSource.PlayClipAtPoint(gunShot[i],gameObject.transform.position,2f);
+        //audioSource.PlayOneShot(gunShot[i], 1f);
     }
 
     private void GoToRandomDestination()
