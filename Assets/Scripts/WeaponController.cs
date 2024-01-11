@@ -247,7 +247,7 @@ public class WeaponController : MonoBehaviour
 
 
 
-            AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.1f);
+            AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
             //audioSource.PlayOneShot(gunSound, 1f);
             bulletCount--;
         }
