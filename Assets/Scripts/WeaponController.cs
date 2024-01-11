@@ -151,7 +151,8 @@ public class WeaponController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
         {
-            audioSource.PlayOneShot(emptyhot, 1f);
+            AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
+            //audioSource.PlayOneShot(emptyhot, 1f);
         }
     }
 
@@ -220,8 +221,8 @@ public class WeaponController : MonoBehaviour
 
 
 
-
-            audioSource.PlayOneShot(gunSound, 1f);
+            AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.1f);
+            //audioSource.PlayOneShot(gunSound, 1f);
             bulletCount--;
         }
 
@@ -242,7 +243,8 @@ public class WeaponController : MonoBehaviour
             isReloading = true;
             animator.SetBool("reload", true);
             StartCoroutine(reload());
-            audioSource.PlayOneShot(reloadSound, 1f);
+            //audioSource.PlayOneShot(reloadSound, 1f);
+            AudioSource.PlayClipAtPoint(reloadSound, gameObject.transform.position, .1f);
         }
     }
 
