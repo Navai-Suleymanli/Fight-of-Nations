@@ -72,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (isRunning && isAiming)
         {
-            controller.Move(move * walkSpeed * Time.deltaTime);
+            controller.Move(move * sprintSpeed * Time.deltaTime);
         }
 
         // Apply gravity
