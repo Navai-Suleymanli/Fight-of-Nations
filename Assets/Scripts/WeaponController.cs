@@ -3,6 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
+using TMPro;
 
 public class WeaponController : MonoBehaviour
 {
@@ -46,6 +47,10 @@ public class WeaponController : MonoBehaviour
     [SerializeField] int bulletCount = 30; // gulle sayi
     [SerializeField] bool isEmpty = false;
     [SerializeField] bool isReloading = false;
+    [SerializeField] TextMeshProUGUI bulletCountText;
+    public Image bullet3;
+    public Image bullet2;
+    public Image bullet1;
 
     [Header("Audio Stuff")]
     [SerializeField] AudioClip gunSound;
@@ -85,6 +90,8 @@ public class WeaponController : MonoBehaviour
         isMoving =  Input.GetKey(KeyCode.W) ? true : false;
         //Empty();
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
+
+        bulletCountText.text = bulletCount.ToString() + "/30";
 
     }
 
@@ -182,10 +189,29 @@ public class WeaponController : MonoBehaviour
             isEmpty = true;
             animator.SetBool("shooting", false);
             Debug.Log("bullet finished!!!");
+
+            bullet3.color = new Color(255, 255, 255, 0.5f);
+            bullet2.color = new Color(255, 255, 255, 0.5f);
+            bullet1.color = new Color(255, 255, 255, 0.5f);
         }
         if (bulletCount == 30)
         {
             animator.SetBool("reload", false);
+            bullet3.color = new Color(255, 255, 255, 1);
+            bullet2.color = new Color(255, 255, 255, 1);
+            bullet1.color = new Color(255, 255, 255, 1);
+        }
+        if (bulletCount == 20)
+        {
+            bullet3.color = new Color(255, 255, 255, 0.5f);
+            bullet2.color = new Color(255, 255, 255, 1);
+            bullet1.color = new Color(255, 255, 255, 1);
+        }
+        if (bulletCount == 10)
+        {
+            bullet3.color = new Color(255, 255, 255, 0.5f);
+            bullet2.color = new Color(255, 255, 255, 0.5f);
+            bullet1.color = new Color(255, 255, 255, 1);
         }
         if (Input.GetKeyDown(KeyCode.R) && !isReloading)
         {
