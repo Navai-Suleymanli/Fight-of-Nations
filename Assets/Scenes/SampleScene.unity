@@ -3577,9 +3577,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 776430301}
   acceleration: 1
-  aimAccelertion: 0.5
+  aimAccelertion: 1
   deceleration: 1
-  aimDeceleration: 0.5
+  aimDeceleration: 1
   maxWalkVelocity: 0.2
   maxRunVelocity: 1
   maxAimValue: 0.3

@@ -8,7 +8,7 @@ public class BlendTree : MonoBehaviour
     [Header("Animation Settings")]
     public Animator animator;
     public float acceleration = 2.0f;
-    public float aimAccelertion = 0.1f;
+    public float aimAccelertion = 0.2f;
     public float deceleration = 2.0f;
     public float aimDeceleration = 0.5f;
     public float maxWalkVelocity = 0.3f;
