@@ -5,15 +5,15 @@ public class bullet : MonoBehaviour
 {
     private bool coroutineRunning = false;
 
-    void OnCollisionEnter(Collision collision)
+
+   /* void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Collided with: " + collision.gameObject.name);
         if (collision.gameObject.CompareTag("wall"))
         {
             gameObject.SetActive(false);
         }
-    }
-
+    }*/
     public void InitializeBullet(float launchVelocity)
     {
         if (!coroutineRunning)
@@ -28,7 +28,7 @@ public class bullet : MonoBehaviour
 
     IEnumerator DestroyBullet()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
         coroutineRunning = false;
     }
