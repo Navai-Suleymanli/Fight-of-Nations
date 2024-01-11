@@ -100,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 audioSource.clip = playerBreath;
                 audioSource.loop = true;
+                audioSource.volume = 0.02f;
                 audioSource.Play();
                 isAudioPlaying = true;
             }
@@ -111,6 +112,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 audioSource.clip = playerBreath;
                 audioSource.loop = true;
+                audioSource.volume = 0.02f;
                 audioSource.Play();
                 isAudioPlaying = true;
             }
