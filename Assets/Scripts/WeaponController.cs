@@ -141,15 +141,15 @@ public class WeaponController : MonoBehaviour
 
     private void HandleShooting()
     {
-        bool canNotShoot = isSprinting && isMoving || isReloading;
+        // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
+        bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
 
         if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
         {
             nextTimeToShoot = Time.time + 1f / fireRate;
             Shoot();
-            animator.SetBool("shooting", true); 
+            animator.SetBool("shooting", true);
         }
-
         else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot)
         {
             animator.SetBool("shooting", false);
