@@ -65,6 +65,7 @@ public class WeaponController : MonoBehaviour
 
     // empty code:
     [SerializeField] bool isAiming;
+    Combined combined;
 
 
 
@@ -75,7 +76,7 @@ public class WeaponController : MonoBehaviour
         FindRecoilScript();
         //FindWeaponTransform();
         audioSource = GetComponent<AudioSource>();
-        
+        combined = GetComponent<Combined>();
     }
 
     private void Update()
@@ -84,10 +85,10 @@ public class WeaponController : MonoBehaviour
         HandleAiming();
         HandleReloading();
         getImageSize();
-        
 
-        isSprinting = Input.GetKey(KeyCode.LeftShift)?true:false;
-        isMoving =  Input.GetKey(KeyCode.W) ? true : false;
+
+        isSprinting = Input.GetKey(KeyCode.LeftShift) ? true : false;
+        isMoving = Input.GetKey(KeyCode.W) ? true : false;
         //Empty();
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
 
@@ -105,7 +106,7 @@ public class WeaponController : MonoBehaviour
 
     public void setImageSize()
     {
-        if(width<100 && height < 100)
+        if (width < 100 && height < 100)
         {
             cross.rectTransform.sizeDelta = new Vector2(width += 10f, height += 10f);
 
@@ -115,7 +116,7 @@ public class WeaponController : MonoBehaviour
 
     public void resetImageSize()
     {
-        while(height>50f && width> 50f)
+        while (height > 50f && width > 50f)
         {
             cross.rectTransform.sizeDelta = new Vector2(width -= 10f, height -= 10f);
         }
@@ -150,9 +151,10 @@ public class WeaponController : MonoBehaviour
             Shoot();
             animator.SetBool("shooting", true);
         }
-        else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot)
+        else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
         {
             animator.SetBool("shooting", false);
+            combined.Dayandir();
             resetImageSize();
         }
 
@@ -254,7 +256,7 @@ public class WeaponController : MonoBehaviour
 
         ProcessRaycast();
         recoil_script.recoilFire();
-
+        combined.TriggerRecoil();
         //animator.SetBool("shooting", true);
         setImageSize();
 
@@ -262,7 +264,7 @@ public class WeaponController : MonoBehaviour
 
     private void Reload()
     {
-        
+
         if (bulletCount < 30)
         {
             animator.SetBool("empty", false);
@@ -274,22 +276,22 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-   /* private void Empty()
-    {
-        if(bulletCount <= 0 && Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && isEmpty == true && !isReloading && !isAiming)
-        {
-            animator.SetBool("empty", true );
-            StartCoroutine(empty());    
-        }
-    }
+    /* private void Empty()
+     {
+         if(bulletCount <= 0 && Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && isEmpty == true && !isReloading && !isAiming)
+         {
+             animator.SetBool("empty", true );
+             StartCoroutine(empty());    
+         }
+     }
 
-    // ienumarator for empty:
-    IEnumerator empty()
-    {
-        yield return new WaitForSeconds(0.5f);
-        animator.SetBool("empty", false);
-    }
-   */
+     // ienumarator for empty:
+     IEnumerator empty()
+     {
+         yield return new WaitForSeconds(0.5f);
+         animator.SetBool("empty", false);
+     }
+    */
     IEnumerator reload()
     {
         yield return new WaitForSeconds(2.7f);

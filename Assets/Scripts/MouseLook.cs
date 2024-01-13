@@ -29,10 +29,10 @@ public class MouseLook : MonoBehaviour
 
     }
 
-   /* Vector3 followCamGun()
-    {
-        return gun.transform.position = gameObject.transform.position + new Vector3(0f, 0.1f, 0.5f);
-    }*/
+    /* Vector3 followCamGun()
+     {
+         return gun.transform.position = gameObject.transform.position + new Vector3(0f, 0.1f, 0.5f);
+     }*/
 
     void Start()
     {
@@ -49,11 +49,11 @@ public class MouseLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 60f);
 
         cam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        
+
         transform.Rotate(Vector3.up * smoothInput.x * sensitivity);
 
         followCam();
-       // followCamGun();
+        // followCamGun();
 
         spotLight.transform.rotation = Quaternion.Slerp(spotLight.transform.rotation, cam.transform.rotation, 0.1f);
         //gun.transform.rotation = Quaternion.Slerp(gun.transform.rotation, cam.transform.rotation, 0.1f);
