@@ -65,7 +65,6 @@ public class WeaponController : MonoBehaviour
 
     // empty code:
     [SerializeField] bool isAiming;
-    Combined combined;
 
 
 
@@ -76,7 +75,7 @@ public class WeaponController : MonoBehaviour
         FindRecoilScript();
         //FindWeaponTransform();
         audioSource = GetComponent<AudioSource>();
-        combined = GetComponent<Combined>();
+        
     }
 
     private void Update()
@@ -154,7 +153,6 @@ public class WeaponController : MonoBehaviour
         else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot)
         {
             animator.SetBool("shooting", false);
-            combined.Dayandir();
             resetImageSize();
         }
 
@@ -256,7 +254,7 @@ public class WeaponController : MonoBehaviour
 
         ProcessRaycast();
         recoil_script.recoilFire();
-        combined.TriggerRecoil();
+
         //animator.SetBool("shooting", true);
         setImageSize();
 
