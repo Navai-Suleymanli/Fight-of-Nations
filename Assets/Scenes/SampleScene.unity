@@ -3384,6 +3384,7 @@ GameObject:
   - component: {fileID: 776430304}
   - component: {fileID: 776430305}
   - component: {fileID: 776430306}
+  - component: {fileID: 776430307}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3535,7 +3536,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 776430293}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 690341bebfe3d694e8e52fabe318160d, type: 3}
   m_Name: 
@@ -3749,6 +3750,27 @@ MonoBehaviour:
   playerAhhVoice: {fileID: 8300000, guid: e3833faeeacf881439fef9ce96af322d, type: 3}
   healthBar: {fileID: 1462806123}
   playerHealth: 100
+--- !u!114 &776430307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776430293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 989bd9b52bf3c4c4e80b3f3d0740473a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensitivity: 2
+  cam: {fileID: 963194227}
+  spotLight: {fileID: 298125933}
+  gun: {fileID: 1354499287}
+  recoilX: 3
+  recoilY: 2
+  recoilZ: 2
+  snappiness: 5
+  returnSpeed: 10
 --- !u!1 &800560436
 GameObject:
   m_ObjectHideFlags: 0
