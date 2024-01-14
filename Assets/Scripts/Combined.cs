@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class Combined : MonoBehaviour
@@ -42,7 +43,7 @@ public class Combined : MonoBehaviour
         {
             ResetCameraPositionAndRotation();
         }
-
+        ApplyFinalRotations();
     }
 
     void HandleMouseInput()
@@ -62,13 +63,15 @@ public class Combined : MonoBehaviour
         transform.Rotate(Vector3.up * smoothInput.x * sensitivity);
     }
 
-
     void ApplyRecoilEffect()
     {
+        // Check if right mouse button is pressed for aiming
+        float aimMultiplier = Input.GetMouseButton(1) ? 0.5f : 1.0f; // Halves recoil when aiming
+
         // Calculate target rotation for recoil (only pitch)
-        targetRotation.x += -recoilX;
-        targetRotation.y = Random.Range(-recoilY, recoilY);
-        targetRotation.z = Random.Range(-recoilZ, recoilZ);
+        targetRotation.x += -recoilX * aimMultiplier;
+        targetRotation.y = Random.Range(-recoilY, recoilY) * aimMultiplier;
+        targetRotation.z = Random.Range(-recoilZ, recoilZ) * aimMultiplier;
 
         // Apply recoil to pitch while keeping current yaw and roll
         Vector3 cameraEuler = cam.transform.localEulerAngles;
@@ -92,21 +95,29 @@ public class Combined : MonoBehaviour
         }
     }
 
-
-
     void ResetCameraPositionAndRotation()
     {
+        // Smoothly interpolate the current rotation towards zero
         currentRotation = Vector3.Lerp(currentRotation, Vector3.zero, Time.deltaTime * returnSpeed);
+
+        // Use Slerp for smoother rotational interpolation
         Quaternion originalRotation = Quaternion.Euler(originalCameraRotation);
-        cam.transform.localRotation = Quaternion.Lerp(cam.transform.localRotation, originalRotation, Time.deltaTime * returnSpeed);
+        cam.transform.localRotation = Quaternion.Slerp(cam.transform.localRotation, originalRotation, Time.deltaTime * returnSpeed);
+        Debug.Log("RESETTING!!!");
     }
 
+    void ApplyFinalRotations()
+    {
+        cam.transform.localRotation = Quaternion.Euler(xRotation + currentRotation.x, originalCameraRotation.y, currentRotation.z);
+        spotLight.transform.rotation = Quaternion.Slerp(spotLight.transform.rotation, cam.transform.rotation, 0.1f);
+    }
 
     public void TriggerRecoil()
     {
         Debug.Log("Recoil Triggered");
         shouldApplyRecoil = true;
-        targetRotation = new Vector3(-recoilX, Random.Range(-recoilY, recoilY), Random.Range(-recoilZ, recoilZ));
+        float aimMultiplier = Input.GetMouseButton(1) ? 0.5f : 1.0f; // Halves recoil when aiming
+        targetRotation = new Vector3(-recoilX * aimMultiplier, Random.Range(-recoilY, recoilY) * aimMultiplier, Random.Range(-recoilZ, recoilZ) * aimMultiplier);
     }
 
     public void Dayandir()

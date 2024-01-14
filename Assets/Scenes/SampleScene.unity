@@ -3767,7 +3767,7 @@ MonoBehaviour:
   spotLight: {fileID: 298125933}
   gun: {fileID: 1354499287}
   recoilX: 1
-  recoilY: 0.5
+  recoilY: 0.7
   recoilZ: 0.2
   snappiness: 2
   returnSpeed: 10

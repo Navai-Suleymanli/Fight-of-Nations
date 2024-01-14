@@ -48,7 +48,7 @@ public class RecoilAndSway : MonoBehaviour
 
     public void recoilFire()
     {
-        float recoilFactorX = recoilX * recoilMultiplier;
+        /*float recoilFactorX = recoilX * recoilMultiplier;
         float recoilFactorY = recoilY * recoilMultiplier;
         float recoilFactorZ = recoilZ * recoilMultiplier;
 
@@ -69,6 +69,6 @@ public class RecoilAndSway : MonoBehaviour
         if (!Input.GetKey(KeyCode.Mouse0))
         {
             recoilMultiplier = 1f;
-        }
+        }*/
     }
 }

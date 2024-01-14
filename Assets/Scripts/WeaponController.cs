@@ -64,7 +64,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] bool isMoving;
 
     // empty code:
-    [SerializeField] bool isAiming;
+    public bool isAiming;
+    public bool isAuto = true;
     Combined combined;
 
 
@@ -89,11 +90,19 @@ public class WeaponController : MonoBehaviour
 
         isSprinting = Input.GetKey(KeyCode.LeftShift) ? true : false;
         isMoving = Input.GetKey(KeyCode.W) ? true : false;
+        
         //Empty();
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
 
         bulletCountText.text = bulletCount.ToString() + "/30";
-
+        if (Input.GetKeyDown(KeyCode.B) && isAuto)
+        {
+            isAuto = false;
+        }
+        else if (Input.GetKeyDown(KeyCode.B) && !isAuto)
+        {
+            isAuto = true;
+        }
     }
 
     public void getImageSize()
@@ -145,9 +154,15 @@ public class WeaponController : MonoBehaviour
         // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
         bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
 
-        if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
+        if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot && isAuto)
         {
             nextTimeToShoot = Time.time + 1f / fireRate;
+            Shoot();
+            animator.SetBool("shooting", true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot && !isAuto)
+        {
             Shoot();
             animator.SetBool("shooting", true);
         }
