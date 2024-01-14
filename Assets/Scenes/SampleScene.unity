@@ -3379,12 +3379,12 @@ GameObject:
   - component: {fileID: 776430299}
   - component: {fileID: 776430300}
   - component: {fileID: 776430301}
+  - component: {fileID: 776430307}
   - component: {fileID: 776430302}
   - component: {fileID: 776430303}
   - component: {fileID: 776430304}
   - component: {fileID: 776430305}
   - component: {fileID: 776430306}
-  - component: {fileID: 776430307}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3624,6 +3624,7 @@ MonoBehaviour:
   isSprinting: 0
   isMoving: 0
   isAiming: 0
+  isAuto: 1
 --- !u!114 &776430304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3767,8 +3768,8 @@ MonoBehaviour:
   spotLight: {fileID: 298125933}
   gun: {fileID: 1354499287}
   recoilX: 1
-  recoilY: 0.7
-  recoilZ: 0.2
+  recoilY: 20
+  recoilZ: 10
   snappiness: 2
   returnSpeed: 10
 --- !u!1 &800560436
@@ -4711,11 +4712,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3a5a2fd879f9e84c9d8b809bf1f1641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  recoilX: -1
-  recoilY: 2
-  recoilZ: 1
+  recoilX: 0
+  recoilY: 0
+  recoilZ: 0
   snappiness: 3
-  returnSpeed: 26
+  returnSpeed: 25
   recoilIncreaseFactor: 1.1
   maxRecoilMultiplier: 3
   smooth: 5

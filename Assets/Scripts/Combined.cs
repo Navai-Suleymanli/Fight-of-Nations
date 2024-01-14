@@ -108,7 +108,7 @@ public class Combined : MonoBehaviour
 
     void ApplyFinalRotations()
     {
-        cam.transform.localRotation = Quaternion.Euler(xRotation + currentRotation.x, originalCameraRotation.y, currentRotation.z);
+        cam.transform.localRotation = Quaternion.Euler(xRotation + currentRotation.x, currentRotation.y, currentRotation.z);
         spotLight.transform.rotation = Quaternion.Slerp(spotLight.transform.rotation, cam.transform.rotation, 0.1f);
     }
 

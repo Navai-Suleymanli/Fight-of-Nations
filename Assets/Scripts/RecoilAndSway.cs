@@ -48,7 +48,7 @@ public class RecoilAndSway : MonoBehaviour
 
     public void recoilFire()
     {
-        /*float recoilFactorX = recoilX * recoilMultiplier;
+        float recoilFactorX = recoilX * recoilMultiplier;
         float recoilFactorY = recoilY * recoilMultiplier;
         float recoilFactorZ = recoilZ * recoilMultiplier;
 
@@ -58,7 +58,7 @@ public class RecoilAndSway : MonoBehaviour
         }
         else // Not aiming
         {
-            targetRotation += new Vector3(recoilFactorX * 3, Random.Range(-recoilFactorY * 2, recoilFactorY * 2), Random.Range(-recoilFactorZ * 2, recoilFactorZ * 2));
+            targetRotation += new Vector3(recoilFactorX, Random.Range(-recoilFactorY * 2, recoilFactorY * 2), Random.Range(-recoilFactorZ * 2, recoilFactorZ * 2));
         }
 
         // Increase the recoil over time
@@ -69,6 +69,6 @@ public class RecoilAndSway : MonoBehaviour
         if (!Input.GetKey(KeyCode.Mouse0))
         {
             recoilMultiplier = 1f;
-        }*/
+        }
     }
 }
