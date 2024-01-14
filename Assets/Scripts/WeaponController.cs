@@ -11,6 +11,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float shootRange = 200;
     [SerializeField] float impact = 30.0f;
     [SerializeField] float fireRate = 19f;
+    [SerializeField] float fireRateSingle = 8f;
     [SerializeField] float launchVelocity = 2000f;
 
     public GameObject impactEffect;
@@ -46,7 +47,7 @@ public class WeaponController : MonoBehaviour
     [Header("Reload Stuff")]
     [SerializeField] int bulletCount = 30; // gulle sayi
     [SerializeField] bool isEmpty = false;
-    [SerializeField] bool isReloading = false;
+    public bool isReloading = false;
     [SerializeField] TextMeshProUGUI bulletCountText;
     public Image bullet3;
     public Image bullet2;
@@ -66,6 +67,7 @@ public class WeaponController : MonoBehaviour
     // empty code:
     public bool isAiming;
     public bool isAuto = true;
+    public bool isSingle = false;
     Combined combined;
 
 
@@ -95,14 +97,20 @@ public class WeaponController : MonoBehaviour
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
 
         bulletCountText.text = bulletCount.ToString() + "/30";
+
         if (Input.GetKeyDown(KeyCode.B) && isAuto)
         {
             isAuto = false;
+            isSingle = true;
+            animator.SetBool("single", true);
         }
         else if (Input.GetKeyDown(KeyCode.B) && !isAuto)
         {
             isAuto = true;
+            isSingle = false;
+            animator.SetBool("Auto", true);
         }
+
     }
 
     public void getImageSize()
@@ -154,24 +162,29 @@ public class WeaponController : MonoBehaviour
         // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
         bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
 
-        if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot && isAuto)
+        if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot && isAuto && !isSingle)
         {
             nextTimeToShoot = Time.time + 1f / fireRate;
             Shoot();
             animator.SetBool("shooting", true);
         }
-
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot && !isAuto)
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot && !isAuto && isSingle)
         {
             Shoot();
             animator.SetBool("shooting", true);
+            StartCoroutine(dayandir());
+            
         }
+
+
         else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
         {
             animator.SetBool("shooting", false);
             combined.Dayandir();
             resetImageSize();
         }
+
+        
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
         {
@@ -181,7 +194,11 @@ public class WeaponController : MonoBehaviour
     }
 
 
-
+    IEnumerator dayandir()
+    {
+        yield return new WaitForSeconds(0.1f);
+        combined.Dayandir();
+    }
 
     private void HandleAiming()
     {
