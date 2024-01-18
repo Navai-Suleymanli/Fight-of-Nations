@@ -25,14 +25,11 @@ public class PlayerMovement : MonoBehaviour
 
     private float gravityValue = -9.81f; // Gravity value
     private float verticalVelocity = 0f; // Vertical velocity due to gravity
-    WeaponController weapon;
 
     // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
-        weapon = GetComponent<WeaponController>();
-        
     }
 
     // Update is called once per frame
@@ -69,13 +66,9 @@ public class PlayerMovement : MonoBehaviour
         {
             controller.Move(move * walkSpeed * Time.deltaTime);
         }
-        if (isRunning && !isAiming && !weapon.isReloading)
+        if (isRunning && !isAiming)
         {
             controller.Move(move * sprintSpeed * Time.deltaTime);
-        }
-        if (isRunning && !isAiming && weapon.isReloading)
-        {
-            controller.Move(move * walkSpeed * Time.deltaTime);
         }
         if (isRunning && isAiming)
         {
