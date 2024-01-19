@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isRunning = false;
     [SerializeField]
     private bool isAiming = false;
-
+    WeaponController weapon;
 
 
 
@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        weapon = GetComponent<WeaponController>();
         audioSource = GetComponent<AudioSource>();
     }
 
@@ -66,11 +67,19 @@ public class PlayerMovement : MonoBehaviour
         {
             controller.Move(move * walkSpeed * Time.deltaTime);
         }
-        if (isRunning && !isAiming)
+        if (isRunning && !isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S))
         {
             controller.Move(move * sprintSpeed * Time.deltaTime);
         }
+        if (isRunning && !isAiming && weapon.isReloading)
+        {
+            controller.Move(move * walkSpeed * Time.deltaTime);
+        }
         if (isRunning && isAiming)
+        {
+            controller.Move(move * walkSpeed * Time.deltaTime);
+        }
+        if(isRunning && Input.GetKey(KeyCode.S))
         {
             controller.Move(move * walkSpeed * Time.deltaTime);
         }

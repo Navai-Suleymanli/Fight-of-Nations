@@ -46,7 +46,7 @@ public class WeaponController : MonoBehaviour
     [Header("Reload Stuff")]
     [SerializeField] int bulletCount = 30; // gulle sayi
     [SerializeField] bool isEmpty = false;
-    [SerializeField] bool isReloading = false;
+    public bool isReloading = false;
     [SerializeField] TextMeshProUGUI bulletCountText;
     public Image bullet3;
     public Image bullet2;
