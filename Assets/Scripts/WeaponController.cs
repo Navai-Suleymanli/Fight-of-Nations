@@ -79,7 +79,7 @@ public class WeaponController : MonoBehaviour
         combined = GetComponent<Combined>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         HandleShooting();
         HandleAiming();
