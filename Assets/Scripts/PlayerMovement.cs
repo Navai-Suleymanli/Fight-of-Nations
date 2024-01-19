@@ -86,21 +86,7 @@ public class PlayerMovement : MonoBehaviour
         verticalVelocity += gravityValue * Time.deltaTime;
         controller.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
 
-        // Camera Bobbing Effect
-        /*if (isRunning)
-        {
-            timer += bobbingSpeed * Time.deltaTime;
-            Vector3 localPos = cameraTransform.localPosition;
-            localPos.y = midpoint + Mathf.Sin(timer) * bobbingAmount;
-            cameraTransform.localPosition = localPos;
-        }*/
-        /*else
-        {
-            timer = 0;
-            Vector3 localPos = cameraTransform.localPosition;
-            localPos.y = Mathf.Lerp(localPos.y, midpoint, Time.deltaTime * bobbingSpeed);
-            cameraTransform.localPosition = localPos;
-        }*/
+
 
         // Handle audio
         HandleAudio();

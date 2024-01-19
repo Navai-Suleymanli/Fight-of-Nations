@@ -193,7 +193,7 @@ public class WeaponController : MonoBehaviour
 
     private void HandleReloading()
     {
-        if (bulletCount <= 0)
+        if (bulletCount == 0)
         {
             isEmpty = true;
             animator.SetBool("shooting", false);
