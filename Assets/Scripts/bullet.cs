@@ -6,14 +6,14 @@ public class bullet : MonoBehaviour
     private bool coroutineRunning = false;
 
 
-   /* void OnCollisionEnter(Collision collision)
+   void OnCollisionEnter(Collision collision)
     {
         Debug.Log("Collided with: " + collision.gameObject.name);
-        if (collision.gameObject.CompareTag("wall"))
-        {
-            gameObject.SetActive(false);
-        }
-    }*/
+        
+        
+        gameObject.SetActive(false);
+        
+    }
     public void InitializeBullet(float launchVelocity)
     {
         if (!coroutineRunning)

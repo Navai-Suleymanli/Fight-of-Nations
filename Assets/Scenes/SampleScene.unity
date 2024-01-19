@@ -2099,7 +2099,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pooledObjects: []
-  objectToPool: {fileID: 2958912399440469697, guid: 4b8c961cbe5cc1041876d96f71cbc1b5, type: 3}
+  objectToPool: {fileID: 6531505928297238165, guid: 50288abe4559e8449a783d6239501ded, type: 3}
   amountToPool: 60
 --- !u!4 &538141675
 Transform:
@@ -3600,7 +3600,7 @@ MonoBehaviour:
   shootRange: 200
   impact: 30
   fireRate: 15
-  launchVelocity: 4000
+  launchVelocity: 1000
   impactEffect: {fileID: 100002, guid: f75efcef4bb42054abf94f8e5c701adc, type: 3}
   weaponHead: {fileID: 74325838}
   spawnPoint: {fileID: 74325839}
