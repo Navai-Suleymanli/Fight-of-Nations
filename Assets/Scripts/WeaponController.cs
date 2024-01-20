@@ -21,6 +21,7 @@ public class WeaponController : MonoBehaviour
     // ates effecti
     public Transform spawnPoint;
     public GameObject muzzle;
+    public GameObject blood;
 
     // gulle gilizleri
     [SerializeField] GameObject bulletShell;
@@ -279,7 +280,7 @@ public class WeaponController : MonoBehaviour
             animator.SetBool("reload", true);
             StartCoroutine(reload());
             //audioSource.PlayOneShot(reloadSound, 1f);
-            AudioSource.PlayClipAtPoint(reloadSound, gameObject.transform.position, .1f);
+            AudioSource.PlayClipAtPoint(reloadSound, gameObject.transform.position, 0.05f);
         }
     }
 
@@ -325,6 +326,7 @@ public class WeaponController : MonoBehaviour
             }
 
             GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+            
             Destroy(impactGO, 2f);
 
             // Check if hit an enemy
@@ -334,7 +336,9 @@ public class WeaponController : MonoBehaviour
                 if (enemy != null)
                 {
                     enemy.TakeDamage(20); // Decrease health by 20
+                    GameObject bloodGo = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 
+                    Destroy(bloodGo, 1f);
                     // Convert the hit point to a screen position and show the X hit effect
                     ShowXHitEffectAtPosition(hit.point);
                 }

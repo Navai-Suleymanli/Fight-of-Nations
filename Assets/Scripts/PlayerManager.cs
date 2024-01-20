@@ -32,7 +32,8 @@ public class PlayerManager : MonoBehaviour
     {
         playerHealth -= damage;
         healthBar.fillAmount = playerHealth / 100f;
-        audioSource.PlayOneShot(playerAhhVoice, 1f);
+        //audioSource.PlayOneShot(playerAhhVoice, 1f);
+        AudioSource.PlayClipAtPoint(playerAhhVoice, gameObject.transform.position, 0.5f);
         if (playerHealth <= 0)
         {
             Die();

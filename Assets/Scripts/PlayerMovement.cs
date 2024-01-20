@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public float bobbingSpeed = 1f;
     public float bobbingAmount = 2f;
     public float midpoint = 2.0f;
-    private float timer = 0.0f;
+    //private float timer = 0.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -60,26 +60,17 @@ public class PlayerMovement : MonoBehaviour
         if (!isRunning)
         {
             controller.Move(move * walkSpeed * Time.deltaTime);
-            timer = 0;
-            Vector3 localPos = cameraTransform.localPosition;
-            localPos.y = Mathf.Lerp(localPos.y, midpoint, Time.deltaTime * bobbingSpeed);
-            cameraTransform.localPosition = localPos;
+            
         }
         else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S))
         {
             controller.Move(move * sprintSpeed * Time.deltaTime);
-            timer += bobbingSpeed * Time.deltaTime;
-            Vector3 localPos = cameraTransform.localPosition;
-            localPos.y = midpoint + Mathf.Sin(timer) * bobbingAmount;
-            cameraTransform.localPosition = localPos;
+            
         }
         else
         {
             controller.Move(move * walkSpeed * Time.deltaTime);
-            timer = 0;
-            Vector3 localPos = cameraTransform.localPosition;
-            localPos.y = Mathf.Lerp(localPos.y, midpoint, Time.deltaTime * bobbingSpeed);
-            cameraTransform.localPosition = localPos;
+            
         }
 
         // Apply gravity
