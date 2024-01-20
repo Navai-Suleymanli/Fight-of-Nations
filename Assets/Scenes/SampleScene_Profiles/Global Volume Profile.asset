@@ -1,5 +1,54 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7246278723340463621
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
+  m_Name: AmbientOcclusion
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 0
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 0.5
+  color:
+    overrideState: 1
+    value: {r: 0, g: 0, b: 0, a: 1}
+  ambientOnly:
+    overrideState: 0
+    value: 1
+  noiseFilterTolerance:
+    overrideState: 0
+    value: 0
+  blurTolerance:
+    overrideState: 0
+    value: -4.6
+  upsampleTolerance:
+    overrideState: 0
+    value: -12
+  thicknessModifier:
+    overrideState: 0
+    value: 1
+  directLightingStrength:
+    overrideState: 0
+    value: 0
+  radius:
+    overrideState: 0
+    value: 0.25
+  quality:
+    overrideState: 0
+    value: 2
 --- !u!114 &-1325804273952690530
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -55,7 +104,7 @@ MonoBehaviour:
     value: {x: 0.5, y: 0.5}
   intensity:
     overrideState: 1
-    value: 0.425
+    value: 0.44
   smoothness:
     overrideState: 0
     value: 0.2
@@ -86,10 +135,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   settings:
   - {fileID: -1325804273952690530}
-  - {fileID: 6389062974272973022}
   - {fileID: 7303573688512597335}
   - {fileID: 3110941758330207178}
   - {fileID: -1291184952683418299}
+  - {fileID: -7246278723340463621}
 --- !u!114 &3110941758330207178
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -135,32 +184,6 @@ MonoBehaviour:
     value: {fileID: 0}
     defaultState: 1
   dirtIntensity:
-    overrideState: 0
-    value: 0
---- !u!114 &6389062974272973022
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6050e2d5de785ce4d931e4dbdbf2d755, type: 3}
-  m_Name: ChromaticAberration
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 1
-  spectralLut:
-    overrideState: 0
-    value: {fileID: 0}
-    defaultState: 1
-  intensity:
-    overrideState: 1
-    value: 0.125
-  fastMode:
     overrideState: 0
     value: 0
 --- !u!114 &7303573688512597335
@@ -216,13 +239,13 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: 11
+    value: 14
   tint:
     overrideState: 1
-    value: 30
+    value: 20
   colorFilter:
     overrideState: 1
-    value: {r: 1, g: 0.950829, b: 0.86477983, a: 1}
+    value: {r: 1, g: 0.9627266, b: 0.9025157, a: 1}
   hueShift:
     overrideState: 0
     value: 0
@@ -239,13 +262,13 @@ MonoBehaviour:
     overrideState: 1
     value: 0
   mixerRedOutRedIn:
-    overrideState: 1
+    overrideState: 0
     value: 100
   mixerRedOutGreenIn:
-    overrideState: 1
+    overrideState: 0
     value: -5
   mixerRedOutBlueIn:
-    overrideState: 1
+    overrideState: 0
     value: 5
   mixerGreenOutRedIn:
     overrideState: 1
