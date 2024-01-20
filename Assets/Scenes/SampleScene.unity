@@ -3054,7 +3054,7 @@ MonoBehaviour:
   playerBreath: {fileID: 8300000, guid: 42f6f9ac46b16bc4fad48f9c4a3c7b14, type: 3}
   playerRunningBreath: {fileID: 8300000, guid: ea990ad4fac7d984b8a38eefe8c40f75, type: 3}
   bobbingSpeed: 12
-  bobbingAmount: 0.25
+  bobbingAmount: 5
   midpoint: 2
 --- !u!114 &776430300
 MonoBehaviour:
