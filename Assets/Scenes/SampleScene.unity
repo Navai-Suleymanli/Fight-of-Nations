@@ -593,8 +593,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74325838}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000033704044, y: 0.999994, z: -0.0000056503914, w: -0.0034818044}
-  m_LocalPosition: {x: -0.003, y: 0, z: -0.443}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.443}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3054,7 +3054,7 @@ MonoBehaviour:
   playerBreath: {fileID: 8300000, guid: 42f6f9ac46b16bc4fad48f9c4a3c7b14, type: 3}
   playerRunningBreath: {fileID: 8300000, guid: ea990ad4fac7d984b8a38eefe8c40f75, type: 3}
   bobbingSpeed: 12
-  bobbingAmount: 5
+  bobbingAmount: 0.25
   midpoint: 2
 --- !u!114 &776430300
 MonoBehaviour:
@@ -5527,7 +5527,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1, y: 4}
+  m_AnchoredPosition: {x: -3, y: 4}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1327437743
