@@ -28,7 +28,7 @@ public class bullet : MonoBehaviour
 
     IEnumerator DestroyBullet()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(10f);
         gameObject.SetActive(false);
         coroutineRunning = false;
     }

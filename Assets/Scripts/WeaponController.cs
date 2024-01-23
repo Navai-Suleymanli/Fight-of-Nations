@@ -68,13 +68,13 @@ public class WeaponController : MonoBehaviour
     public bool isAiming;
     Combined combined;
 
-
+    // light
+    public GameObject pointLight;
 
 
     private void Start()
     {
         InitializeAnimator();
-        FindRecoilScript();
         //FindWeaponTransform();
         audioSource = GetComponent<AudioSource>();
         combined = GetComponent<Combined>();
@@ -105,7 +105,6 @@ public class WeaponController : MonoBehaviour
         height = rect.height;
 
     }
-
     public void setImageSize()
     {
         if (width < 100 && height < 100)
@@ -115,7 +114,6 @@ public class WeaponController : MonoBehaviour
         }
 
     }
-
     public void resetImageSize()
     {
         while (height > 50f && width > 50f)
@@ -128,19 +126,22 @@ public class WeaponController : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
-
-    private void FindRecoilScript()
+    private void HandleAiming()
     {
-        Transform mainCameraTransform = transform.Find("Main Camera");
-        if (mainCameraTransform != null)
+        if (Input.GetKey(KeyCode.Mouse1))
         {
-            recoil_script = mainCameraTransform.GetComponent<RecoilAndSway>();
+            animator.SetBool("aiming", true);
+            cross.gameObject.SetActive(false);
+
         }
-        else
+
+        if (Input.GetKeyUp(KeyCode.Mouse1))
         {
-            Debug.LogError("Could not find the MainCamera GameObject.");
+            animator.SetBool("aiming", false);
+            cross.gameObject.SetActive(true);
         }
     }
+
 
     private void HandleShooting()
     {
@@ -172,24 +173,51 @@ public class WeaponController : MonoBehaviour
             //audioSource.PlayOneShot(emptyhot, 1f);
         }
     }
-
-
-
-
-    private void HandleAiming()
+    private void Shoot()
     {
-        if (Input.GetKey(KeyCode.Mouse1))
-        {
-            animator.SetBool("aiming", true);
-            cross.gameObject.SetActive(false);
+        // Prevent shooting when reloading
+        if (isReloading) return;
 
+        GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
+        if (bullet != null)
+        {
+            bullet.transform.position = weaponHead.transform.position;
+            bullet.transform.rotation = weaponHead.transform.rotation;
+            bullet.SetActive(true);
+
+            bullet.GetComponent<bullet>().InitializeBullet(launchVelocity);
+
+            GameObject currentMuzzle = Instantiate(muzzle, spawnPoint.transform.position, spawnPoint.transform.rotation);
+            currentMuzzle.transform.parent = spawnPoint;
+
+
+
+
+
+            GameObject currentBulletShell = Instantiate(bulletShell, spawnPoint2.transform.position, spawnPoint2.transform.rotation);
+            currentBulletShell.transform.parent = spawnPoint2;
+
+
+
+
+            AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
+            //audioSource.PlayOneShot(gunSound, 1f);
+            bulletCount--;
+            pointLight.gameObject.SetActive(true);
+            StartCoroutine(LightBlyat());
         }
 
-        if (Input.GetKeyUp(KeyCode.Mouse1))
-        {
-            animator.SetBool("aiming", false);
-            cross.gameObject.SetActive(true);
-        }
+        ProcessRaycast();
+        combined.TriggerRecoil();
+        //animator.SetBool("shooting", true);
+        setImageSize();
+
+    }
+
+    IEnumerator LightBlyat()
+    {
+        yield return new WaitForSeconds(0.1f);
+        pointLight.gameObject.SetActive(false);
     }
 
     private void HandleReloading()
@@ -229,47 +257,6 @@ public class WeaponController : MonoBehaviour
             Reload();
         }
     }
-
-    private void Shoot()
-    {
-        // Prevent shooting when reloading
-        if (isReloading) return;
-
-        GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
-        if (bullet != null)
-        {
-            bullet.transform.position = weaponHead.transform.position;
-            bullet.transform.rotation = weaponHead.transform.rotation;
-            bullet.SetActive(true);
-
-            bullet.GetComponent<bullet>().InitializeBullet(launchVelocity);
-
-            GameObject currentMuzzle = Instantiate(muzzle, spawnPoint.transform.position, spawnPoint.transform.rotation);
-            currentMuzzle.transform.parent = spawnPoint;
-
-
-
-
-
-            GameObject currentBulletShell = Instantiate(bulletShell, spawnPoint2.transform.position, spawnPoint2.transform.rotation);
-            currentBulletShell.transform.parent = spawnPoint2;
-
-
-
-
-            AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
-            //audioSource.PlayOneShot(gunSound, 1f);
-            bulletCount--;
-        }
-
-        ProcessRaycast();
-        recoil_script.recoilFire();
-        combined.TriggerRecoil();
-        //animator.SetBool("shooting", true);
-        setImageSize();
-
-    }
-
     private void Reload()
     {
 
@@ -283,23 +270,6 @@ public class WeaponController : MonoBehaviour
             AudioSource.PlayClipAtPoint(reloadSound, gameObject.transform.position, 0.05f);
         }
     }
-
-    /* private void Empty()
-     {
-         if(bulletCount <= 0 && Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && isEmpty == true && !isReloading && !isAiming)
-         {
-             animator.SetBool("empty", true );
-             StartCoroutine(empty());    
-         }
-     }
-
-     // ienumarator for empty:
-     IEnumerator empty()
-     {
-         yield return new WaitForSeconds(0.5f);
-         animator.SetBool("empty", false);
-     }
-    */
     IEnumerator reload()
     {
         yield return new WaitForSeconds(2.7f);
@@ -308,9 +278,6 @@ public class WeaponController : MonoBehaviour
         isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
-
-
-
 
 
     private void ProcessRaycast()
@@ -345,7 +312,6 @@ public class WeaponController : MonoBehaviour
             }
         }
     }
-
     private void ShowXHitEffectAtPosition(Vector3 worldPosition)
     {
         Vector2 screenPosition = mainCamera.WorldToScreenPoint(worldPosition);
@@ -357,7 +323,6 @@ public class WeaponController : MonoBehaviour
         // Optionally, you can start a coroutine to hide this effect after some time
         StartCoroutine(HideXHitEffect());
     }
-
     IEnumerator HideXHitEffect()
     {
         yield return new WaitForSeconds(0.2f); // Duration for which the effect is shown, adjust as needed

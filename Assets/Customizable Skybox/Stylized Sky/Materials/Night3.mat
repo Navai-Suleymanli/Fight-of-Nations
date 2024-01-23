@@ -2,37 +2,43 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Night3
   m_Shader: {fileID: 4800000, guid: eb3c6fb598ded4c71b8968e1c40a3b4d, type: 3}
-  m_ShaderKeywords: 
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
+    m_Ints: []
     m_Floats:
-    - _HorizonLineContribution: 0
-    - _HorizonLineExponent: 1
-    - _SkyGradientExponent: 2.5
+    - _HorizonLineContribution: 0.34
+    - _HorizonLineExponent: 17.7
+    - _SkyGradientExponent: 0.28
     - _SunDiscContribution: 1
     - _SunDiscExponent: 250000
     - _SunDiscMultiplier: 500
-    - _SunHaloContribution: 0.5
-    - _SunHaloExponent: 50
+    - _SunHaloContribution: 0.82
+    - _SunHaloExponent: 53.7
     - _Title: 0
     - __dirty: 0
     m_Colors:
-    - _HorizonLineColor: {r: 0, g: 0, b: 0, a: 1}
-    - _SkyGradientBottom: {r: 0.3803922, g: 0.47450984, b: 0.6156863, a: 1}
-    - _SkyGradientTop: {r: 0.1137255, g: 0.1764706, b: 0.26666668, a: 1}
-    - _SunDiscColor: {r: 0.6286764, g: 0.7428499, b: 0.83823526, a: 1}
-    - _SunHaloColor: {r: 0.4900519, g: 0.5582597, b: 0.75735295, a: 1}
+    - _HorizonLineColor: {r: 0.23529412, g: 0.023529412, b: 0.21176471, a: 1}
+    - _SkyGradientBottom: {r: 0.08235294, g: 0.15294118, b: 0.24705882, a: 1}
+    - _SkyGradientTop: {r: 0.17254902, g: 0.27058825, b: 0.43137255, a: 1}
+    - _SunDiscColor: {r: 0.9528302, g: 0.56330836, b: 0.8829877, a: 1}
+    - _SunHaloColor: {r: 0.109706864, g: 0.4056604, b: 0.32061625, a: 1}
+  m_BuildTextureStacks: []

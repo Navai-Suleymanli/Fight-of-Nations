@@ -163,7 +163,7 @@ MonoBehaviour:
     value: 0.8
   softKnee:
     overrideState: 1
-    value: 0.5
+    value: 0.6
   clamp:
     overrideState: 0
     value: 65472
@@ -245,7 +245,7 @@ MonoBehaviour:
     value: 20
   colorFilter:
     overrideState: 1
-    value: {r: 1, g: 1, b: 1, a: 1}
+    value: {r: 1, g: 0.8962642, b: 0.80817604, a: 1}
   hueShift:
     overrideState: 0
     value: 0
