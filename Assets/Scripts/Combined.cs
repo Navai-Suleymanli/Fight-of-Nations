@@ -116,7 +116,7 @@ public class Combined : MonoBehaviour
     {
         Debug.Log("Recoil Triggered");
         shouldApplyRecoil = true;
-        float aimMultiplier = Input.GetMouseButton(1) ? 0.5f : 1.0f; // Halves recoil when aiming
+        float aimMultiplier = Input.GetMouseButton(1) ? 0.6f : 1.0f; // Halves recoil when aiming
         targetRotation = new Vector3(-recoilX * aimMultiplier, Random.Range(-recoilY, recoilY) * aimMultiplier, Random.Range(-recoilZ, recoilZ) * aimMultiplier);
     }
 

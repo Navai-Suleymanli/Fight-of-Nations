@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 516130141114516860}
   - component: {fileID: 3342331409838963985}
   - component: {fileID: 4556022945094317828}
-  - component: {fileID: 8285349657393364646}
   - component: {fileID: 5689396428739415333}
   - component: {fileID: 2953581823953916018}
+  - component: {fileID: 6741181572008425048}
   m_Layer: 0
   m_Name: Bullet_Trail_FX 1
   m_TagString: Untagged
@@ -122,7 +122,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 936ea0c6c913ea849a449eddce2502ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &8285349657393364646
+--- !u!65 &5689396428739415333
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531505928297238165}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Size: {x: 0.01, y: 0.01, z: 1.2840053}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2953581823953916018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6531505928297238165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9fc8806c831e70418e4b369dc627d11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cullDistance: 3
+--- !u!54 &6741181572008425048
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -149,40 +183,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!65 &5689396428739415333
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6531505928297238165}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.01, y: 0.01, z: 1.2840053}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2953581823953916018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6531505928297238165}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9fc8806c831e70418e4b369dc627d11, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cullDistance: 3
 --- !u!1 &8829899741229423020
 GameObject:
   m_ObjectHideFlags: 0
