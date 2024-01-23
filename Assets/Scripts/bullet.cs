@@ -24,7 +24,6 @@ public class bullet : MonoBehaviour
 
         GetComponent<Rigidbody>().velocity = Vector3.zero; // Reset velocity if reusing bullets
         GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, launchVelocity));
-
     }
 
     IEnumerator DestroyBullet()

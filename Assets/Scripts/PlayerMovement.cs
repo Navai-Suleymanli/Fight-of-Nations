@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         // Check ground status and reset vertical velocity
         if (controller.isGrounded && verticalVelocity < 0)
