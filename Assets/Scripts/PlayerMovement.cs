@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     public float bobbingSpeed = 1f;
     public float bobbingAmount = 2f;
     public float midpoint = 2.0f;
+    public bool pressedAtTheSameTime = false;
     //private float timer = 0.0f;
 
     // Start is called before the first frame update
@@ -39,6 +40,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if((Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)))
+        {
+            pressedAtTheSameTime = true;
+        }
+        else
+        {
+            pressedAtTheSameTime = false;
+        }
         // Check ground status and reset vertical velocity
         if (controller.isGrounded && verticalVelocity < 0)
         {
@@ -57,20 +66,24 @@ public class PlayerMovement : MonoBehaviour
         move = transform.right * x + transform.forward * z;
 
         // Handle player movement
-        if (!isRunning)
+        if (!isRunning && !pressedAtTheSameTime)
         {
             controller.Move(move * walkSpeed * Time.deltaTime);
             
         }
-        else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S))
+        else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S) && !pressedAtTheSameTime)
         {
             controller.Move(move * sprintSpeed * Time.deltaTime);
             
         }
         else
         {
-            controller.Move(move * walkSpeed * Time.deltaTime);
-            
+            if(!pressedAtTheSameTime)
+            {
+                controller.Move(move * walkSpeed * Time.deltaTime);
+
+            }
+
         }
 
         // Apply gravity

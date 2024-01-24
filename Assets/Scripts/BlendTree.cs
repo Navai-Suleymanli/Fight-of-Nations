@@ -19,10 +19,12 @@ public class BlendTree : MonoBehaviour
     private int velocityXHash; // To control the horizontal value of the blend tree.
     private float velocityZ = 0.0f;
     private float velocityX = 0.0f;
-
+    PlayerMovement movement;
+    public bool pressedAtTheSameTime = false;
 
     private void InitializeAnimator()
     {
+        movement = GetComponent<PlayerMovement>();
         animator = GetComponent<Animator>(); // Get the Animator component attached to the game object.
         velocityZHash = Animator.StringToHash("vertical"); // Get the hash code for the "vertical" parameter.
         velocityXHash = Animator.StringToHash("horizontal"); //get the hash code for the horizontal parameter of the blend tree
@@ -32,38 +34,45 @@ public class BlendTree : MonoBehaviour
 
     private void UpdateVelocity(bool forwardPressed, bool runPressed, bool backPressed, float currentMaxVelocity, bool aimPressed, bool canNotShoot)  // add bool canNotShoot
     {
-        // Check if running
-        if (forwardPressed && runPressed && velocityZ < maxRunVelocity)
+        if (!pressedAtTheSameTime)
         {
-            velocityZ += Time.deltaTime * acceleration;
-        }
-        else if (forwardPressed && !runPressed && velocityZ < maxWalkVelocity)
-        {
-            velocityZ += Time.deltaTime * acceleration; // Accelerate forward at walking speed.
-        }
+            // Check if running
+            if (forwardPressed && runPressed && velocityZ < maxRunVelocity && !Input.GetKey(KeyCode.A) && ! Input.GetKey(KeyCode.D))
+            {
+                velocityZ += Time.deltaTime * acceleration;
+            }
+            else if (forwardPressed && !runPressed && velocityZ < maxWalkVelocity)
+            {
+                velocityZ += Time.deltaTime * acceleration; // Accelerate forward at walking speed.
+            }
 
-        if (backPressed && velocityZ > -currentMaxVelocity)
-        {
-            velocityZ -= Time.deltaTime * acceleration; // Accelerate backward.
-        }
+            if (backPressed && velocityZ > -maxWalkVelocity)
+            {
+                velocityZ -= Time.deltaTime * acceleration; // Accelerate backward.
+            }
 
-        if (aimPressed && velocityX < maxAimValue /*&& !canNotShoot*/)
-        {
-            velocityX += Time.deltaTime * aimAccelertion;
-        }
-        if ((!aimPressed && velocityX > 0.0f) /* || canNotShoot*/)
-        {
-            velocityX -= Time.deltaTime * aimDeceleration;
-        }
+            if (aimPressed && velocityX < maxAimValue /*&& !canNotShoot*/)
+            {
+                velocityX += Time.deltaTime * aimAccelertion;
+            }
+            if ((!aimPressed && velocityX > 0.0f) /* || canNotShoot*/)
+            {
+                velocityX -= Time.deltaTime * aimDeceleration;
+            }
 
 
-        if (!forwardPressed && velocityZ > 0.0f)
-        {
-            velocityZ -= Time.deltaTime * deceleration; // Decelerate forward.
+            if (!forwardPressed && velocityZ > 0.0f)
+            {
+                velocityZ -= Time.deltaTime * deceleration; // Decelerate forward.
+            }
+            if (!backPressed && velocityZ < 0.0f)
+            {
+                velocityZ += Time.deltaTime * deceleration; // Decelerate backward.
+            }
         }
-        if (!backPressed && velocityZ < 0.0f)
+        if (pressedAtTheSameTime)
         {
-            velocityZ += Time.deltaTime * deceleration; // Decelerate backward.
+            velocityZ -= Time.deltaTime * deceleration;
         }
 
 
@@ -83,7 +92,7 @@ public class BlendTree : MonoBehaviour
         {
             velocityX -= Time.deltaTime * aimDeceleration;
         }
-        if(velocityX < 0.0f)
+        if (velocityX < 0.0f)
         {
             velocityX = 0.0f;
         }
@@ -114,6 +123,12 @@ public class BlendTree : MonoBehaviour
                 velocityZ = -currentMaxVelocity; // Limit the backward velocity to the maximum.
             }
         }
+        if (pressedAtTheSameTime && velocityZ <0.0f)
+        {
+            velocityZ = 0.0f;
+        }
+        
+
     }
 
     // Start is called before the first frame update
@@ -127,7 +142,17 @@ public class BlendTree : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if ((Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)))
+        {
+            pressedAtTheSameTime = true;
+        }
+        else
+        {
+            pressedAtTheSameTime = false;
+        }
+
         bool forwardPressed = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A); // Check if the forward key is pressed.
+        bool sidePressed = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.A);
         bool backPressed = Input.GetKey(KeyCode.S); // Check if the backward key is pressed.
 
         bool aimPressed = Input.GetKey(KeyCode.Mouse1); //Check is right mouse button is pressed
@@ -143,7 +168,10 @@ public class BlendTree : MonoBehaviour
 
 
         float currentMaxVelocity = runPressed && !aiming ? maxRunVelocity : maxWalkVelocity; // Determine the maximum velocity based on whether the run key is pressed or not
+        
         UpdateVelocity(forwardPressed, runPressed, backPressed, currentMaxVelocity, aimPressed, canNotShoot); // Update the current velocity based on input.
+        
+        
         LockOrResetVelocity(forwardPressed, runPressed, backPressed, currentMaxVelocity, aimPressed, canNotShoot); // Lock or reset the velocity based on input.
 
         UpdateAnimator(); // Update the animator parameters based on the current velocity.
