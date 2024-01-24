@@ -49,6 +49,12 @@ public class GameManager : MonoBehaviour
         GUI.Label(new Rect(5, 5, 100, 25), fps.ToString("F2") + "FPS", textStyle);
     }
 
+    public void LoadWarSelection()
+    {
+        SceneManager.LoadScene("WarSelection");
+
+    }
+
     public void LoadGame()
     {
         SceneManager.LoadScene("SampleScene");
