@@ -18,7 +18,7 @@ public class BlendTree : MonoBehaviour
     private int velocityZHash; // To control the vertical value of the blend tree.
     private int velocityXHash; // To control the horizontal value of the blend tree.
     private float velocityZ = 0.0f;
-    private float velocityX = 0.0f;     
+    private float velocityX = 0.0f;
 
 
     private void InitializeAnimator()
