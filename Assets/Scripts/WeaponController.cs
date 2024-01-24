@@ -18,12 +18,12 @@ public class WeaponController : MonoBehaviour
     private Animator animator;
     private RecoilAndSway recoil_script;
 
-    // ates effecti
+    // shooting effects
     public Transform spawnPoint;
     public GameObject muzzle;
     public GameObject blood;
 
-    // gulle gilizleri
+    // bullet gilizleri
     [SerializeField] GameObject bulletShell;
     [SerializeField] Transform spawnPoint2;
 
@@ -155,11 +155,11 @@ public class WeaponController : MonoBehaviour
             animator.SetBool("shooting", true);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
+        /*if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
         {
             Shoot();
             animator.SetBool("shooting", true);
-        }
+        }*/
         else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
         {
             animator.SetBool("shooting", false);
@@ -179,7 +179,7 @@ public class WeaponController : MonoBehaviour
         if (isReloading) return;
 
         GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
-        if (bullet != null)
+        if (bullet != null && bulletCount>0)
         {
             bullet.transform.position = weaponHead.transform.position;
             bullet.transform.rotation = weaponHead.transform.rotation;
@@ -205,10 +205,11 @@ public class WeaponController : MonoBehaviour
             bulletCount--;
             pointLight.gameObject.SetActive(true);
             StartCoroutine(LightBlyat());
+            combined.TriggerRecoil();
         }
 
         ProcessRaycast();
-        combined.TriggerRecoil();
+        
         //animator.SetBool("shooting", true);
         setImageSize();
 
@@ -225,9 +226,9 @@ public class WeaponController : MonoBehaviour
         if (bulletCount == 0)
         {
             isEmpty = true;
-            animator.SetBool("shooting", false);
+            //animator.SetBool("shooting", false);
             Debug.Log("bullet finished!!!");
-
+            StartCoroutine(NotStopShootingWhenOne()); ;
             bullet3.color = new Color(255, 255, 255, 0.5f);
             bullet2.color = new Color(255, 255, 255, 0.5f);
             bullet1.color = new Color(255, 255, 255, 0.5f);
@@ -256,6 +257,12 @@ public class WeaponController : MonoBehaviour
             animator.SetBool("shooting", false);
             Reload();
         }
+    }
+
+    IEnumerator NotStopShootingWhenOne() 
+    {
+        yield return new WaitForSeconds(1f);
+        animator.SetBool("shooting", false);
     }
     private void Reload()
     {
