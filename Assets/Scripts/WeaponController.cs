@@ -64,6 +64,19 @@ public class WeaponController : MonoBehaviour
     [SerializeField] bool isSprinting;
     [SerializeField] bool isMoving;
 
+    [SerializeField] bool Sniper;
+    [SerializeField] bool AK47;
+
+
+    [Header("Weapons")]
+
+    public GameObject AKM;
+    public GameObject SniperRifle;
+
+
+
+
+
     // empty code:
     public bool isAiming;
     Combined combined;
@@ -95,7 +108,27 @@ public class WeaponController : MonoBehaviour
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
 
         bulletCountText.text = bulletCount.ToString() + "/30";
-        
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            Sniper = true;
+            AK47 = false;
+            AKM.SetActive(false);
+            SniperRifle.SetActive(true);   
+            animator.SetBool("Sniper", true);
+            animator.SetBool("AK47", false);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            Sniper = false;
+            AK47 = true;
+            animator.SetBool("Sniper", false);
+            animator.SetBool("AK47", true);
+            AKM.SetActive(true);
+            SniperRifle.SetActive(false);
+        }
+
     }
 
     public void getImageSize()

@@ -3234,6 +3234,10 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
   isSprinting: 0
   isMoving: 0
+  Sniper: 0
+  AK47: 0
+  AKM: {fileID: 700387855180504898}
+  SniperRifle: {fileID: 2675226658666308483}
   isAiming: 0
   pointLight: {fileID: 996512973}
 --- !u!114 &776430304
