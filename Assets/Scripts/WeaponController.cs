@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class WeaponController : MonoBehaviour
 {
@@ -11,21 +12,26 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float shootRange = 200;
     [SerializeField] float impact = 30.0f;
     [SerializeField] float fireRate = 19f;
+    [SerializeField] float fireRateSniper = 5f;
     [SerializeField] float launchVelocity = 2000f;
 
     public GameObject impactEffect;
     public GameObject weaponHead;
+    public GameObject sniperHead;
     private Animator animator;
     private RecoilAndSway recoil_script;
 
     // shooting effects
     public Transform spawnPoint;
+    public Transform sniperSpawnPoint;
     public GameObject muzzle;
+    [SerializeField] GameObject[] muzzles;
     public GameObject blood;
 
     // bullet gilizleri
     [SerializeField] GameObject bulletShell;
     [SerializeField] Transform spawnPoint2;
+    public Transform sniperSpawnPoint2;
 
     //rotation
     [Header("Weapon Rotation")]
@@ -64,8 +70,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] bool isSprinting;
     [SerializeField] bool isMoving;
 
-    [SerializeField] bool Sniper;
-    [SerializeField] bool AK47;
+    public  bool Sniper =false;
+    [SerializeField] bool AK47 = true;
 
 
     [Header("Weapons")]
@@ -83,6 +89,7 @@ public class WeaponController : MonoBehaviour
 
     // light
     public GameObject pointLight;
+    public GameObject pointLightSniper;
 
 
     private void Start()
@@ -118,6 +125,13 @@ public class WeaponController : MonoBehaviour
             SniperRifle.SetActive(true);   
             animator.SetBool("Sniper", true);
             animator.SetBool("AK47", false);
+            muzzles = GameObject.FindGameObjectsWithTag("Effects");
+   
+            for (int i = 0; i < muzzles.Length; i++)
+            {
+                Destroy(muzzles[i]);
+                //muzzles[i].(false);
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -127,6 +141,12 @@ public class WeaponController : MonoBehaviour
             animator.SetBool("AK47", true);
             AKM.SetActive(true);
             SniperRifle.SetActive(false);
+            muzzles = GameObject.FindGameObjectsWithTag("Effects");
+            for (int i = 0; i < muzzles.Length; i++)
+            {
+                //muzzles[i].SetActive(false);
+                Destroy(muzzles[i]);
+            }
         }
 
     }
@@ -178,73 +198,150 @@ public class WeaponController : MonoBehaviour
 
     private void HandleShooting()
     {
-        // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
-        bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
-
-        if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
+        if (AK47)
         {
-            nextTimeToShoot = Time.time + 1f / fireRate;
-            Shoot();
-            animator.SetBool("shooting", true);
+            // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
+            bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
+
+            if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
+            {
+                nextTimeToShoot = Time.time + 1f / fireRate;
+                Shoot();
+                animator.SetBool("shooting", true);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
+            {
+                Shoot();
+                animator.SetBool("shooting", true);
+            }
+            else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
+            {
+                animator.SetBool("shooting", false);
+                combined.Dayandir();
+                resetImageSize();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
+            {
+                AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
+                //audioSource.PlayOneShot(emptyhot, 1f);
+            }
         }
+        else if (Sniper)
+        {
+            // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
+            bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
 
-        /*if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
-        {
-            Shoot();
-            animator.SetBool("shooting", true);
-        }*/
-        else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
-        {
-            animator.SetBool("shooting", false);
-            combined.Dayandir();
-            resetImageSize();
-        }
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
+            {
+                nextTimeToShoot = Time.time + 1f / fireRateSniper;
+                Shoot();
+                StartCoroutine(StopRecoil());
+                animator.SetBool("shooting", true);
+            }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
-        {
-            AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
-            //audioSource.PlayOneShot(emptyhot, 1f);
+            if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
+            {
+                Shoot();
+                animator.SetBool("shooting", true);
+            }
+            else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
+            {
+                animator.SetBool("shooting", false);
+                combined.Dayandir();
+                resetImageSize();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
+            {
+                AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
+                //audioSource.PlayOneShot(emptyhot, 1f);
+            }
         }
     }
     private void Shoot()
     {
-        // Prevent shooting when reloading
-        if (isReloading) return;
-
-        GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
-        if (bullet != null && bulletCount>0)
+        if (AK47 && !Sniper)
         {
-            bullet.transform.position = weaponHead.transform.position;
-            bullet.transform.rotation = weaponHead.transform.rotation;
-            bullet.SetActive(true);
+            // Prevent shooting when reloading
+            if (isReloading) return;
 
-            bullet.GetComponent<bullet>().InitializeBullet(launchVelocity);
+            GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
+            if (bullet != null && bulletCount > 0)
+            {
+                bullet.transform.position = weaponHead.transform.position;
+                bullet.transform.rotation = weaponHead.transform.rotation;
+                bullet.SetActive(true);
 
-            GameObject currentMuzzle = Instantiate(muzzle, spawnPoint.transform.position, spawnPoint.transform.rotation);
-            currentMuzzle.transform.parent = spawnPoint;
+                bullet.GetComponent<bullet>().InitializeBullet(launchVelocity);
 
-
-
-
-
-            GameObject currentBulletShell = Instantiate(bulletShell, spawnPoint2.transform.position, spawnPoint2.transform.rotation);
-            currentBulletShell.transform.parent = spawnPoint2;
-
+                GameObject currentMuzzle = Instantiate(muzzle, spawnPoint.transform.position, spawnPoint.transform.rotation);
+                currentMuzzle.transform.parent = spawnPoint;
 
 
 
-            AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
-            //audioSource.PlayOneShot(gunSound, 1f);
-            bulletCount--;
-            pointLight.gameObject.SetActive(true);
-            StartCoroutine(LightBlyat());
-            combined.TriggerRecoil();
+
+
+                GameObject currentBulletShell = Instantiate(bulletShell, spawnPoint2.transform.position, spawnPoint2.transform.rotation);
+                currentBulletShell.transform.parent = spawnPoint2;
+
+
+
+
+                AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
+                //audioSource.PlayOneShot(gunSound, 1f);
+                bulletCount--;
+                pointLight.gameObject.SetActive(true);
+                StartCoroutine(LightBlyat());
+                combined.TriggerRecoil();
+            }
+
+            ProcessRaycast();
+
+            //animator.SetBool("shooting", true);
+            setImageSize();
         }
+        else if (Sniper && !AK47)
+        {
+            // Prevent shooting when reloading
+            if (isReloading) return;
 
-        ProcessRaycast();
+            GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
+            if (bullet != null && bulletCount > 0)
+            {
+                bullet.transform.position = sniperHead.transform.position;
+                bullet.transform.rotation = sniperHead.transform.rotation;
+                bullet.SetActive(true);
+
+                bullet.GetComponent<bullet>().InitializeBullet(launchVelocity);
+
+                GameObject currentMuzzle = Instantiate(muzzle, sniperSpawnPoint.transform.position, sniperSpawnPoint.transform.rotation);
+                currentMuzzle.transform.parent = sniperSpawnPoint;
+
+
+
+
+
+                GameObject currentBulletShell = Instantiate(bulletShell, sniperSpawnPoint2.transform.position, sniperSpawnPoint2.transform.rotation);
+                currentBulletShell.transform.parent = sniperSpawnPoint2;
+
+
+
+
+                AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
+                //audioSource.PlayOneShot(gunSound, 1f);
+                bulletCount--;
+                pointLightSniper.gameObject.SetActive(true);
+                StartCoroutine(LightBlyatSniper());
+                combined.TriggerRecoil();
+            }
+
+            ProcessRaycast();
+
+            setImageSize();
+        }
         
-        //animator.SetBool("shooting", true);
-        setImageSize();
 
     }
 
@@ -254,6 +351,11 @@ public class WeaponController : MonoBehaviour
         pointLight.gameObject.SetActive(false);
     }
 
+    IEnumerator LightBlyatSniper()
+    {
+        yield return new WaitForSeconds(0.1f);
+        pointLightSniper.gameObject.SetActive(false);
+    }
     private void HandleReloading()
     {
         if (bulletCount == 0)
@@ -292,6 +394,12 @@ public class WeaponController : MonoBehaviour
         }
     }
 
+    IEnumerator StopRecoil()
+    {
+        yield return new WaitForSeconds(0.1f);
+        combined.Dayandir();
+    }
+
     IEnumerator NotStopShootingWhenOne() 
     {
         yield return new WaitForSeconds(1f);
@@ -322,32 +430,67 @@ public class WeaponController : MonoBehaviour
 
     private void ProcessRaycast()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(weaponHead.transform.position, weaponHead.transform.forward, out hit, shootRange))
+       if (AK47)
         {
-            // ... existing code ...
-            Debug.Log(hit.transform.tag);
-            if (hit.rigidbody != null)
+            RaycastHit hit;
+            if (Physics.Raycast(weaponHead.transform.position, weaponHead.transform.forward, out hit, shootRange))
             {
-                hit.rigidbody.AddForce(-hit.normal * impact);
-            }
-
-            GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            
-            Destroy(impactGO, 2f);
-
-            // Check if hit an enemy
-            if (hit.transform.CompareTag("Enemy")) // Ensure your enemy GameObjects have the tag "Enemy"
-            {
-                Enemy enemy = hit.transform.GetComponent<Enemy>();
-                if (enemy != null)
+                // ... existing code ...
+                Debug.Log(hit.transform.tag);
+                if (hit.rigidbody != null)
                 {
-                    enemy.TakeDamage(20); // Decrease health by 20
-                    GameObject bloodGo = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
+                    hit.rigidbody.AddForce(-hit.normal * impact);
+                }
 
-                    Destroy(bloodGo, 1f);
-                    // Convert the hit point to a screen position and show the X hit effect
-                    ShowXHitEffectAtPosition(hit.point);
+                GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+
+                Destroy(impactGO, 2f);
+
+                // Check if hit an enemy
+                if (hit.transform.CompareTag("Enemy")) // Ensure your enemy GameObjects have the tag "Enemy"
+                {
+                    Enemy enemy = hit.transform.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(20); // Decrease health by 20
+                        GameObject bloodGo = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
+
+                        Destroy(bloodGo, 1f);
+                        // Convert the hit point to a screen position and show the X hit effect
+                        ShowXHitEffectAtPosition(hit.point);
+                    }
+                }
+            }
+        }
+       else if (Sniper)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(sniperHead.transform.position, sniperHead.transform.forward, out hit, shootRange))
+            {
+                // ... existing code ...
+                Debug.Log(hit.transform.tag);
+                if (hit.rigidbody != null)
+                {
+                    hit.rigidbody.AddForce(-hit.normal * impact);
+                }
+
+                GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+
+                Destroy(impactGO, 2f);
+
+                // Check if hit an enemy
+                if (hit.transform.CompareTag("Enemy")) // Ensure your enemy GameObjects have the tag "Enemy"
+                {
+                    Enemy enemy = hit.transform.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(20); // Decrease health by 20
+                        GameObject bloodGo = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
+
+                        Destroy(bloodGo, 1f);
+                        // Convert the hit point to a screen position and show the X hit effect
+                        ShowXHitEffectAtPosition(hit.point);
+                    }
                 }
             }
         }

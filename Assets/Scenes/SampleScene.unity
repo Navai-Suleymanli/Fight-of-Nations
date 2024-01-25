@@ -1390,7 +1390,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 269901656}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: weaponHead Sniper
   m_TagString: WeaponHead
   m_Icon: {fileID: 0}
@@ -2342,7 +2342,7 @@ GameObject:
   - component: {fileID: 633976296}
   - component: {fileID: 633976295}
   - component: {fileID: 633976294}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3207,17 +3207,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2bab05a81d07d34aa918a7da0125251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shootRange: 1000
+  shootRange: 2000
   impact: 30
   fireRate: 15
   launchVelocity: 2000
   impactEffect: {fileID: 100002, guid: f75efcef4bb42054abf94f8e5c701adc, type: 3}
-  weaponHead: {fileID: 269901655}
+  weaponHead: {fileID: 74325838}
+  sniperHead: {fileID: 269901655}
   spawnPoint: {fileID: 74325839}
+  sniperSpawnPoint: {fileID: 1504345917}
   muzzle: {fileID: 157586, guid: 2574ca206a571a342a7fab69fdfb87aa, type: 3}
   blood: {fileID: 3548588485384254792, guid: 2f9e7dc163581394da1e00b561eed65d, type: 3}
   bulletShell: {fileID: 131604, guid: 8698f59a8ea9a0c449a001968fa1db7f, type: 3}
   spawnPoint2: {fileID: 507285335}
+  sniperSpawnPoint2: {fileID: 1068000375}
   weaponTransform: {fileID: 700387855180989282}
   cross: {fileID: 1327437743}
   mainCamera: {fileID: 963194227}
@@ -3235,11 +3238,12 @@ MonoBehaviour:
   isSprinting: 0
   isMoving: 0
   Sniper: 0
-  AK47: 0
+  AK47: 1
   AKM: {fileID: 700387855180504898}
   SniperRifle: {fileID: 2675226658666308483}
   isAiming: 0
   pointLight: {fileID: 996512973}
+  pointLightSniper: {fileID: 1764692384}
 --- !u!114 &776430304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4625,6 +4629,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCount: 0
+--- !u!1 &1068000374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1068000375}
+  m_Layer: 6
+  m_Name: SniperSpawnPoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1068000375
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1068000374}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.28110245, y: 0.6502986, z: 0.28285974, w: 0.64659387}
+  m_LocalPosition: {x: 0.0001, y: 0.0579, z: 0.236}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2677922157304221627}
+  m_LocalEulerAnglesHint: {x: -47.004, y: 90.32, z: 0.016}
 --- !u!1 &1068389629
 GameObject:
   m_ObjectHideFlags: 0
@@ -6602,6 +6637,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500283786}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1504345916
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1504345917}
+  m_Layer: 6
+  m_Name: sniperSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1504345917
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1504345916}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0463, z: 1.153}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2677922157304221627}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1504749784
 GameObject:
   m_ObjectHideFlags: 0
@@ -8390,6 +8456,100 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755736005}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1764692384
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1764692385}
+  - component: {fileID: 1764692386}
+  m_Layer: 6
+  m_Name: Point Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1764692385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764692384}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.0435, z: 1.1613}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2677922157304221627}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &1764692386
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1764692384}
+  m_Enabled: 1
+  serializedVersion: 10
+  m_Type: 2
+  m_Shape: 0
+  m_Color: {r: 1, g: 0.94087356, b: 0.56289303, a: 1}
+  m_Intensity: 2
+  m_Range: 10
+  m_SpotAngle: 30
+  m_InnerSpotAngle: 21.80208
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 2
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
 --- !u!1 &1767574448
 GameObject:
   m_ObjectHideFlags: 0
@@ -10312,7 +10472,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &700387855180504900
 GameObject:
   m_ObjectHideFlags: 0
@@ -10741,13 +10901,13 @@ GameObject:
   - component: {fileID: 2692695054846766143}
   - component: {fileID: 2698338235380566327}
   - component: {fileID: 2721195132027718457}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SM_Wep_Sniper_Lite_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &2675711890829437813
 GameObject:
   m_ObjectHideFlags: 0
@@ -10759,7 +10919,7 @@ GameObject:
   - component: {fileID: 2681728706064822909}
   - component: {fileID: 2689127946512566237}
   - component: {fileID: 2699183447872274401}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SM_Wep_Sniper_Lite_Flash_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10777,7 +10937,7 @@ GameObject:
   - component: {fileID: 2681554030123677975}
   - component: {fileID: 2692607472136933065}
   - component: {fileID: 2698978912073528131}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SM_Wep_Sniper_Lite_Scope_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10795,7 +10955,7 @@ GameObject:
   - component: {fileID: 2681794757954926145}
   - component: {fileID: 2688772813777167629}
   - component: {fileID: 2699260152358694217}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SM_Wep_Sniper_Lite_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10813,7 +10973,7 @@ GameObject:
   - component: {fileID: 2677618632093901511}
   - component: {fileID: 2692758273392393361}
   - component: {fileID: 2699163961620325529}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SM_Wep_Sniper_Lite_Mag_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10831,7 +10991,7 @@ GameObject:
   - component: {fileID: 2681343928363314937}
   - component: {fileID: 2692856625279802477}
   - component: {fileID: 2699847796370055233}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SM_Wep_Sniper_Lite_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10873,6 +11033,9 @@ Transform:
   - {fileID: 2681343928363314937}
   - {fileID: 269901656}
   - {fileID: 7374154728215035149}
+  - {fileID: 1504345917}
+  - {fileID: 1068000375}
+  - {fileID: 1764692385}
   m_Father: {fileID: 1354499288}
   m_LocalEulerAnglesHint: {x: -0.4, y: -1.35, z: -0.1}
 --- !u!4 &2681343928363314937
@@ -11268,7 +11431,7 @@ GameObject:
   - component: {fileID: 6340448146156709034}
   - component: {fileID: 617975665990856979}
   - component: {fileID: 967743095392242143}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: CrosshairTex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11600,7 +11763,7 @@ GameObject:
   - component: {fileID: 2163193270196498514}
   - component: {fileID: 967884574873724231}
   - component: {fileID: 2068379498579578446}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Glass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11616,7 +11779,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7374154728215035149}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: SniperScopeRealisticLens
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11687,15 +11850,15 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
-  far clip plane: 1000
+  near clip plane: 2
+  far clip plane: 2000
   field of view: 5
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4031
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: b5e5f16c863c54d4ba865692c1cb13cb, type: 2}
   m_TargetDisplay: 0
@@ -11716,7 +11879,7 @@ Transform:
   m_GameObject: {fileID: 9083801313521767369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.09, z: -0.653}
+  m_LocalPosition: {x: 0, y: 0, z: -0.678}
   m_LocalScale: {x: 0.75000006, y: 0.75, z: 0.7500002}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11733,7 +11896,7 @@ GameObject:
   - component: {fileID: 8973090253191164782}
   - component: {fileID: 7958157859746809839}
   - component: {fileID: 2903754751605948545}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}

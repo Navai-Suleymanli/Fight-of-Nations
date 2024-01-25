@@ -1,4 +1,5 @@
 using System.Security.Cryptography;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Combined : MonoBehaviour
@@ -12,6 +13,7 @@ public class Combined : MonoBehaviour
 
     public Light spotLight;
     public GameObject gun;
+    WeaponController wc;
 
     private Vector3 currentRotation, targetRotation;
     private Vector3 initialGunPosition;
@@ -29,6 +31,7 @@ public class Combined : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         initialGunPosition = gun.transform.localPosition;
         originalCameraRotation = cam.transform.localRotation.eulerAngles; // Store the original camera rotation
+        wc = GetComponent<WeaponController>();  
     }
 
     void Update()
@@ -66,12 +69,13 @@ public class Combined : MonoBehaviour
     void ApplyRecoilEffect()
     {
         // Check if right mouse button is pressed for aiming
-        float aimMultiplier = Input.GetMouseButton(1) ? 0.5f : 1.0f; // Halves recoil when aiming
+        //float aimMultiplier = Input.GetMouseButton(1) ? 0.5f : 1.0f; // Halves recoil when aiming
 
-        // Calculate target rotation for recoil (only pitch)
-        targetRotation.x += -recoilX * aimMultiplier;
-        targetRotation.y = Random.Range(-recoilY, recoilY) * aimMultiplier;
-        targetRotation.z = Random.Range(-recoilZ, recoilZ) * aimMultiplier;
+        // Calculate target rotation for recoil (only pitch)]
+        
+        targetRotation.x += -recoilX;
+        targetRotation.y = Random.Range(-recoilY, recoilY);
+        targetRotation.z = Random.Range(-recoilZ, recoilZ);
 
         // Apply recoil to pitch while keeping current yaw and roll
         Vector3 cameraEuler = cam.transform.localEulerAngles;
@@ -116,7 +120,15 @@ public class Combined : MonoBehaviour
     {
         Debug.Log("Recoil Triggered");
         shouldApplyRecoil = true;
-        float aimMultiplier = Input.GetMouseButton(1) ? 0.5f : 1.0f; // Halves recoil when aiming
+        float aimMultiplier; 
+        if (wc.Sniper) 
+        {
+            aimMultiplier = Input.GetMouseButton(1) ? 20f : 100f;
+        }
+        else
+        {
+            aimMultiplier = Input.GetMouseButton(1) ? 0.5f : 1.0f;
+        }
         targetRotation = new Vector3(-recoilX * aimMultiplier, Random.Range(-recoilY, recoilY) * aimMultiplier, Random.Range(-recoilZ, recoilZ) * aimMultiplier);
     }
 
