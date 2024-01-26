@@ -259,7 +259,8 @@ public class WeaponController : MonoBehaviour
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
             {
                 animator.SetBool("shooting", false);
-                combined.Dayandir();
+                //combined.Dayandir();
+                StartCoroutine(StopRecoil());
                 resetImageSize();
             }
 
