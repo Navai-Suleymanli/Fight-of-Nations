@@ -3240,7 +3240,7 @@ MonoBehaviour:
   bullet1: {fileID: 1888217014}
   gunSound: {fileID: 8300000, guid: eb8db376ee229124799f452cfc6f0833, type: 3}
   emptyhot: {fileID: 8300000, guid: b43ef78315506d94ca06355d42bb4088, type: 3}
-  gunSoundSniper: {fileID: 0}
+  gunSoundSniper: {fileID: 8300000, guid: b0664474ffcc84343814c14815644599, type: 3}
   reloadSound: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
   isSprinting: 0
   isMoving: 0
