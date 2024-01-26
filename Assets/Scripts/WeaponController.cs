@@ -25,12 +25,14 @@ public class WeaponController : MonoBehaviour
     // shooting effects
     public Transform spawnPoint;
     public Transform sniperSpawnPoint;
-    public GameObject muzzle;
+    public GameObject muzzle;  // ------------------------------------------------------------------------
+    public GameObject muzzleSniper;
     [SerializeField] GameObject[] muzzles;
     public GameObject blood;
 
     // bullet gilizleri
-    [SerializeField] GameObject bulletShell;
+    [SerializeField] GameObject bulletShell;  // --------------------------------------------------------
+    [SerializeField] GameObject bulletShellSniper;
     [SerializeField] Transform spawnPoint2;
     public Transform sniperSpawnPoint2;
 
@@ -343,14 +345,14 @@ public class WeaponController : MonoBehaviour
 
                 bullet.GetComponent<bullet>().InitializeBullet(launchVelocity);
 
-                GameObject currentMuzzle = Instantiate(muzzle, sniperSpawnPoint.transform.position, sniperSpawnPoint.transform.rotation);
+                GameObject currentMuzzle = Instantiate(muzzleSniper, sniperSpawnPoint.transform.position, sniperSpawnPoint.transform.rotation);
                 currentMuzzle.transform.parent = sniperSpawnPoint;
 
 
 
 
 
-                GameObject currentBulletShell = Instantiate(bulletShell, sniperSpawnPoint2.transform.position, sniperSpawnPoint2.transform.rotation);
+                GameObject currentBulletShell = Instantiate(bulletShellSniper, sniperSpawnPoint2.transform.position, sniperSpawnPoint2.transform.rotation);
                 currentBulletShell.transform.parent = sniperSpawnPoint2;
 
 
