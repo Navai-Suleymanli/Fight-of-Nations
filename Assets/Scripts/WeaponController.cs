@@ -55,6 +55,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] int bulletCount = 30; // gulle sayi
     [SerializeField] int bulletCountSniper = 10;
     [SerializeField] bool isEmpty = false;
+    [SerializeField] bool isEmptySniper = false;
     public bool isReloading = false;
     [SerializeField] TextMeshProUGUI bulletCountText;
     public Image bullet3;
@@ -242,7 +243,7 @@ public class WeaponController : MonoBehaviour
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
             bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmptySniper && !canNotShoot)
             {
                 nextTimeToShoot = Time.time + 1f / fireRateSniper;
                 Shoot();
@@ -256,7 +257,7 @@ public class WeaponController : MonoBehaviour
                 Shoot();
                 animator.SetBool("shooting", true);
             }*/
-            else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
+            else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmptySniper)
             {
                 animator.SetBool("shooting", false);
                 //combined.Dayandir();
@@ -264,7 +265,7 @@ public class WeaponController : MonoBehaviour
                 resetImageSize();
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmptySniper && !isReloading)
             {
                 AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
                 //audioSource.PlayOneShot(emptyhot, 1f);
@@ -405,7 +406,7 @@ public class WeaponController : MonoBehaviour
         {
             if (bulletCountSniper == 0)
             {
-                isEmpty = true;
+                isEmptySniper = true;
                 //animator.SetBool("shooting", false);
                 Debug.Log("bullet finished!!!");
                 StartCoroutine(NotStopShootingWhenOne()); ;
@@ -495,7 +496,7 @@ public class WeaponController : MonoBehaviour
     {
         yield return new WaitForSeconds(2.7f);
         bulletCountSniper = 10;
-        isEmpty = false;
+        isEmptySniper = false;
         isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
