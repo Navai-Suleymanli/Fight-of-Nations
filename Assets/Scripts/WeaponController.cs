@@ -70,6 +70,7 @@ public class WeaponController : MonoBehaviour
     [SerializeField] AudioClip gunSoundSniper;
 
     [SerializeField] AudioClip reloadSound;
+    [SerializeField] AudioClip reloadSoundSniper;
     AudioSource audioSource;
 
     [Header("bools")]
@@ -501,7 +502,7 @@ public class WeaponController : MonoBehaviour
                 animator.SetBool("reload", true);
                 StartCoroutine(reloadSniper());
                 //audioSource.PlayOneShot(reloadSound, 1f);
-                AudioSource.PlayClipAtPoint(reloadSound, gameObject.transform.position, 0.05f);
+                AudioSource.PlayClipAtPoint(reloadSoundSniper, gameObject.transform.position, 1f);
             }
         }
         
