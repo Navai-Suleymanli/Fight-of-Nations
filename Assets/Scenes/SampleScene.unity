@@ -3213,6 +3213,7 @@ MonoBehaviour:
   fireRateSniper: 1
   launchVelocity: 2000
   impactEffect: {fileID: 100002, guid: f75efcef4bb42054abf94f8e5c701adc, type: 3}
+  impactEffectSniper: {fileID: 100002, guid: a16692bc2c8797849aab8fbe0a112ad1, type: 3}
   weaponHead: {fileID: 74325838}
   sniperHead: {fileID: 269901655}
   spawnPoint: {fileID: 74325839}
@@ -3251,6 +3252,7 @@ MonoBehaviour:
   isAiming: 0
   pointLight: {fileID: 996512973}
   pointLightSniper: {fileID: 1764692384}
+  volume: {fileID: 1909385471}
 --- !u!114 &776430304
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.Rendering.PostProcessing;
 
 public class WeaponController : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float launchVelocity = 2000f;
 
     public GameObject impactEffect;
+    public GameObject impactEffectSniper;
+
     public GameObject weaponHead;
     public GameObject sniperHead;
     private Animator animator;
@@ -98,12 +101,22 @@ public class WeaponController : MonoBehaviour
     public GameObject pointLightSniper;
 
 
+    [Header ("Post Processing Effects")]
+    public PostProcessVolume volume;
+    private DepthOfField depthOfField;
+    private AmbientOcclusion ambientOcclusion;
+
     private void Start()
     {
         InitializeAnimator();
         //FindWeaponTransform();
         audioSource = GetComponent<AudioSource>();
         combined = GetComponent<Combined>();
+        if(volume.profile.TryGetSettings(out depthOfField) &&
+            volume.profile.TryGetSettings(out ambientOcclusion))
+        {
+            SetEffectsActive(true);
+        }
     }
 
     private void LateUpdate()
@@ -243,6 +256,14 @@ public class WeaponController : MonoBehaviour
         }
         else if (Sniper)
         {
+            if (isAiming)
+            {
+                DisableEffects();
+            }
+            else if(!isAiming)
+            {
+                SetEffectsActive(true);
+            }
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
             bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
 
@@ -289,6 +310,19 @@ public class WeaponController : MonoBehaviour
             }
         }
     }
+    public void SetEffectsActive(bool isActive)
+    {
+        depthOfField.active = isActive;
+        ambientOcclusion.active = isActive;
+    }
+
+
+    public void DisableEffects()
+    {
+        SetEffectsActive(false);
+    }
+
+
     private void Shoot()
     {
         if (AK47 && !Sniper)
@@ -571,7 +605,7 @@ public class WeaponController : MonoBehaviour
                     hit.rigidbody.AddForce(-hit.normal * impact);
                 }
 
-                GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                GameObject impactGO = Instantiate(impactEffectSniper, hit.point, Quaternion.LookRotation(hit.normal));
 
                 Destroy(impactGO, 2f);
 
