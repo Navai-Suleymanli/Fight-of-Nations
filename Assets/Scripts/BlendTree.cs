@@ -64,11 +64,20 @@ public class BlendTree : MonoBehaviour
             if (!forwardPressed && velocityZ > 0.0f)
             {
                 velocityZ -= Time.deltaTime * deceleration; // Decelerate forward.
+                if(velocityZ < 0.03f)
+                {
+                    velocityZ = 0.0f;
+                }
             }
             if (!backPressed && velocityZ < 0.0f)
             {
                 velocityZ += Time.deltaTime * deceleration; // Decelerate backward.
+                if (velocityZ > -0.03f)
+                {
+                    velocityZ = 0.0f;
+                }
             }
+
         }
         if (pressedAtTheSameTime)
         {
