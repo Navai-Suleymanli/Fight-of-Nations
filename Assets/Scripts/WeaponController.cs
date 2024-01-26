@@ -5,6 +5,7 @@ using UnityEngine.Pool;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 
 public class WeaponController : MonoBehaviour
 {
@@ -52,6 +53,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("Reload Stuff")]
     [SerializeField] int bulletCount = 30; // gulle sayi
+    [SerializeField] int bulletCountSniper = 10;
     [SerializeField] bool isEmpty = false;
     public bool isReloading = false;
     [SerializeField] TextMeshProUGUI bulletCountText;
@@ -114,8 +116,15 @@ public class WeaponController : MonoBehaviour
         //Empty();
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
 
-        bulletCountText.text = bulletCount.ToString() + "/30";
+        if (AK47)
+        {
+            bulletCountText.text = bulletCount.ToString() + "/30";
+        }
+        else if (Sniper)
+        {
+            bulletCountText.text = bulletCountSniper.ToString() + "/10";
 
+        }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -210,11 +219,11 @@ public class WeaponController : MonoBehaviour
                 animator.SetBool("shooting", true);
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
+            /*if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
             {
                 Shoot();
                 animator.SetBool("shooting", true);
-            }
+            }*/
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
             {
                 animator.SetBool("shooting", false);
@@ -237,15 +246,16 @@ public class WeaponController : MonoBehaviour
             {
                 nextTimeToShoot = Time.time + 1f / fireRateSniper;
                 Shoot();
+
                 StartCoroutine(StopRecoil());
                 animator.SetBool("shooting", true);
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
+            /*if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
             {
                 Shoot();
                 animator.SetBool("shooting", true);
-            }
+            }*/
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
             {
                 animator.SetBool("shooting", false);
@@ -308,7 +318,7 @@ public class WeaponController : MonoBehaviour
             if (isReloading) return;
 
             GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
-            if (bullet != null && bulletCount > 0)
+            if (bullet != null && bulletCountSniper > 0)
             {
                 bullet.transform.position = sniperHead.transform.position;
                 bullet.transform.rotation = sniperHead.transform.rotation;
@@ -331,7 +341,7 @@ public class WeaponController : MonoBehaviour
 
                 AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
                 //audioSource.PlayOneShot(gunSound, 1f);
-                bulletCount--;
+                bulletCountSniper--;
                 pointLightSniper.gameObject.SetActive(true);
                 StartCoroutine(LightBlyatSniper());
                 combined.TriggerRecoil();
@@ -358,35 +368,72 @@ public class WeaponController : MonoBehaviour
     }
     private void HandleReloading()
     {
-        if (bulletCount == 0)
+        if (AK47)
         {
-            isEmpty = true;
-            //animator.SetBool("shooting", false);
-            Debug.Log("bullet finished!!!");
-            StartCoroutine(NotStopShootingWhenOne()); ;
-            bullet3.color = new Color(255, 255, 255, 0.5f);
-            bullet2.color = new Color(255, 255, 255, 0.5f);
-            bullet1.color = new Color(255, 255, 255, 0.5f);
+            if (bulletCount == 0)
+            {
+                isEmpty = true;
+                //animator.SetBool("shooting", false);
+                Debug.Log("bullet finished!!!");
+                StartCoroutine(NotStopShootingWhenOne()); ;
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 0.5f);
+                bullet1.color = new Color(255, 255, 255, 0.5f);
+            }
+            if (bulletCount == 30)
+            {
+                animator.SetBool("reload", false);
+                bullet3.color = new Color(255, 255, 255, 1);
+                bullet2.color = new Color(255, 255, 255, 1);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
+            if (bulletCount == 20)
+            {
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 1);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
+            if (bulletCount == 10)
+            {
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 0.5f);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
         }
-        if (bulletCount == 30)
+        else if (Sniper)
         {
-            animator.SetBool("reload", false);
-            bullet3.color = new Color(255, 255, 255, 1);
-            bullet2.color = new Color(255, 255, 255, 1);
-            bullet1.color = new Color(255, 255, 255, 1);
+            if (bulletCountSniper == 0)
+            {
+                isEmpty = true;
+                //animator.SetBool("shooting", false);
+                Debug.Log("bullet finished!!!");
+                StartCoroutine(NotStopShootingWhenOne()); ;
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 0.5f);
+                bullet1.color = new Color(255, 255, 255, 0.5f);
+            }
+            if (bulletCountSniper == 10)
+            {
+                animator.SetBool("reload", false);
+                bullet3.color = new Color(255, 255, 255, 1);
+                bullet2.color = new Color(255, 255, 255, 1);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
+            if (bulletCount == 6)
+            {
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 1);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
+            if (bulletCount == 2)
+            {
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 0.5f);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
         }
-        if (bulletCount == 20)
-        {
-            bullet3.color = new Color(255, 255, 255, 0.5f);
-            bullet2.color = new Color(255, 255, 255, 1);
-            bullet1.color = new Color(255, 255, 255, 1);
-        }
-        if (bulletCount == 10)
-        {
-            bullet3.color = new Color(255, 255, 255, 0.5f);
-            bullet2.color = new Color(255, 255, 255, 0.5f);
-            bullet1.color = new Color(255, 255, 255, 1);
-        }
+
+
         if (Input.GetKeyDown(KeyCode.R) && !isReloading)
         {
             animator.SetBool("shooting", false);
@@ -405,23 +452,48 @@ public class WeaponController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         animator.SetBool("shooting", false);
     }
+
     private void Reload()
     {
-
-        if (bulletCount < 30)
+        if (AK47)
         {
-            animator.SetBool("empty", false);
-            isReloading = true;
-            animator.SetBool("reload", true);
-            StartCoroutine(reload());
-            //audioSource.PlayOneShot(reloadSound, 1f);
-            AudioSource.PlayClipAtPoint(reloadSound, gameObject.transform.position, 0.05f);
+            if (bulletCount < 30)
+            {
+                animator.SetBool("empty", false);
+                isReloading = true;
+                animator.SetBool("reload", true);
+                StartCoroutine(reload());
+                //audioSource.PlayOneShot(reloadSound, 1f);
+                AudioSource.PlayClipAtPoint(reloadSound, gameObject.transform.position, 0.05f);
+            }
         }
+        else if (Sniper)
+        {
+            if (bulletCountSniper < 10)
+            {
+                animator.SetBool("empty", false);
+                isReloading = true;
+                animator.SetBool("reload", true);
+                StartCoroutine(reloadSniper());
+                //audioSource.PlayOneShot(reloadSound, 1f);
+                AudioSource.PlayClipAtPoint(reloadSound, gameObject.transform.position, 0.05f);
+            }
+        }
+        
     }
     IEnumerator reload()
     {
         yield return new WaitForSeconds(2.7f);
         bulletCount = 30;
+        isEmpty = false;
+        isReloading = false;
+        animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
+    }
+
+    IEnumerator reloadSniper()
+    {
+        yield return new WaitForSeconds(2.7f);
+        bulletCountSniper = 10;
         isEmpty = false;
         isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
@@ -484,7 +556,7 @@ public class WeaponController : MonoBehaviour
                     Enemy enemy = hit.transform.GetComponent<Enemy>();
                     if (enemy != null)
                     {
-                        enemy.TakeDamage(20); // Decrease health by 20
+                        enemy.TakeDamage(100); // Decrease health by 20
                         GameObject bloodGo = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 
                         Destroy(bloodGo, 1f);
