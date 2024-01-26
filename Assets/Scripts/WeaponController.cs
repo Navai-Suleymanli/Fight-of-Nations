@@ -140,6 +140,14 @@ public class WeaponController : MonoBehaviour
         else if (Sniper)
         {
             bulletCountText.text = bulletCountSniper.ToString() + "/10";
+            if (isAiming)
+            {
+                DisableEffects();
+            }
+            else if (!isAiming)
+            {
+                SetEffectsActive(true);
+            }
 
         }
 
@@ -256,14 +264,6 @@ public class WeaponController : MonoBehaviour
         }
         else if (Sniper)
         {
-            if (isAiming)
-            {
-                DisableEffects();
-            }
-            else if(!isAiming)
-            {
-                SetEffectsActive(true);
-            }
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
             bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
 
@@ -282,12 +282,6 @@ public class WeaponController : MonoBehaviour
                 
                 animator.SetBool("shooting", true);
             }
-
-            /*if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
-            {
-                Shoot();
-                animator.SetBool("shooting", true);
-            }*/
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmptySniper)
             {
                 animator.SetBool("shooting", false);
