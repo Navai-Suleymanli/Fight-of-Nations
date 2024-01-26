@@ -65,6 +65,7 @@ public class WeaponController : MonoBehaviour
     [Header("Audio Stuff")]
     [SerializeField] AudioClip gunSound;
     [SerializeField] AudioClip emptyhot;
+    [SerializeField] AudioClip gunSoundSniper;
 
     [SerializeField] AudioClip reloadSound;
     AudioSource audioSource;
@@ -247,8 +248,15 @@ public class WeaponController : MonoBehaviour
             {
                 nextTimeToShoot = Time.time + 1f / fireRateSniper;
                 Shoot();
-
-                StartCoroutine(StopRecoil());
+                if (isAiming)
+                {
+                    StartCoroutine(StopRecoil2());
+                }
+                if (!isAiming)
+                {
+                    StartCoroutine(StopRecoil());
+                }
+                
                 animator.SetBool("shooting", true);
             }
 
@@ -261,7 +269,14 @@ public class WeaponController : MonoBehaviour
             {
                 animator.SetBool("shooting", false);
                 //combined.Dayandir();
-                StartCoroutine(StopRecoil());
+                if (isAiming)
+                {
+                    StartCoroutine(StopRecoil2());
+                }
+                if (!isAiming)
+                {
+                    StartCoroutine(StopRecoil());
+                }
                 resetImageSize();
             }
 
@@ -341,7 +356,7 @@ public class WeaponController : MonoBehaviour
 
 
 
-                AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
+                //AudioSource.PlayClipAtPoint(gunSoundSniper, gameObject.transform.position, 0.4f);
                 //audioSource.PlayOneShot(gunSound, 1f);
                 bulletCountSniper--;
                 pointLightSniper.gameObject.SetActive(true);
@@ -446,6 +461,12 @@ public class WeaponController : MonoBehaviour
     IEnumerator StopRecoil()
     {
         yield return new WaitForSeconds(0.1f);
+        combined.Dayandir();
+    }
+
+    IEnumerator StopRecoil2()
+    {
+        yield return new WaitForSeconds(0.2f);
         combined.Dayandir();
     }
 
