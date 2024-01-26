@@ -3210,7 +3210,7 @@ MonoBehaviour:
   shootRange: 2000
   impact: 30
   fireRate: 15
-  fireRateSniper: 5
+  fireRateSniper: 1
   launchVelocity: 2000
   impactEffect: {fileID: 100002, guid: f75efcef4bb42054abf94f8e5c701adc, type: 3}
   weaponHead: {fileID: 74325838}
