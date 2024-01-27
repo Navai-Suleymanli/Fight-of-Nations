@@ -3245,7 +3245,7 @@ MonoBehaviour:
   emptyhot: {fileID: 8300000, guid: ee4edef183d540f4a97cb802406e4fea, type: 3}
   gunSoundSniper: {fileID: 8300000, guid: f872c13bfaf8a0e4e822cdd661384487, type: 3}
   reloadSound: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
-  reloadSoundSniper: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
+  reloadSoundSniper: {fileID: 8300000, guid: a797aeb0227ae16409f01c9e7a4bc415, type: 3}
   isSprinting: 0
   isMoving: 0
   Sniper: 0
