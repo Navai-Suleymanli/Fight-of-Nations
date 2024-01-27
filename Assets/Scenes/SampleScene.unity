@@ -3253,6 +3253,7 @@ MonoBehaviour:
   AKM: {fileID: 700387855180504898}
   SniperRifle: {fileID: 2675226658666308483}
   isAiming: 0
+  canNotShoot: 0
   pointLight: {fileID: 996512973}
   pointLightSniper: {fileID: 1764692384}
   volume: {fileID: 1909385471}
@@ -10560,7 +10561,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &700387855180504900
 GameObject:
   m_ObjectHideFlags: 0
@@ -10995,7 +10996,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &2675711890829437813
 GameObject:
   m_ObjectHideFlags: 0
