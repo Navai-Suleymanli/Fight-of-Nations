@@ -558,7 +558,7 @@ public class WeaponController : MonoBehaviour
     }
     IEnumerator reload()
     {
-        yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(3.0f);
         bulletCount = 30;
         isEmpty = false;
         isReloading = false;
