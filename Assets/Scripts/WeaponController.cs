@@ -62,10 +62,16 @@ public class WeaponController : MonoBehaviour
     [SerializeField] bool isEmpty = false;
     [SerializeField] bool isEmptySniper = false;
     public bool isReloading = false;
+
+    [Header("UI")]
+
     [SerializeField] TextMeshProUGUI bulletCountText;
     public Image bullet3;
     public Image bullet2;
     public Image bullet1;
+
+    public Image AKImage;
+    public Image SniperImage;
 
     [Header("Audio Stuff")]
     [SerializeField] AudioClip gunSound;
@@ -156,10 +162,12 @@ public class WeaponController : MonoBehaviour
         {
             Sniper = true;
             AK47 = false;
-            AKM.SetActive(false);
-            SniperRifle.SetActive(true);   
             animator.SetBool("Sniper", true);
             animator.SetBool("AK47", false);
+            AKM.SetActive(false);
+            SniperImage.gameObject.SetActive(true);
+            AKImage.gameObject.SetActive(false);
+            SniperRifle.SetActive(true);           
             muzzles = GameObject.FindGameObjectsWithTag("Effects");
    
             for (int i = 0; i < muzzles.Length; i++)
@@ -174,7 +182,9 @@ public class WeaponController : MonoBehaviour
             AK47 = true;
             animator.SetBool("Sniper", false);
             animator.SetBool("AK47", true);
-            AKM.SetActive(true);
+            SniperImage.gameObject.SetActive(false);
+            AKImage.gameObject.SetActive(true);
+            AKM.SetActive(true);            
             SniperRifle.SetActive(false);
             muzzles = GameObject.FindGameObjectsWithTag("Effects");
             for (int i = 0; i < muzzles.Length; i++)
