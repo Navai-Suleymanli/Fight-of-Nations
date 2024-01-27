@@ -569,7 +569,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reloadSniper()
     {
-        yield return new WaitForSeconds(2.7f);
+        yield return new WaitForSeconds(5.1f);
         bulletCountSniper = 10;
         isEmptySniper = false;
         isReloading = false;
