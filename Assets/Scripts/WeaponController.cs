@@ -100,6 +100,7 @@ public class WeaponController : MonoBehaviour
 
     // empty code:
     public bool isAiming;
+    public bool canNotShoot;
     Combined combined;
 
     // light
@@ -138,6 +139,7 @@ public class WeaponController : MonoBehaviour
         
         //Empty();
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
+        canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming || (isReloading) && isAiming;
 
         if (AK47)
         {
@@ -255,7 +257,7 @@ public class WeaponController : MonoBehaviour
         if (AK47)
         {
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
-            bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
+            
 
             if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
             {
