@@ -215,6 +215,16 @@ public class WeaponController : MonoBehaviour
     }
     private void HandleAiming()
     {
+        if (Sniper)
+        {
+            cross.gameObject.SetActive(false);
+        }
+        else 
+        {
+            cross.gameObject.SetActive(true);
+        }
+
+
         if (Input.GetKey(KeyCode.Mouse1))
         {
             animator.SetBool("aiming", true);
@@ -302,6 +312,8 @@ public class WeaponController : MonoBehaviour
                 AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
                 //audioSource.PlayOneShot(emptyhot, 1f);
             }
+
+            
         }
     }
     public void SetEffectsActive(bool isActive)
