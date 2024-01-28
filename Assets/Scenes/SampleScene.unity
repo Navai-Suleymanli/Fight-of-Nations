@@ -3242,7 +3242,7 @@ MonoBehaviour:
   AKImage: {fileID: 1006407510}
   SniperImage: {fileID: 1698890892}
   gunSound: {fileID: 8300000, guid: eb8db376ee229124799f452cfc6f0833, type: 3}
-  emptyhot: {fileID: 8300000, guid: ee4edef183d540f4a97cb802406e4fea, type: 3}
+  emptyhot: {fileID: 8300000, guid: b43ef78315506d94ca06355d42bb4088, type: 3}
   gunSoundSniper: {fileID: 8300000, guid: f872c13bfaf8a0e4e822cdd661384487, type: 3}
   reloadSound: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
   reloadSoundSniper: {fileID: 8300000, guid: a797aeb0227ae16409f01c9e7a4bc415, type: 3}
