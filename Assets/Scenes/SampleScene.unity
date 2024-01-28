@@ -3250,8 +3250,10 @@ MonoBehaviour:
   isMoving: 0
   Sniper: 0
   AK47: 1
+  isMakarov: 0
   AKM: {fileID: 700387855180504898}
   SniperRifle: {fileID: 2675226658666308483}
+  MakarovPistol: {fileID: 3472096630002051008}
   isAiming: 0
   canNotShoot: 0
   pointLight: {fileID: 996512973}
@@ -11999,7 +12001,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3472096630002051008}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.09744637, y: -0.99512595, z: 0.014963088, w: 0.0021450738}
+  m_LocalRotation: {x: 0.097443014, y: -0.9951263, z: 0.014967034, w: 0.0021494513}
   m_LocalPosition: {x: -0.02, y: -0.319, z: 0.471}
   m_LocalScale: {x: 0.050000004, y: 0.05, z: 0.050000004}
   m_ConstrainProportionsScale: 0

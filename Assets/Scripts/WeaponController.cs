@@ -85,14 +85,16 @@ public class WeaponController : MonoBehaviour
     [SerializeField] bool isSprinting;
     [SerializeField] bool isMoving;
 
-    public  bool Sniper =false;
+    public bool Sniper = false;
     [SerializeField] bool AK47 = true;
+    [SerializeField] bool isMakarov = false;
 
 
     [Header("Weapons")]
 
     public GameObject AKM;
     public GameObject SniperRifle;
+    public GameObject MakarovPistol;
 
 
 
@@ -158,6 +160,29 @@ public class WeaponController : MonoBehaviour
             }
 
         }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            isMakarov = true;
+            AK47 = false;
+            Sniper = false;
+            animator.SetBool("Makarov", true);
+            animator.SetBool("AK47", false);
+            animator.SetBool("Sniper", false);
+            AKM.SetActive(false);
+            SniperRifle.SetActive(false);
+            SniperImage.gameObject.SetActive(true);
+            AKImage.gameObject.SetActive(false);           
+            MakarovPistol.SetActive(true);
+            muzzles = GameObject.FindGameObjectsWithTag("Effects");
+
+            for (int i = 0; i < muzzles.Length; i++)
+            {
+                Destroy(muzzles[i]);
+                //muzzles[i].(false);
+            }
+        }
+       
+
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -165,7 +190,9 @@ public class WeaponController : MonoBehaviour
             AK47 = false;
             animator.SetBool("Sniper", true);
             animator.SetBool("AK47", false);
+            animator.SetBool("Makarov", false);
             AKM.SetActive(false);
+            MakarovPistol.SetActive(false);
             SniperImage.gameObject.SetActive(true);
             AKImage.gameObject.SetActive(false);
             SniperRifle.SetActive(true);           
@@ -183,10 +210,12 @@ public class WeaponController : MonoBehaviour
             AK47 = true;
             animator.SetBool("Sniper", false);
             animator.SetBool("AK47", true);
+            animator.SetBool("Makarov", false);
             SniperImage.gameObject.SetActive(false);
             AKImage.gameObject.SetActive(true);
             AKM.SetActive(true);            
             SniperRifle.SetActive(false);
+            MakarovPistol.SetActive(false);
             muzzles = GameObject.FindGameObjectsWithTag("Effects");
             for (int i = 0; i < muzzles.Length; i++)
             {
