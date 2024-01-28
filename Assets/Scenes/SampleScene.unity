@@ -8770,7 +8770,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1782913842}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: WeaponHeadMakarov
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12487,8 +12487,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5069333310954362592}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.05, y: -0.3195, z: 0.126}
+  m_LocalRotation: {x: -0.16446449, y: -0.030478198, z: 0.09471648, w: 0.9813518}
+  m_LocalPosition: {x: -0.024, y: -0.423, z: 0.506}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12496,7 +12496,7 @@ Transform:
   - {fileID: 5065873331344059340}
   - {fileID: 1782913842}
   m_Father: {fileID: 1354499288}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -18.483, y: -5.504, z: 11.922}
 --- !u!1 &5069121534118162044
 GameObject:
   m_ObjectHideFlags: 0
