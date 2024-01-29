@@ -105,7 +105,7 @@ public class WeaponController : MonoBehaviour
 
     public bool Sniper = false;
     [SerializeField] bool AK47 = true;
-    [SerializeField] bool isMakarov = false;
+    public bool isMakarov = false;
 
 
     [Header("Weapons")]
