@@ -190,9 +190,11 @@ public class WeaponController : MonoBehaviour
             isMakarov = true;
             AK47 = false;
             Sniper = false;
+
             animator.SetBool("Makarov", true);
             animator.SetBool("AK47", false);
             animator.SetBool("Sniper", false);
+
             MakarovPistol.gameObject.SetActive(true);
             AKM.gameObject.SetActive(false);
             SniperRifle.gameObject.SetActive(false);
@@ -214,9 +216,11 @@ public class WeaponController : MonoBehaviour
             Sniper = true;
             AK47 = false;
             isMakarov = false;
+
             animator.SetBool("Sniper", true);
             animator.SetBool("AK47", false);
             animator.SetBool("Makarov", false);
+
             SniperRifle.gameObject.SetActive(true);
             AKM.gameObject.SetActive(false);
             MakarovPistol.gameObject.SetActive(false);
@@ -519,7 +523,7 @@ public class WeaponController : MonoBehaviour
 
             setImageSize();
         }
-        else if (isMakarov && !Sniper && !AK47 && !AK47)
+        else if (isMakarov && !Sniper && !AK47)
         {
             // Prevent shooting when reloading
             if (isReloading) return;

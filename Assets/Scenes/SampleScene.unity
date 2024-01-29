@@ -10809,7 +10809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &700387855180504900
 GameObject:
   m_ObjectHideFlags: 0
@@ -12004,12 +12004,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3472096630002306496}
   m_Layer: 0
-  m_Name: "\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab) (1)"
+  m_Name: "\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab) "
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3472096630002297306
 Transform:
   m_ObjectHideFlags: 0
