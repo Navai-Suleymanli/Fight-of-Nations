@@ -223,15 +223,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.033333335
         value: {x: -0.019994259, y: -0.319, z: 0.47099996}
-        inSlope: {x: 0, y: 0, z: -0.0000017881391}
-        outSlope: {x: 0, y: 0, z: -0.0000017881391}
+        inSlope: {x: 0, y: 0, z: -0.0000017881393}
+        outSlope: {x: 0, y: 0, z: -0.0000017881393}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
         time: 0.06666667
-        value: {x: -0.02, y: -0.3213, z: 0.3828}
+        value: {x: -0.02, y: -0.3218, z: 0.3662}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -524,7 +524,7 @@ AnimationClip:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.06666667
-        value: -0.3213
+        value: -0.3218
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -573,15 +573,15 @@ AnimationClip:
       - serializedVersion: 3
         time: 0.033333335
         value: 0.47099996
-        inSlope: -0.0000017881391
-        outSlope: -0.0000017881391
+        inSlope: -0.0000017881393
+        outSlope: -0.0000017881393
         tangentMode: 136
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.06666667
-        value: 0.3828
+        value: 0.3662
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -1555,82 +1555,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab) "
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab) "
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab) "
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab)
-      /Hammer"
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab)
-      /Hammer"
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
-    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab)
-      /Hammer"
-    classID: 4
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
     path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab)
       /Slide"
     classID: 4
@@ -1656,9 +1581,84 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.z
+    attribute: m_LocalEulerAngles.x
     path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab)
       /Slide"
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab) "
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab) "
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab) "
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab)
+      /Hammer"
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab)
+      /Hammer"
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: "Main Camera/Weapon Holder/\u041C\u0430\u043A\u0430\u0440\u043E\u0432 (Prefab)
+      /Hammer"
     classID: 4
     script: {fileID: 0}
     flags: 0
