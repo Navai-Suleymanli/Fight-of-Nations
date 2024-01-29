@@ -14,29 +14,37 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float impact = 30.0f;
     [SerializeField] float fireRate = 19f;
     [SerializeField] float fireRateSniper = 5f;
+    [SerializeField] float fireRateMakarov = 10f;
     [SerializeField] float launchVelocity = 2000f;
 
     public GameObject impactEffect;
     public GameObject impactEffectSniper;
+    public GameObject impactEffectMakarov;
 
     public GameObject weaponHead;
     public GameObject sniperHead;
+    public GameObject makarovHead;
     private Animator animator;
     private RecoilAndSway recoil_script;
 
     // shooting effects
     public Transform spawnPoint;
     public Transform sniperSpawnPoint;
+    public Transform makarowSpawnPoint;
     public GameObject muzzle;  // ------------------------------------------------------------------------
     public GameObject muzzleSniper;
+    public GameObject muzzleMakarov;
     [SerializeField] GameObject[] muzzles;
     public GameObject blood;
 
     // bullet gilizleri
     [SerializeField] GameObject bulletShell;  // --------------------------------------------------------
     [SerializeField] GameObject bulletShellSniper;
+    [SerializeField] GameObject bulletShellMakarov;
+
     [SerializeField] Transform spawnPoint2;
-    public Transform sniperSpawnPoint2;
+    [SerializeField] Transform sniperSpawnPoint2;
+    [SerializeField] Transform makarovSpawnPoint2;
 
     //rotation
     [Header("Weapon Rotation")]
@@ -58,8 +66,12 @@ public class WeaponController : MonoBehaviour
     [Header("Reload Stuff")]
     [SerializeField] int bulletCount = 30; // gulle sayi
     [SerializeField] int bulletCountSniper = 10;
+    [SerializeField] int bulletCountMakarov = 8;
+
     [SerializeField] bool isEmpty = false;
     [SerializeField] bool isEmptySniper = false;
+    [SerializeField] bool isEmptyMakarov = false;
+
     public bool isReloading = false;
 
     [Header("UI")]
@@ -71,14 +83,20 @@ public class WeaponController : MonoBehaviour
 
     public Image AKImage;
     public Image SniperImage;
+    public Image MakarovImage;
+
 
     [Header("Audio Stuff")]
     [SerializeField] AudioClip gunSound;
     [SerializeField] AudioClip emptyhot;
     [SerializeField] AudioClip gunSoundSniper;
+    [SerializeField] AudioClip gunSoundMakarov;
+
 
     [SerializeField] AudioClip reloadSound;
     [SerializeField] AudioClip reloadSoundSniper;
+    [SerializeField] AudioClip reloadSoundMakarov;
+
     AudioSource audioSource;
 
     [Header("bools")]
@@ -108,6 +126,8 @@ public class WeaponController : MonoBehaviour
     // light
     public GameObject pointLight;
     public GameObject pointLightSniper;
+    public GameObject pointLightMakarov;
+
 
 
     [Header ("Post Processing Effects")]
@@ -160,6 +180,11 @@ public class WeaponController : MonoBehaviour
             }
 
         }
+        else if(isMakarov)
+        {
+            bulletCountText.text = bulletCountMakarov.ToString() + "/8";
+        }
+
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             isMakarov = true;
@@ -168,11 +193,14 @@ public class WeaponController : MonoBehaviour
             animator.SetBool("Makarov", true);
             animator.SetBool("AK47", false);
             animator.SetBool("Sniper", false);
-            AKM.SetActive(false);
-            SniperRifle.SetActive(false);
-            SniperImage.gameObject.SetActive(true);
-            AKImage.gameObject.SetActive(false);           
-            MakarovPistol.SetActive(true);
+            MakarovPistol.gameObject.SetActive(true);
+            AKM.gameObject.SetActive(false);
+            SniperRifle.gameObject.SetActive(false);
+
+            MakarovImage.gameObject.SetActive(true);
+            AKImage.gameObject.SetActive(false);
+            SniperImage.gameObject.SetActive(false);
+
             muzzles = GameObject.FindGameObjectsWithTag("Effects");
 
             for (int i = 0; i < muzzles.Length; i++)
@@ -181,21 +209,22 @@ public class WeaponController : MonoBehaviour
                 //muzzles[i].(false);
             }
         }
-       
-
-
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             Sniper = true;
             AK47 = false;
+            isMakarov = false;
             animator.SetBool("Sniper", true);
             animator.SetBool("AK47", false);
             animator.SetBool("Makarov", false);
-            AKM.SetActive(false);
-            MakarovPistol.SetActive(false);
+            SniperRifle.gameObject.SetActive(true);
+            AKM.gameObject.SetActive(false);
+            MakarovPistol.gameObject.SetActive(false);
+
             SniperImage.gameObject.SetActive(true);
+            MakarovImage.gameObject.SetActive(false);
             AKImage.gameObject.SetActive(false);
-            SniperRifle.SetActive(true);           
+                      
             muzzles = GameObject.FindGameObjectsWithTag("Effects");
    
             for (int i = 0; i < muzzles.Length; i++)
@@ -208,14 +237,18 @@ public class WeaponController : MonoBehaviour
         {
             Sniper = false;
             AK47 = true;
+            isMakarov = false;
             animator.SetBool("Sniper", false);
             animator.SetBool("AK47", true);
             animator.SetBool("Makarov", false);
-            SniperImage.gameObject.SetActive(false);
+
+            AKM.gameObject.SetActive(true);            
+            SniperRifle.gameObject.SetActive(false);
+            MakarovPistol.gameObject.SetActive(false);
+
             AKImage.gameObject.SetActive(true);
-            AKM.SetActive(true);            
-            SniperRifle.SetActive(false);
-            MakarovPistol.SetActive(false);
+            SniperImage.gameObject.SetActive(false);
+            MakarovImage.gameObject.SetActive(false);
             muzzles = GameObject.FindGameObjectsWithTag("Effects");
             for (int i = 0; i < muzzles.Length; i++)
             {
@@ -293,13 +326,7 @@ public class WeaponController : MonoBehaviour
                 nextTimeToShoot = Time.time + 1f / fireRate;
                 Shoot();
                 animator.SetBool("shooting", true);
-            }
-
-            /*if (Input.GetKeyDown(KeyCode.Mouse0) && !isEmpty && !canNotShoot)
-            {
-                Shoot();
-                animator.SetBool("shooting", true);
-            }*/
+            }   
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
             {
                 animator.SetBool("shooting", false);
@@ -316,7 +343,7 @@ public class WeaponController : MonoBehaviour
         else if (Sniper)
         {
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
-            bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
+            //bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmptySniper && !canNotShoot)
             {
@@ -353,8 +380,49 @@ public class WeaponController : MonoBehaviour
                 AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
                 //audioSource.PlayOneShot(emptyhot, 1f);
             }
-
             
+        }
+        else if (isMakarov)
+        {
+            // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
+            //bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmptyMakarov && !canNotShoot)
+            {
+                nextTimeToShoot = Time.time + 1f / fireRateMakarov;
+                Shoot();
+                if (isAiming)
+                {
+                    StartCoroutine(StopRecoil2());
+                }
+                if (!isAiming)
+                {
+                    StartCoroutine(StopRecoil());
+                }
+
+                animator.SetBool("shooting", true);
+            }
+            else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmptyMakarov)
+            {
+                animator.SetBool("shooting", false);
+                //combined.Dayandir();
+                if (isAiming)
+                {
+                    StartCoroutine(StopRecoil2());
+                }
+                if (!isAiming)
+                {
+                    StartCoroutine(StopRecoil());
+                }
+                resetImageSize();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmptyMakarov && !isReloading)
+            {
+                AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
+                //audioSource.PlayOneShot(emptyhot, 1f);
+            }
+
         }
     }
     public void SetEffectsActive(bool isActive)
@@ -372,7 +440,7 @@ public class WeaponController : MonoBehaviour
 
     private void Shoot()
     {
-        if (AK47 && !Sniper)
+        if (AK47 && !Sniper && !isMakarov)
         {
             // Prevent shooting when reloading
             if (isReloading) return;
@@ -412,7 +480,7 @@ public class WeaponController : MonoBehaviour
             //animator.SetBool("shooting", true);
             setImageSize();
         }
-        else if (Sniper && !AK47)
+        else if (Sniper && !AK47 && !isMakarov)
         {
             // Prevent shooting when reloading
             if (isReloading) return;
@@ -451,7 +519,46 @@ public class WeaponController : MonoBehaviour
 
             setImageSize();
         }
-        
+        else if (isMakarov && !Sniper && !AK47 && !AK47)
+        {
+            // Prevent shooting when reloading
+            if (isReloading) return;
+
+            GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
+            if (bullet != null && bulletCountSniper > 0)
+            {
+                bullet.transform.position = makarovHead.transform.position;
+                bullet.transform.rotation = makarovHead.transform.rotation;
+                bullet.SetActive(true);
+
+                bullet.GetComponent<bullet>().InitializeBullet(launchVelocity);
+
+                GameObject currentMuzzle = Instantiate(muzzleMakarov, makarowSpawnPoint.transform.position, makarowSpawnPoint.transform.rotation);
+                currentMuzzle.transform.parent = makarowSpawnPoint;
+
+
+
+
+
+                GameObject currentBulletShell = Instantiate(bulletShellSniper, makarovSpawnPoint2.transform.position, makarovSpawnPoint2.transform.rotation);
+                currentBulletShell.transform.parent = makarovSpawnPoint2;
+
+
+
+
+                AudioSource.PlayClipAtPoint(gunSoundMakarov, gameObject.transform.position, 2f);
+                //audioSource.PlayOneShot(gunSound, 1f);
+                bulletCountMakarov--;
+                pointLightMakarov.gameObject.SetActive(true);
+                StartCoroutine(LightBlyatMakarov());
+                combined.TriggerRecoil();
+            }
+
+            ProcessRaycast();
+
+            setImageSize();
+        }
+
 
     }
 
@@ -466,6 +573,13 @@ public class WeaponController : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         pointLightSniper.gameObject.SetActive(false);
     }
+    IEnumerator LightBlyatMakarov()
+    {
+        yield return new WaitForSeconds(0.1f);
+        pointLightMakarov.gameObject.SetActive(false);
+    }
+
+
     private void HandleReloading()
     {
         if (AK47)
@@ -532,6 +646,38 @@ public class WeaponController : MonoBehaviour
                 bullet1.color = new Color(255, 255, 255, 1);
             }
         }
+        else if (isMakarov)
+        {
+            if (bulletCountMakarov == 0)
+            {
+                isEmptyMakarov = true;
+                //animator.SetBool("shooting", false);
+                Debug.Log("bullet finished!!!");
+                StartCoroutine(NotStopShootingWhenOne()); ;
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 0.5f);
+                bullet1.color = new Color(255, 255, 255, 0.5f);
+            }
+            if (bulletCountMakarov == 8)
+            {
+                animator.SetBool("reload", false);
+                bullet3.color = new Color(255, 255, 255, 1);
+                bullet2.color = new Color(255, 255, 255, 1);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
+            if (bulletCountMakarov == 4)
+            {
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 1);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
+            if (bulletCountMakarov == 2)
+            {
+                bullet3.color = new Color(255, 255, 255, 0.5f);
+                bullet2.color = new Color(255, 255, 255, 0.5f);
+                bullet1.color = new Color(255, 255, 255, 1);
+            }
+        }
 
 
         if (Input.GetKeyDown(KeyCode.R) && !isReloading)
@@ -585,7 +731,19 @@ public class WeaponController : MonoBehaviour
                 AudioSource.PlayClipAtPoint(reloadSoundSniper, gameObject.transform.position, 1f);
             }
         }
-        
+        else if (isMakarov)
+        {
+            if (bulletCountMakarov < 8)
+            {
+                animator.SetBool("empty", false);
+                isReloading = true;
+                animator.SetBool("reload", true);
+                StartCoroutine(reloadMakarov());
+                //audioSource.PlayOneShot(reloadSound, 1f);
+                AudioSource.PlayClipAtPoint(reloadSoundSniper, gameObject.transform.position, 1f);
+            }
+        }
+
     }
     IEnumerator reload()
     {
@@ -601,6 +759,15 @@ public class WeaponController : MonoBehaviour
         yield return new WaitForSeconds(5.2f);
         bulletCountSniper = 10;
         isEmptySniper = false;
+        isReloading = false;
+        animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
+    }
+
+    IEnumerator reloadMakarov()
+    {
+        yield return new WaitForSeconds(3.0f);
+        bulletCountMakarov = 8;
+        isEmptyMakarov = false;
         isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
@@ -663,6 +830,38 @@ public class WeaponController : MonoBehaviour
                     if (enemy != null)
                     {
                         enemy.TakeDamage(100); // Decrease health by 20
+                        GameObject bloodGo = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
+
+                        Destroy(bloodGo, 1f);
+                        // Convert the hit point to a screen position and show the X hit effect
+                        ShowXHitEffectAtPosition(hit.point);
+                    }
+                }
+            }
+        }
+        else if (isMakarov)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(makarovHead.transform.position, makarovHead.transform.forward, out hit, shootRange))
+            {
+                // ... existing code ...
+                Debug.Log(hit.transform.tag);
+                if (hit.rigidbody != null)
+                {
+                    hit.rigidbody.AddForce(-hit.normal * impact);
+                }
+
+                GameObject impactGO = Instantiate(impactEffectSniper, hit.point, Quaternion.LookRotation(hit.normal));
+
+                Destroy(impactGO, 2f);
+
+                // Check if hit an enemy
+                if (hit.transform.CompareTag("Enemy")) // Ensure your enemy GameObjects have the tag "Enemy"
+                {
+                    Enemy enemy = hit.transform.GetComponent<Enemy>();
+                    if (enemy != null)
+                    {
+                        enemy.TakeDamage(20); // Decrease health by 20
                         GameObject bloodGo = Instantiate(blood, hit.point, Quaternion.LookRotation(hit.normal));
 
                         Destroy(bloodGo, 1f);
