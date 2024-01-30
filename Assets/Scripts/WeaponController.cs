@@ -410,14 +410,14 @@ public class WeaponController : MonoBehaviour
             {
                 animator.SetBool("shooting", false);
                 //combined.Dayandir();
-                if (isAiming)
+                /*if (isAiming)
                 {
                     StartCoroutine(StopRecoil2());
                 }
                 if (!isAiming)
                 {
                     StartCoroutine(StopRecoil());
-                }
+                }*/
                 resetImageSize();
             }
 
