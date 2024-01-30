@@ -131,7 +131,7 @@ public class Combined : MonoBehaviour
         }
         else
         {
-            aimMultiplier = Input.GetMouseButton(1) ? 0.5f : 1.0f;
+            aimMultiplier = Input.GetMouseButton(1) ? 3.0f : 10.0f;
         }
         targetRotation = new Vector3(-recoilX * aimMultiplier, Random.Range(-recoilY, recoilY) * aimMultiplier, Random.Range(-recoilZ, recoilZ) * aimMultiplier);
     }
