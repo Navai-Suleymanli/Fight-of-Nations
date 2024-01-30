@@ -778,7 +778,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reloadMakarov()
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(1.9f);
         bulletCountMakarov = 8;
         isEmptyMakarov = false;
         isReloading = false;
