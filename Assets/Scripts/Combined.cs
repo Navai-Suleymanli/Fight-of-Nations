@@ -127,7 +127,7 @@ public class Combined : MonoBehaviour
         }
         else if (wc.isMakarov)
         {
-            aimMultiplier = Input.GetMouseButton(1) ? 40f : 20f;
+            aimMultiplier = Input.GetMouseButton(1) ? 40f : 120f;
         }
         else
         {

@@ -410,14 +410,14 @@ public class WeaponController : MonoBehaviour
             {
                 animator.SetBool("shooting", false);
                 //combined.Dayandir();
-                /*if (isAiming)
+                if (isAiming)
                 {
                     StartCoroutine(StopRecoil2());
                 }
                 if (!isAiming)
                 {
                     StartCoroutine(StopRecoil());
-                }*/
+                }
                 resetImageSize();
             }
 
@@ -778,7 +778,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reloadMakarov()
     {
-        yield return new WaitForSeconds(1.9f);
+        yield return new WaitForSeconds(1.8f);
         bulletCountMakarov = 8;
         isEmptyMakarov = false;
         isReloading = false;
