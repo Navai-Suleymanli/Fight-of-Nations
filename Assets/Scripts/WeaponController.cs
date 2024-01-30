@@ -748,10 +748,18 @@ public class WeaponController : MonoBehaviour
         {
             if (bulletCountMakarov < 8)
             {
+                if(bulletCountMakarov == 0)
+                {
+                    StartCoroutine(reloadMakarovGullesiz());
+                }
+                else
+                {
+                    StartCoroutine(reloadMakarov());
+                }
                 animator.SetBool("empty", false);
                 isReloading = true;
                 animator.SetBool("reload", true);
-                StartCoroutine(reloadMakarov());
+                
                 //audioSource.PlayOneShot(reloadSound, 1f);
                 AudioSource.PlayClipAtPoint(reloadSoundSniper, gameObject.transform.position, 1f);
             }
@@ -778,7 +786,15 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reloadMakarov()
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(2.2f);
+        bulletCountMakarov = 8;
+        isEmptyMakarov = false;
+        isReloading = false;
+        animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
+    }
+    IEnumerator reloadMakarovGullesiz()
+    {
+        yield return new WaitForSeconds(4f);
         bulletCountMakarov = 8;
         isEmptyMakarov = false;
         isReloading = false;
