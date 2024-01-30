@@ -794,7 +794,7 @@ public class WeaponController : MonoBehaviour
     }
     IEnumerator reloadMakarovGullesiz()
     {
-        yield return new WaitForSeconds(2.6f);
+        yield return new WaitForSeconds(2.2f);
         bulletCountMakarov = 8;
         isEmptyMakarov = false;
         isReloading = false;
