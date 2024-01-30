@@ -368,14 +368,14 @@ public class WeaponController : MonoBehaviour
             {
                 animator.SetBool("shooting", false);
                 //combined.Dayandir();
-                if (isAiming)
+                /*if (isAiming)
                 {
                     StartCoroutine(StopRecoil2());
                 }
                 if (!isAiming)
                 {
                     StartCoroutine(StopRecoil());
-                }
+                }*/
                 resetImageSize();
             }
 
@@ -429,13 +429,12 @@ public class WeaponController : MonoBehaviour
 
         }
     }
+
     public void SetEffectsActive(bool isActive)
     {
         depthOfField.active = isActive;
         ambientOcclusion.active = isActive;
     }
-
-
     public void DisableEffects()
     {
         SetEffectsActive(false);
@@ -544,13 +543,13 @@ public class WeaponController : MonoBehaviour
 
 
 
-                GameObject currentBulletShell = Instantiate(bulletShellSniper, makarovSpawnPoint2.transform.position, makarovSpawnPoint2.transform.rotation);
+                GameObject currentBulletShell = Instantiate(bulletShellMakarov, makarovSpawnPoint2.transform.position, makarovSpawnPoint2.transform.rotation);
                 currentBulletShell.transform.parent = makarovSpawnPoint2;
 
 
 
 
-                AudioSource.PlayClipAtPoint(gunSoundMakarov, gameObject.transform.position, 2f);
+                AudioSource.PlayClipAtPoint(gunSoundMakarov, gameObject.transform.position, .5f);
                 //audioSource.PlayOneShot(gunSound, 1f);
                 bulletCountMakarov--;
                 pointLightMakarov.gameObject.SetActive(true);
@@ -654,6 +653,8 @@ public class WeaponController : MonoBehaviour
         {
             if (bulletCountMakarov == 0)
             {
+                animator.SetBool("OutOfBulletMakarov", true);
+                StartCoroutine(setOutOfBulletFalse());
                 isEmptyMakarov = true;
                 //animator.SetBool("shooting", false);
                 Debug.Log("bullet finished!!!");
@@ -664,6 +665,7 @@ public class WeaponController : MonoBehaviour
             }
             if (bulletCountMakarov == 8)
             {
+                animator.SetBool("OutOfBulletMakarov", false);
                 animator.SetBool("reload", false);
                 bullet3.color = new Color(255, 255, 255, 1);
                 bullet2.color = new Color(255, 255, 255, 1);
@@ -690,6 +692,13 @@ public class WeaponController : MonoBehaviour
             Reload();
         }
     }
+
+    IEnumerator setOutOfBulletFalse()
+    {
+        yield return new WaitForSeconds(2f);
+        animator.SetBool("OutOfBulletMakarov", false);
+    }
+
 
     IEnumerator StopRecoil()
     {
@@ -769,7 +778,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reloadMakarov()
     {
-        yield return new WaitForSeconds(3.0f);
+        yield return new WaitForSeconds(1.8f);
         bulletCountMakarov = 8;
         isEmptyMakarov = false;
         isReloading = false;

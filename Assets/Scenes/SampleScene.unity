@@ -3229,7 +3229,7 @@ MonoBehaviour:
   blood: {fileID: 3548588485384254792, guid: 2f9e7dc163581394da1e00b561eed65d, type: 3}
   bulletShell: {fileID: 131604, guid: 8698f59a8ea9a0c449a001968fa1db7f, type: 3}
   bulletShellSniper: {fileID: 131604, guid: f3afbbc3bea79e6459dd28f6a342b6e1, type: 3}
-  bulletShellMakarov: {fileID: 131604, guid: 8698f59a8ea9a0c449a001968fa1db7f, type: 3}
+  bulletShellMakarov: {fileID: 131604, guid: d8c015f18a9abb847b9aaed52e3bd60f, type: 3}
   spawnPoint2: {fileID: 507285335}
   sniperSpawnPoint2: {fileID: 1068000375}
   makarovSpawnPoint2: {fileID: 2145287786}
@@ -3254,7 +3254,7 @@ MonoBehaviour:
   gunSound: {fileID: 8300000, guid: eb8db376ee229124799f452cfc6f0833, type: 3}
   emptyhot: {fileID: 8300000, guid: b43ef78315506d94ca06355d42bb4088, type: 3}
   gunSoundSniper: {fileID: 8300000, guid: f872c13bfaf8a0e4e822cdd661384487, type: 3}
-  gunSoundMakarov: {fileID: 8300000, guid: f872c13bfaf8a0e4e822cdd661384487, type: 3}
+  gunSoundMakarov: {fileID: 8300000, guid: 2a1ab6a07242a494b99bfb5f4186a001, type: 3}
   reloadSound: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
   reloadSoundSniper: {fileID: 8300000, guid: a797aeb0227ae16409f01c9e7a4bc415, type: 3}
   reloadSoundMakarov: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
@@ -8969,7 +8969,7 @@ Transform:
   m_GameObject: {fileID: 1782913841}
   serializedVersion: 2
   m_LocalRotation: {x: -0.003168784, y: 0.9999415, z: -0.004804992, w: 0.009157924}
-  m_LocalPosition: {x: 0.04, y: 2.11, z: -3.61}
+  m_LocalPosition: {x: -0.02, y: 2.11, z: -3.61}
   m_LocalScale: {x: 49.999985, y: 50, z: 49.999985}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10441,13 +10441,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2145287785}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.17817922, y: 0.98394376, z: -0.0030649689, w: 0.009877321}
-  m_LocalPosition: {x: -0.02, y: 2.14, z: -0.35}
+  m_LocalRotation: {x: 0.1257486, y: 0.68933207, z: 0.1262716, w: -0.70218515}
+  m_LocalPosition: {x: -0.526, y: 2.33, z: -0.557}
   m_LocalScale: {x: 49.999985, y: 50, z: 49.999985}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3472096630002306496}
-  m_LocalEulerAnglesHint: {x: 0.547, y: 178.949, z: 20.524}
+  m_LocalEulerAnglesHint: {x: -20.529, y: 271.102, z: -0.243}
 --- !u!1 &1199566717660657
 GameObject:
   m_ObjectHideFlags: 0
@@ -10809,7 +10809,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &700387855180504900
 GameObject:
   m_ObjectHideFlags: 0
@@ -12009,7 +12009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3472096630002297306
 Transform:
   m_ObjectHideFlags: 0
