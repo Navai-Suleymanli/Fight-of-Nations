@@ -528,7 +528,7 @@ public class WeaponController : MonoBehaviour
             if (isReloading) return;
 
             GameObject bullet = ObjectPool.SharedInstance.GetPooledObject();
-            if (bullet != null && bulletCountSniper > 0)
+            if (bullet != null && bulletCountMakarov > 0)
             {
                 bullet.transform.position = makarovHead.transform.position;
                 bullet.transform.rotation = makarovHead.transform.rotation;
@@ -654,7 +654,6 @@ public class WeaponController : MonoBehaviour
             if (bulletCountMakarov == 0)
             {
                 animator.SetBool("OutOfBulletMakarov", true);
-                StartCoroutine(setOutOfBulletFalse());
                 isEmptyMakarov = true;
                 //animator.SetBool("shooting", false);
                 Debug.Log("bullet finished!!!");
@@ -665,7 +664,6 @@ public class WeaponController : MonoBehaviour
             }
             if (bulletCountMakarov == 8)
             {
-                animator.SetBool("OutOfBulletMakarov", false);
                 animator.SetBool("reload", false);
                 bullet3.color = new Color(255, 255, 255, 1);
                 bullet2.color = new Color(255, 255, 255, 1);
@@ -748,20 +746,15 @@ public class WeaponController : MonoBehaviour
         {
             if (bulletCountMakarov < 8)
             {
-                if (bulletCountMakarov == 0)
-                {
-                    StartCoroutine(reloadMakarovGullesiz());
-                }
-                else
-                {
-                    StartCoroutine(reloadMakarov());
-                }
+                
                 animator.SetBool("empty", false);
                 isReloading = true;
                 animator.SetBool("reload", true);
+                StartCoroutine(reloadMakarov());
+
 
                 //audioSource.PlayOneShot(reloadSound, 1f);
-                AudioSource.PlayClipAtPoint(reloadSoundSniper, gameObject.transform.position, 1f);
+                AudioSource.PlayClipAtPoint(reloadSoundMakarov, gameObject.transform.position, 1f);
             }
         }
 
@@ -790,6 +783,7 @@ public class WeaponController : MonoBehaviour
         bulletCountMakarov = 8;
         isEmptyMakarov = false;
         isReloading = false;
+        animator.SetBool("OutOfBulletMakarov", false);
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
     IEnumerator reloadMakarovGullesiz()

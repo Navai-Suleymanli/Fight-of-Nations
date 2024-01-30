@@ -3257,7 +3257,7 @@ MonoBehaviour:
   gunSoundMakarov: {fileID: 8300000, guid: 2a1ab6a07242a494b99bfb5f4186a001, type: 3}
   reloadSound: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
   reloadSoundSniper: {fileID: 8300000, guid: a797aeb0227ae16409f01c9e7a4bc415, type: 3}
-  reloadSoundMakarov: {fileID: 8300000, guid: 6ec3debed0640d546961f57eb6c61067, type: 3}
+  reloadSoundMakarov: {fileID: 0}
   isSprinting: 0
   isMoving: 0
   Sniper: 0

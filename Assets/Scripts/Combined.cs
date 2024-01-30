@@ -123,11 +123,11 @@ public class Combined : MonoBehaviour
         float aimMultiplier; 
         if (wc.Sniper) 
         {
-            aimMultiplier = Input.GetMouseButton(1) ? 40f : 120f;
+            aimMultiplier = Input.GetMouseButton(1) ? 60f : 120f;
         }
         else if (wc.isMakarov)
         {
-            aimMultiplier = Input.GetMouseButton(1) ? 40f : 120f;
+            aimMultiplier = Input.GetMouseButton(1) ? 60f : 120f;
         }
         else
         {
