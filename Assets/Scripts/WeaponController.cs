@@ -130,7 +130,7 @@ public class WeaponController : MonoBehaviour
 
 
 
-    [Header ("Post Processing Effects")]
+    [Header("Post Processing Effects")]
     public PostProcessVolume volume;
     private DepthOfField depthOfField;
     private AmbientOcclusion ambientOcclusion;
@@ -141,7 +141,7 @@ public class WeaponController : MonoBehaviour
         //FindWeaponTransform();
         audioSource = GetComponent<AudioSource>();
         combined = GetComponent<Combined>();
-        if(volume.profile.TryGetSettings(out depthOfField) &&
+        if (volume.profile.TryGetSettings(out depthOfField) &&
             volume.profile.TryGetSettings(out ambientOcclusion))
         {
             SetEffectsActive(true);
@@ -158,7 +158,7 @@ public class WeaponController : MonoBehaviour
 
         isSprinting = Input.GetKey(KeyCode.LeftShift) ? true : false;
         isMoving = Input.GetKey(KeyCode.W) ? true : false;
-        
+
         //Empty();
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
         canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming || (isReloading) && isAiming;
@@ -180,7 +180,7 @@ public class WeaponController : MonoBehaviour
             }
 
         }
-        else if(isMakarov)
+        else if (isMakarov)
         {
             bulletCountText.text = bulletCountMakarov.ToString() + "/8";
         }
@@ -228,9 +228,9 @@ public class WeaponController : MonoBehaviour
             SniperImage.gameObject.SetActive(true);
             MakarovImage.gameObject.SetActive(false);
             AKImage.gameObject.SetActive(false);
-                      
+
             muzzles = GameObject.FindGameObjectsWithTag("Effects");
-   
+
             for (int i = 0; i < muzzles.Length; i++)
             {
                 Destroy(muzzles[i]);
@@ -246,7 +246,7 @@ public class WeaponController : MonoBehaviour
             animator.SetBool("AK47", true);
             animator.SetBool("Makarov", false);
 
-            AKM.gameObject.SetActive(true);            
+            AKM.gameObject.SetActive(true);
             SniperRifle.gameObject.SetActive(false);
             MakarovPistol.gameObject.SetActive(false);
 
@@ -297,7 +297,7 @@ public class WeaponController : MonoBehaviour
         {
             cross.gameObject.SetActive(false);
         }
-        else 
+        else
         {
             cross.gameObject.SetActive(true);
         }
@@ -323,14 +323,14 @@ public class WeaponController : MonoBehaviour
         if (AK47)
         {
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
-            
+
 
             if (Input.GetKey(KeyCode.Mouse0) && Time.time >= nextTimeToShoot && !isEmpty && !canNotShoot)
             {
                 nextTimeToShoot = Time.time + 1f / fireRate;
                 Shoot();
                 animator.SetBool("shooting", true);
-            }   
+            }
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
             {
                 animator.SetBool("shooting", false);
@@ -361,7 +361,7 @@ public class WeaponController : MonoBehaviour
                 {
                     StartCoroutine(StopRecoil());
                 }
-                
+
                 animator.SetBool("shooting", true);
             }
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmptySniper)
@@ -384,7 +384,7 @@ public class WeaponController : MonoBehaviour
                 AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
                 //audioSource.PlayOneShot(emptyhot, 1f);
             }
-            
+
         }
         else if (isMakarov)
         {
@@ -712,7 +712,7 @@ public class WeaponController : MonoBehaviour
         combined.Dayandir();
     }
 
-    IEnumerator NotStopShootingWhenOne() 
+    IEnumerator NotStopShootingWhenOne()
     {
         yield return new WaitForSeconds(1f);
         animator.SetBool("shooting", false);
@@ -778,7 +778,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator reloadMakarov()
     {
-        yield return new WaitForSeconds(1.8f);
+        yield return new WaitForSeconds(2.2f);
         bulletCountMakarov = 8;
         isEmptyMakarov = false;
         isReloading = false;
@@ -788,7 +788,7 @@ public class WeaponController : MonoBehaviour
 
     private void ProcessRaycast()
     {
-       if (AK47)
+        if (AK47)
         {
             RaycastHit hit;
             if (Physics.Raycast(weaponHead.transform.position, weaponHead.transform.forward, out hit, shootRange))
@@ -820,7 +820,7 @@ public class WeaponController : MonoBehaviour
                 }
             }
         }
-       else if (Sniper)
+        else if (Sniper)
         {
             RaycastHit hit;
             if (Physics.Raycast(sniperHead.transform.position, sniperHead.transform.forward, out hit, shootRange))
