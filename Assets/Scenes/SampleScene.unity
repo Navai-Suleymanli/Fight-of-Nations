@@ -3130,6 +3130,10 @@ MonoBehaviour:
   controller: {fileID: 776430294}
   walkSpeed: 3.5
   sprintSpeed: 15
+  walkSpeedSniper: 2.5
+  sprintSpeedSniper: 11
+  walkSpeedMakarov: 5
+  sprintSpeedMakarov: 18
   isRunning: 0
   isAiming: 0
   playerBreath: {fileID: 8300000, guid: 42f6f9ac46b16bc4fad48f9c4a3c7b14, type: 3}

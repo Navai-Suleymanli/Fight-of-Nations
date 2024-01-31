@@ -8,6 +8,10 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController controller;
     [SerializeField] private float walkSpeed = 0f;
     [SerializeField] private float sprintSpeed = 0f;
+    [SerializeField] private float walkSpeedSniper = 0f;
+    [SerializeField] private float sprintSpeedSniper = 0f;
+    [SerializeField] private float walkSpeedMakarov = 0f;
+    [SerializeField] private float sprintSpeedMakarov = 0f;
     [SerializeField] private bool isRunning = false;
     [SerializeField] private bool isAiming = false;
     WeaponController weapon;
@@ -65,26 +69,78 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         move = transform.right * x + transform.forward * z;
 
-        // Handle player movement
-        if (!isRunning && !pressedAtTheSameTime)
+        if (weapon.AKM)
         {
-            controller.Move(move * walkSpeed * Time.deltaTime);
-            
-        }
-        else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S) && !pressedAtTheSameTime)
-        {
-            controller.Move(move * sprintSpeed * Time.deltaTime);
-            
-        }
-        else
-        {
-            if(!pressedAtTheSameTime)
+            // Handle player movement
+            if (!isRunning && !pressedAtTheSameTime)
             {
                 controller.Move(move * walkSpeed * Time.deltaTime);
 
             }
+            else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S) && !pressedAtTheSameTime)
+            {
+                controller.Move(move * sprintSpeed * Time.deltaTime);
 
+            }
+            else
+            {
+                if (!pressedAtTheSameTime)
+                {
+                    controller.Move(move * walkSpeed * Time.deltaTime);
+
+                }
+
+            }
         }
+        else if(weapon.Sniper)
+        {
+            // Handle player movement
+            if (!isRunning && !pressedAtTheSameTime)
+            {
+                controller.Move(move * walkSpeedSniper * Time.deltaTime);
+
+            }
+            else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S) && !pressedAtTheSameTime)
+            {
+                controller.Move(move * sprintSpeedSniper * Time.deltaTime);
+
+            }
+            else
+            {
+                if (!pressedAtTheSameTime)
+                {
+                    controller.Move(move * walkSpeedSniper * Time.deltaTime);
+
+                }
+
+            }
+        }
+        else if(weapon.isMakarov)
+        {
+            // Handle player movement
+            if (!isRunning && !pressedAtTheSameTime)
+            {
+                controller.Move(move * walkSpeedMakarov * Time.deltaTime);
+
+            }
+            else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S) && !pressedAtTheSameTime)
+            {
+                controller.Move(move * sprintSpeedMakarov * Time.deltaTime);
+
+            }
+            else
+            {
+                if (!pressedAtTheSameTime)
+                {
+                    controller.Move(move * walkSpeedMakarov * Time.deltaTime);
+
+                }
+
+            }
+        }
+
+
+        
 
         // Apply gravity
         verticalVelocity += gravityValue * Time.deltaTime;
