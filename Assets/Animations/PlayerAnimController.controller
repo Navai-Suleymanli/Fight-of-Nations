@@ -871,6 +871,9 @@ AnimatorStateMachine:
   - serializedVersion: 1
     m_State: {fileID: 7015355429103938532}
     m_Position: {x: 1380, y: -440, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -1106379490591040054}
+    m_Position: {x: 1415, y: -375, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1542,7 +1545,7 @@ BlendTree:
     m_DirectBlendParameter: Blend
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: 57cda8b3d972a674ea5a8c4d665e8f20, type: 2}
+    m_Motion: {fileID: 7400000, guid: 180666cefec796146a06b3d822fb28b7, type: 2}
     m_Threshold: 0.6
     m_Position: {x: 0, y: 0.6}
     m_TimeScale: 0.8
@@ -1777,6 +1780,32 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 5622f4e4cf7b52a4888f01210ae3472b, type: 2}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-1106379490591040054
+AnimatorState:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SprintingAK47
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 7400000, guid: 180666cefec796146a06b3d822fb28b7, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
