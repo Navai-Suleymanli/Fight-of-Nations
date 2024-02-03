@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - Enemy
   - Effects
+  - PlayerBody
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Occupation Area
   - Enemy
   - Post Processing
-  - 
+  - PlayerBody
   - 
   - 
   - 
