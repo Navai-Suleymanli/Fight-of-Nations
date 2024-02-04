@@ -2002,6 +2002,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 700387855180989282}
   m_LocalEulerAnglesHint: {x: -1.629, y: 84.706, z: -80.011}
+--- !u!1 &483732424
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 483732425}
+  m_Layer: 0
+  m_Name: HAnd_L_Makarov
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &483732425
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483732424}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.1650949, y: -0.16585888, z: 0.7575997, w: 0.6093252}
+  m_LocalPosition: {x: 4.12, y: -4.46, z: 4.38}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3472096630002306496}
+  m_LocalEulerAnglesHint: {x: 2.873, y: -26.926, z: 101.694}
 --- !u!1 &507285334
 GameObject:
   m_ObjectHideFlags: 0
@@ -3131,6 +3162,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 400416788}
+  _target_makarov: {fileID: 1879986704}
+  _target_sniper: {fileID: 1250227844}
   _speed: 60
 --- !u!1 &750016913
 GameObject:
@@ -5650,6 +5683,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 927659642}
+  _target_makarov: {fileID: 483732425}
+  _target_sniper: {fileID: 1175070413}
   _speed: 60
 --- !u!114 &1118567172
 MonoBehaviour:
@@ -5785,6 +5820,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165547718}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1175070412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1175070413}
+  m_Layer: 6
+  m_Name: Hand_Position_L
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1175070413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1175070412}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.26417434, y: 0.5049352, z: 0.5423793, w: -0.6173144}
+  m_LocalPosition: {x: 0.143, y: -0.179, z: 0.281}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2677922157304221627}
+  m_LocalEulerAnglesHint: {x: -119.086, y: 136.139, z: 124.034}
 --- !u!1 &1224876767
 GameObject:
   m_ObjectHideFlags: 0
@@ -6009,6 +6075,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2029116804}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1250227843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1250227844}
+  m_Layer: 6
+  m_Name: Hand_Position_R
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1250227844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250227843}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.4784902, y: -0.43331572, z: -0.49487796, w: 0.58170485}
+  m_LocalPosition: {x: 0.06639099, y: -0.09536975, z: -0.080933}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2677922157304221627}
+  m_LocalEulerAnglesHint: {x: 7.343, y: -80.332, z: -86.978}
 --- !u!1 &1301952345
 GameObject:
   m_ObjectHideFlags: 0
@@ -10898,6 +10995,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1877404401}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1879986703
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1879986704}
+  m_Layer: 0
+  m_Name: HAnd_R_Makarov
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1879986704
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1879986703}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.4874432, y: 0.66304255, z: -0.23352778, w: 0.51791763}
+  m_LocalPosition: {x: 0.74, y: -3.29, z: 0.63}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3472096630002306496}
+  m_LocalEulerAnglesHint: {x: -11.258, y: 111.187, z: -64.92}
 --- !u!1 &1888217012
 GameObject:
   m_ObjectHideFlags: 0
@@ -12312,7 +12440,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &700387855180504900
 GameObject:
   m_ObjectHideFlags: 0
@@ -12879,6 +13007,8 @@ Transform:
   - {fileID: 1504345917}
   - {fileID: 1068000375}
   - {fileID: 1764692385}
+  - {fileID: 1250227844}
+  - {fileID: 1175070413}
   m_Father: {fileID: 1354499288}
   m_LocalEulerAnglesHint: {x: -0.4, y: -1.35, z: -0.1}
 --- !u!4 &2681343928363314937
@@ -13515,7 +13645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3472096630002297306
 Transform:
   m_ObjectHideFlags: 0
@@ -13552,6 +13682,8 @@ Transform:
   - {fileID: 1782913842}
   - {fileID: 2145287786}
   - {fileID: 1652683479}
+  - {fileID: 1879986704}
+  - {fileID: 483732425}
   m_Father: {fileID: 1354499288}
   m_LocalEulerAnglesHint: {x: 1.731, y: -179.922, z: -11.184}
 --- !u!4 &3472096630002313806
