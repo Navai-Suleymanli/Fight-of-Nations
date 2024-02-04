@@ -5685,7 +5685,7 @@ MonoBehaviour:
   _target: {fileID: 927659642}
   _target_makarov: {fileID: 483732425}
   _target_sniper: {fileID: 1175070413}
-  _speed: 100
+  _speed: 60
 --- !u!114 &1118567172
 MonoBehaviour:
   m_ObjectHideFlags: 0

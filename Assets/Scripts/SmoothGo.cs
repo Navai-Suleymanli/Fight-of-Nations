@@ -31,7 +31,7 @@ public class SmoothGo : MonoBehaviour
 
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         if (wc == null)
         {
