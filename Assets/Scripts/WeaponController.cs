@@ -712,7 +712,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator NotStopShootingWhenOne()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(.1f);
         animator.SetBool("shooting", false);
     }
 
