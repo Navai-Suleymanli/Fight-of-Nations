@@ -762,8 +762,8 @@ public class WeaponController : MonoBehaviour
     IEnumerator reload()
     {
         yield return new WaitForSeconds(3.0f);
-        bulletCount = 30;
         isEmpty = false;
+        bulletCount = 30;       
         isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
