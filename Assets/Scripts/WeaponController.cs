@@ -722,9 +722,6 @@ public class WeaponController : MonoBehaviour
         {
             if (bulletCount < 30)
             {
-                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-                animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
-
                 animator.SetBool("empty", false);
                 isReloading = true;
                 animator.SetBool("reload", true);
@@ -737,9 +734,6 @@ public class WeaponController : MonoBehaviour
         {
             if (bulletCountSniper < 10)
             {
-                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-                animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
-
                 animator.SetBool("empty", false);
                 isReloading = true;
                 animator.SetBool("reload", true);
@@ -752,10 +746,7 @@ public class WeaponController : MonoBehaviour
         {
             if (bulletCountMakarov < 8)
             {
-
-                animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
-                animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 0);
-
+                
                 animator.SetBool("empty", false);
                 isReloading = true;
                 animator.SetBool("reload", true);
@@ -771,10 +762,6 @@ public class WeaponController : MonoBehaviour
     IEnumerator reload()
     {
         yield return new WaitForSeconds(3.0f);
-
-        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-
         bulletCount = 30;
         isEmpty = false;
         isReloading = false;
@@ -784,10 +771,6 @@ public class WeaponController : MonoBehaviour
     IEnumerator reloadSniper()
     {
         yield return new WaitForSeconds(5.2f);
-
-        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-
         bulletCountSniper = 10;
         isEmptySniper = false;
         isReloading = false;
@@ -797,10 +780,6 @@ public class WeaponController : MonoBehaviour
     IEnumerator reloadMakarov()
     {
         yield return new WaitForSeconds(2.2f);
-
-        animator.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-        animator.SetIKRotationWeight(AvatarIKGoal.RightHand, 1);
-
         bulletCountMakarov = 8;
         isEmptyMakarov = false;
         isReloading = false;
