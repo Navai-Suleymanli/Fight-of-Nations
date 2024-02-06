@@ -135,6 +135,9 @@ public class WeaponController : MonoBehaviour
     private DepthOfField depthOfField;
     private AmbientOcclusion ambientOcclusion;
 
+    [Header("bool for changing weapons")]
+    [SerializeField] private bool isChanging = false;
+
     private void Start()
     {
         InitializeAnimator();
@@ -185,11 +188,13 @@ public class WeaponController : MonoBehaviour
             bulletCountText.text = bulletCountMakarov.ToString() + "/8";
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && !isReloading)
         {
+            isChanging = true;
             isMakarov = true;
             AK47 = false;
             Sniper = false;
+            StartCoroutine(makeBoolFalse());
 
             animator.SetBool("Makarov", true);
             animator.SetBool("AK47", false);
@@ -210,12 +215,15 @@ public class WeaponController : MonoBehaviour
                 Destroy(muzzles[i]);
                 //muzzles[i].(false);
             }
+            combined.Dayandir();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && !isReloading)
         {
+            isChanging = true;
             Sniper = true;
             AK47 = false;
             isMakarov = false;
+            StartCoroutine(makeBoolFalse());
 
             animator.SetBool("Sniper", true);
             animator.SetBool("AK47", false);
@@ -236,12 +244,16 @@ public class WeaponController : MonoBehaviour
                 Destroy(muzzles[i]);
                 //muzzles[i].(false);
             }
+            combined.Dayandir();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha1) && !isReloading)
         {
+            isChanging = true;
             Sniper = false;
             AK47 = true;
             isMakarov = false;
+            StartCoroutine(makeBoolFalse());
+
             animator.SetBool("Sniper", false);
             animator.SetBool("AK47", true);
             animator.SetBool("Makarov", false);
@@ -259,9 +271,17 @@ public class WeaponController : MonoBehaviour
                 //muzzles[i].SetActive(false);
                 Destroy(muzzles[i]);
             }
+            combined.Dayandir();
         }
 
     }
+
+    IEnumerator makeBoolFalse()
+    {
+        yield return new WaitForSeconds(1.3f);
+        isChanging = false;
+    }
+
 
     public void getImageSize()
     {
@@ -320,7 +340,7 @@ public class WeaponController : MonoBehaviour
 
     private void HandleShooting()
     {
-        if (AK47)
+        if (AK47 && !isChanging)
         {
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
 
@@ -344,7 +364,7 @@ public class WeaponController : MonoBehaviour
                 //audioSource.PlayOneShot(emptyhot, 1f);
             }
         }
-        else if (Sniper)
+        else if (Sniper && !isChanging)
         {
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
             //bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
@@ -386,7 +406,7 @@ public class WeaponController : MonoBehaviour
             }
 
         }
-        else if (isMakarov)
+        else if (isMakarov && !isChanging)
         {
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
             //bool canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming;
