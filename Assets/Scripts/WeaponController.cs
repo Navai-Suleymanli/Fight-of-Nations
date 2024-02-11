@@ -490,7 +490,7 @@ public class WeaponController : MonoBehaviour
 
 
 
-                AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.2f);
+                AudioSource.PlayClipAtPoint(gunSound, gameObject.transform.position, 0.5f);
                 //audioSource.PlayOneShot(gunSound, 1f);
                 bulletCount--;
                 pointLight.gameObject.SetActive(true);
