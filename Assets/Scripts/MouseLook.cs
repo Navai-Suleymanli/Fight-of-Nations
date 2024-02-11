@@ -25,7 +25,7 @@ public class MouseLook : MonoBehaviour
 
     Vector3 followCam()
     {
-        return spotLight.transform.position = gameObject.transform.position + new Vector3(0f, 1f, 0f);
+        return spotLight.transform.position = cam.gameObject.transform.position + new Vector3(0f, 0f, 0.5f);
 
     }
 
