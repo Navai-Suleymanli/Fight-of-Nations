@@ -278,7 +278,7 @@ public class WeaponController : MonoBehaviour
 
     IEnumerator makeBoolFalse()
     {
-        yield return new WaitForSeconds(1.3f);
+        yield return new WaitForSeconds(0.9f);
         isChanging = false;
     }
 
