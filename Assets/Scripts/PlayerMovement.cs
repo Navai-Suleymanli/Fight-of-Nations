@@ -69,75 +69,25 @@ public class PlayerMovement : MonoBehaviour
         float z = Input.GetAxis("Vertical");
         move = transform.right * x + transform.forward * z;
 
+        float speed = 0f;
+
+
+        //***Changing the speed of the player according to the weapon he is carrying***
+
         if (weapon.AKM)
         {
-            // Handle player movement
-            if (!isRunning && !pressedAtTheSameTime)
-            {
-                controller.Move(move * walkSpeed * Time.deltaTime);
-
-            }
-            else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S) && !pressedAtTheSameTime)
-            {
-                controller.Move(move * sprintSpeed * Time.deltaTime);
-
-            }
-            else
-            {
-                if (!pressedAtTheSameTime)
-                {
-                    controller.Move(move * walkSpeed * Time.deltaTime);
-
-                }
-
-            }
+            speed = !isRunning && !pressedAtTheSameTime ? walkSpeed : (!isAiming && !weapon.isReloading && !pressedAtTheSameTime && !Input.GetKey(KeyCode.S)) ? sprintSpeed : !pressedAtTheSameTime ? walkSpeed : 0;
         }
-        else if(weapon.Sniper)
+        else if (weapon.Sniper)
         {
-            // Handle player movement
-            if (!isRunning && !pressedAtTheSameTime)
-            {
-                controller.Move(move * walkSpeedSniper * Time.deltaTime);
-
-            }
-            else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S) && !pressedAtTheSameTime)
-            {
-                controller.Move(move * sprintSpeedSniper * Time.deltaTime);
-
-            }
-            else
-            {
-                if (!pressedAtTheSameTime)
-                {
-                    controller.Move(move * walkSpeedSniper * Time.deltaTime);
-
-                }
-
-            }
+            speed = !isRunning && !pressedAtTheSameTime ? walkSpeedSniper : (!isAiming && !weapon.isReloading && !pressedAtTheSameTime && !Input.GetKey(KeyCode.S)) ? sprintSpeedSniper : !pressedAtTheSameTime ? walkSpeedSniper : 0;
         }
-        else if(weapon.isMakarov)
-        {
-            // Handle player movement
-            if (!isRunning && !pressedAtTheSameTime)
-            {
-                controller.Move(move * walkSpeedMakarov * Time.deltaTime);
+        else if (weapon.isMakarov) {
+            speed = !isRunning && !pressedAtTheSameTime ? walkSpeedMakarov : (!isAiming && !weapon.isReloading && !pressedAtTheSameTime && !Input.GetKey(KeyCode.S)) ? sprintSpeedMakarov : !pressedAtTheSameTime ? walkSpeedMakarov : 0;
 
-            }
-            else if (!isAiming && !weapon.isReloading && !Input.GetKey(KeyCode.S) && !pressedAtTheSameTime)
-            {
-                controller.Move(move * sprintSpeedMakarov * Time.deltaTime);
-
-            }
-            else
-            {
-                if (!pressedAtTheSameTime)
-                {
-                    controller.Move(move * walkSpeedMakarov * Time.deltaTime);
-
-                }
-
-            }
         }
+
+        controller.Move(move * speed * Time.deltaTime);
 
 
         
