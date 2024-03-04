@@ -17,31 +17,42 @@ public class WeaponController : MonoBehaviour
     [SerializeField] float fireRateMakarov = 10f;
     [SerializeField] float launchVelocity = 2000f;
 
+    [Header("Impact Effects")]
     public GameObject impactEffect;
     public GameObject impactEffectSniper;
     public GameObject impactEffectMakarov;
 
+    [Header("Weapon Heads")]
     public GameObject weaponHead;
     public GameObject sniperHead;
     public GameObject makarovHead;
+
+
     private Animator animator;
-    private RecoilAndSway recoil_script;
 
     // shooting effects
+    [Header("Bullet Spawn points for weapons")]
     public Transform spawnPoint;
     public Transform sniperSpawnPoint;
     public Transform makarowSpawnPoint;
+
+    [Header("Muzzles")]
     public GameObject muzzle;  // ------------------------------------------------------------------------
     public GameObject muzzleSniper;
     public GameObject muzzleMakarov;
-    [SerializeField] GameObject[] muzzles;
+    [SerializeField] GameObject[] muzzles;  // muzzle array to collect and then destroy all the muzzle effects when changing weapons
+
+    [Header("GORE effects")]
     public GameObject blood;
 
-    // bullet gilizleri
+    [Header("Bullet shells")]
+    // bullet gilizleri 
     [SerializeField] GameObject bulletShell;  // --------------------------------------------------------
     [SerializeField] GameObject bulletShellSniper;
     [SerializeField] GameObject bulletShellMakarov;
 
+    // Spawn points for bullet chells
+    [Header("Spawn points for bullet chells")]
     [SerializeField] Transform spawnPoint2;
     [SerializeField] Transform sniperSpawnPoint2;
     [SerializeField] Transform makarovSpawnPoint2;
@@ -55,9 +66,10 @@ public class WeaponController : MonoBehaviour
     Rect rect;
     float width;
     float height;
-
-    public Camera mainCamera; // Reference to the main camera in the scene
     public RectTransform xHitEffectUI; // Assuming it's a RectTransform (like for an Image or Text)
+
+    [Header("Camera Ref")]
+    public Camera mainCamera; // Reference to the main camera in the scene
 
 
 
@@ -75,7 +87,6 @@ public class WeaponController : MonoBehaviour
     public bool isReloading = false;
 
     [Header("UI")]
-
     [SerializeField] TextMeshProUGUI bulletCountText;
     public Image bullet3;
     public Image bullet2;
@@ -124,6 +135,7 @@ public class WeaponController : MonoBehaviour
     Combined combined;
 
     // light
+    [Header("Shooting Lights")]
     public GameObject pointLight;
     public GameObject pointLightSniper;
     public GameObject pointLightMakarov;
@@ -141,9 +153,11 @@ public class WeaponController : MonoBehaviour
     private void Start()
     {
         InitializeAnimator();
-        //FindWeaponTransform();
+
         audioSource = GetComponent<AudioSource>();
         combined = GetComponent<Combined>();
+
+        // setting volume effects true at the start
         if (volume.profile.TryGetSettings(out depthOfField) &&
             volume.profile.TryGetSettings(out ambientOcclusion))
         {
@@ -153,19 +167,20 @@ public class WeaponController : MonoBehaviour
 
     private void LateUpdate()
     {
-        HandleShooting();
         HandleAiming();
+        HandleShooting();
         HandleReloading();
         getImageSize();
 
-
+         // updating movement bools
         isSprinting = Input.GetKey(KeyCode.LeftShift) ? true : false;
         isMoving = Input.GetKey(KeyCode.W) ? true : false;
 
-        //Empty();
         isAiming = Input.GetKey(KeyCode.Mouse1) ? true : false;
-        canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming || (isReloading) && isAiming;
+        canNotShoot = (isSprinting && isMoving || isReloading) && !isAiming || (isReloading) && isAiming;  // not-shooting cases
 
+
+        // setting basic weapon parameters on change:  bullet count, blur effect
         if (AK47)
         {
             bulletCountText.text = bulletCount.ToString() + "/30";
@@ -173,11 +188,12 @@ public class WeaponController : MonoBehaviour
         else if (Sniper)
         {
             bulletCountText.text = bulletCountSniper.ToString() + "/10";
+            // if aiming with the sniper disable aiming blur effect
             if (isAiming)
             {
                 DisableEffects();
             }
-            else if (!isAiming)
+            else if (!isAiming)  // if stopping aiming re-activate the effects
             {
                 SetEffectsActive(true);
             }
@@ -188,6 +204,8 @@ public class WeaponController : MonoBehaviour
             bulletCountText.text = bulletCountMakarov.ToString() + "/8";
         }
 
+        // ------------------------ setting full parameters for the weapons------------------------:
+        // MAKAROV
         if (Input.GetKeyDown(KeyCode.Alpha3) && !isReloading)
         {
             isChanging = true;
@@ -213,10 +231,10 @@ public class WeaponController : MonoBehaviour
             for (int i = 0; i < muzzles.Length; i++)
             {
                 Destroy(muzzles[i]);
-                //muzzles[i].(false);
             }
             combined.Dayandir();
         }
+        // SNIPER
         if (Input.GetKeyDown(KeyCode.Alpha2) && !isReloading)
         {
             isChanging = true;
@@ -246,6 +264,7 @@ public class WeaponController : MonoBehaviour
             }
             combined.Dayandir();
         }
+        // AK
         if (Input.GetKeyDown(KeyCode.Alpha1) && !isReloading)
         {
             isChanging = true;
@@ -283,6 +302,7 @@ public class WeaponController : MonoBehaviour
     }
 
 
+    // ------------------ crosshair functions-------------------------:
     public void getImageSize()
     {
         rect = cross.rectTransform.rect;
@@ -306,13 +326,32 @@ public class WeaponController : MonoBehaviour
             cross.rectTransform.sizeDelta = new Vector2(width -= 10f, height -= 10f);
         }
     }
+    private void ShowXHitEffectAtPosition(Vector3 worldPosition)
+    {
+        Vector2 screenPosition = mainCamera.WorldToScreenPoint(worldPosition);
+
+        // Move the X hit effect UI element to the calculated screen position
+        xHitEffectUI.gameObject.SetActive(true);
+        xHitEffectUI.position = screenPosition;
+
+        // Optionally, you can start a coroutine to hide this effect after some time
+        StartCoroutine(HideXHitEffect());
+    }
+    IEnumerator HideXHitEffect()
+    {
+        yield return new WaitForSeconds(0.2f); // Duration for which the effect is shown, adjust as needed
+        xHitEffectUI.gameObject.SetActive(false);
+    }
+    //----------------------------------------------------------------
 
     private void InitializeAnimator()
     {
         animator = GetComponent<Animator>();
     }
+
     private void HandleAiming()
     {
+        // corsshair settings
         if (Sniper)
         {
             cross.gameObject.SetActive(false);
@@ -322,14 +361,13 @@ public class WeaponController : MonoBehaviour
             cross.gameObject.SetActive(true);
         }
 
-
+        // bool-setting for the animator
         if (Input.GetKey(KeyCode.Mouse1))
         {
             animator.SetBool("aiming", true);
-            cross.gameObject.SetActive(false);
+            cross.gameObject.SetActive(false);  // setting up crosshair object false
 
         }
-
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             animator.SetBool("aiming", false);
@@ -338,7 +376,7 @@ public class WeaponController : MonoBehaviour
     }
 
 
-    private void HandleShooting()
+    private void HandleShooting() // handling the shooting function for all the weapons
     {
         if (AK47 && !isChanging)
         {
@@ -354,16 +392,16 @@ public class WeaponController : MonoBehaviour
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmpty)
             {
                 animator.SetBool("shooting", false);
-                combined.Dayandir();
+                combined.Dayandir(); // stop camera shake/recoil effect
                 resetImageSize();
             }
 
-            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmpty && !isReloading)  // sound
             {
                 AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
                 //audioSource.PlayOneShot(emptyhot, 1f);
             }
-        }
+        }           // AK
         else if (Sniper && !isChanging)
         {
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
@@ -387,25 +425,15 @@ public class WeaponController : MonoBehaviour
             else if (Input.GetKeyUp(KeyCode.Mouse0) || canNotShoot || isEmptySniper)
             {
                 animator.SetBool("shooting", false);
-                //combined.Dayandir();
-                /*if (isAiming)
-                {
-                    StartCoroutine(StopRecoil2());
-                }
-                if (!isAiming)
-                {
-                    StartCoroutine(StopRecoil());
-                }*/
                 resetImageSize();
             }
-
-            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmptySniper && !isReloading)
+            if (Input.GetKeyDown(KeyCode.Mouse0) && isEmptySniper && !isReloading)  // sound
             {
                 AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
                 //audioSource.PlayOneShot(emptyhot, 1f);
             }
 
-        }
+        }    // SNIPER
         else if (isMakarov && !isChanging)
         {
             // Updated logic: Can't shoot if (sprinting and moving) or reloading, unless aiming.
@@ -443,25 +471,15 @@ public class WeaponController : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Mouse0) && isEmptyMakarov && !isReloading)
             {
-                AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);
-                //audioSource.PlayOneShot(emptyhot, 1f);
+                AudioSource.PlayClipAtPoint(emptyhot, gameObject.transform.position, 1f);  // sound
             }
 
-        }
-    }
-
-    public void SetEffectsActive(bool isActive)
-    {
-        depthOfField.active = isActive;
-        ambientOcclusion.active = isActive;
-    }
-    public void DisableEffects()
-    {
-        SetEffectsActive(false);
+        } // MAKAROV
     }
 
 
-    private void Shoot()
+    // Shoot function. internally varies from weapon-to-weapon
+    private void Shoot()  
     {
         if (AK47 && !Sniper && !isMakarov)
         {
@@ -502,7 +520,7 @@ public class WeaponController : MonoBehaviour
 
             //animator.SetBool("shooting", true);
             setImageSize();
-        }
+        }       // AK
         else if (Sniper && !AK47 && !isMakarov)
         {
             // Prevent shooting when reloading
@@ -541,7 +559,7 @@ public class WeaponController : MonoBehaviour
             ProcessRaycast();
 
             setImageSize();
-        }
+        }  // SNIPER
         else if (isMakarov && !Sniper && !AK47)
         {
             // Prevent shooting when reloading
@@ -580,17 +598,27 @@ public class WeaponController : MonoBehaviour
             ProcessRaycast();
 
             setImageSize();
-        }
+        }  // MAKAROV
+    } 
 
 
+    // Post-Processing Effects functions
+    public void SetEffectsActive(bool isActive)
+    {
+        depthOfField.active = isActive;
+        ambientOcclusion.active = isActive;
+    }
+    public void DisableEffects()
+    {
+        SetEffectsActive(false);
     }
 
+    // IENumerators to set light false after short time
     IEnumerator LightBlyat()
     {
         yield return new WaitForSeconds(0.1f);
         pointLight.gameObject.SetActive(false);
     }
-
     IEnumerator LightBlyatSniper()
     {
         yield return new WaitForSeconds(0.1f);
@@ -610,9 +638,8 @@ public class WeaponController : MonoBehaviour
             if (bulletCount == 0)
             {
                 isEmpty = true;
-                //animator.SetBool("shooting", false);
                 Debug.Log("bullet finished!!!");
-                StartCoroutine(NotStopShootingWhenOne()); ;
+                StartCoroutine(NotStopShootingWhenOne());
                 bullet3.color = new Color(255, 255, 255, 0.5f);
                 bullet2.color = new Color(255, 255, 255, 0.5f);
                 bullet1.color = new Color(255, 255, 255, 0.5f);
@@ -642,9 +669,8 @@ public class WeaponController : MonoBehaviour
             if (bulletCountSniper == 0)
             {
                 isEmptySniper = true;
-                //animator.SetBool("shooting", false);
                 Debug.Log("bullet finished!!!");
-                StartCoroutine(NotStopShootingWhenOne()); ;
+                StartCoroutine(NotStopShootingWhenOne());
                 bullet3.color = new Color(255, 255, 255, 0.5f);
                 bullet2.color = new Color(255, 255, 255, 0.5f);
                 bullet1.color = new Color(255, 255, 255, 0.5f);
@@ -675,9 +701,8 @@ public class WeaponController : MonoBehaviour
             {
                 animator.SetBool("OutOfBulletMakarov", true);
                 isEmptyMakarov = true;
-                //animator.SetBool("shooting", false);
                 Debug.Log("bullet finished!!!");
-                StartCoroutine(NotStopShootingWhenOne()); ;
+                StartCoroutine(NotStopShootingWhenOne());
                 bullet3.color = new Color(255, 255, 255, 0.5f);
                 bullet2.color = new Color(255, 255, 255, 0.5f);
                 bullet1.color = new Color(255, 255, 255, 0.5f);
@@ -703,7 +728,7 @@ public class WeaponController : MonoBehaviour
             }
         }
 
-
+        // set reloading bool to true when pressing: R
         if (Input.GetKeyDown(KeyCode.R) && !isReloading)
         {
             animator.SetBool("shooting", false);
@@ -718,18 +743,19 @@ public class WeaponController : MonoBehaviour
     }
 
 
+    // recoil IENumerators for weapons. varies depending on aiming or not.
     IEnumerator StopRecoil()
     {
         yield return new WaitForSeconds(0.1f);
         combined.Dayandir();
     }
-
     IEnumerator StopRecoil2()
     {
         yield return new WaitForSeconds(0.2f);
         combined.Dayandir();
     }
 
+    //  not make bullet count directly 0 and let functions to be called.
     IEnumerator NotStopShootingWhenOne()
     {
         yield return new WaitForSeconds(.1f);
@@ -779,6 +805,8 @@ public class WeaponController : MonoBehaviour
         }
 
     }
+
+    // Reloading IENumerators
     IEnumerator reload()
     {
         yield return new WaitForSeconds(3.0f);
@@ -787,7 +815,6 @@ public class WeaponController : MonoBehaviour
         isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
-
     IEnumerator reloadSniper()
     {
         yield return new WaitForSeconds(5.2f);
@@ -796,7 +823,6 @@ public class WeaponController : MonoBehaviour
         isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
-
     IEnumerator reloadMakarov()
     {
         yield return new WaitForSeconds(2.2f);
@@ -804,14 +830,6 @@ public class WeaponController : MonoBehaviour
         isEmptyMakarov = false;
         isReloading = false;
         animator.SetBool("OutOfBulletMakarov", false);
-        animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
-    }
-    IEnumerator reloadMakarovGullesiz()
-    {
-        yield return new WaitForSeconds(2.2f);
-        bulletCountMakarov = 8;
-        isEmptyMakarov = false;
-        isReloading = false;
         animator.SetBool("reload", false);  // Ensure shooting state is reset after reloading
     }
 
@@ -914,21 +932,6 @@ public class WeaponController : MonoBehaviour
                 }
             }
         }
-    }
-    private void ShowXHitEffectAtPosition(Vector3 worldPosition)
-    {
-        Vector2 screenPosition = mainCamera.WorldToScreenPoint(worldPosition);
-
-        // Move the X hit effect UI element to the calculated screen position
-        xHitEffectUI.gameObject.SetActive(true);
-        xHitEffectUI.position = screenPosition;
-
-        // Optionally, you can start a coroutine to hide this effect after some time
-        StartCoroutine(HideXHitEffect());
-    }
-    IEnumerator HideXHitEffect()
-    {
-        yield return new WaitForSeconds(0.2f); // Duration for which the effect is shown, adjust as needed
-        xHitEffectUI.gameObject.SetActive(false);
-    }
+    }  // PROCESS RAYCAST
+    
 }
