@@ -46,7 +46,7 @@ public class RecoilAndSway : MonoBehaviour
         gun.transform.localRotation = Quaternion.Slerp(gun.transform.localRotation, combinedRotation, smooth * Time.deltaTime);
     }
 
-    public void recoilFire()
+   /* public void recoilFire()
     {
         float recoilFactorX = recoilX * recoilMultiplier;
         float recoilFactorY = recoilY * recoilMultiplier;
@@ -70,5 +70,5 @@ public class RecoilAndSway : MonoBehaviour
         {
             recoilMultiplier = 1f;
         }
-    }
+    }*/
 }
