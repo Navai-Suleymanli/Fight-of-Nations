@@ -1,11 +1,12 @@
+using Fusion;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
     public Vector3 move;
-    public CharacterController controller;
+    // CharacterController controller;
     [SerializeField] private float walkSpeed = 0f;
     [SerializeField] private float sprintSpeed = 0f;
     [SerializeField] private float walkSpeedSniper = 0f;
@@ -30,19 +31,27 @@ public class PlayerMovement : MonoBehaviour
     public float bobbingAmount = 2f;
     public float midpoint = 2.0f;
     public bool pressedAtTheSameTime = false;
+    public float speed = 0f;
+
     //private float timer = 0.0f;
 
     // Start is called before the first frame update
-    void Start()
+
+    private NetworkCharacterController _cc;
+
+    private void Awake()
     {
+        _cc = GetComponent<NetworkCharacterController>();
         weapon = GetComponent<WeaponController>();
         audioSource = GetComponent<AudioSource>();
-        cameraTransform = GetComponentInChildren<Camera>().transform;
+        //cameraTransform = GetComponentInChildren<Camera>().transform;
         midpoint = cameraTransform.localPosition.y;
     }
 
+ 
+
     // Update is called once per frame
-    void Update()
+    public override void FixedUpdateNetwork()
     {
         if((Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)))
         {
@@ -52,11 +61,18 @@ public class PlayerMovement : MonoBehaviour
         {
             pressedAtTheSameTime = false;
         }
+
+        if (GetInput(out NetworkInputData data))
+        {
+            data.direction.Normalize();
+            _cc.Move(5 * data.direction * Runner.DeltaTime);
+        }
+
         // Check ground status and reset vertical velocity
-        if (controller.isGrounded && verticalVelocity < 0)
+        /*if (controller.isGrounded && verticalVelocity < 0)
         {
             verticalVelocity = 0f;
-        }
+        }*/
 
         // Check for running input
         isRunning = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W);
@@ -65,11 +81,11 @@ public class PlayerMovement : MonoBehaviour
         isAiming = Input.GetKey(KeyCode.Mouse1);
 
         // Calculate movement direction
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
-        move = transform.right * x + transform.forward * z;
+        //float x = Input.GetAxis("Horizontal");
+        //float z = Input.GetAxis("Vertical");
+       // move = transform.right * x + transform.forward * z;
 
-        float speed = 0f;
+        
 
 
         //***Changing the speed of the player according to the weapon he is carrying***
@@ -87,14 +103,14 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        controller.Move(move * speed * Time.deltaTime);
+        //controller.Move(move * speed * Time.deltaTime);
 
 
         
 
         // Apply gravity
-        verticalVelocity += gravityValue * Time.deltaTime;
-        controller.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
+        //verticalVelocity += gravityValue * Time.deltaTime;
+        //controller.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
 
 
 
