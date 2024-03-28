@@ -1,10 +1,17 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : NetworkBehaviour
 {
+
+    [Networked] public NetworkButtons ButtonsPrevious { get; set; }  //----------------------------------------------------------------------------
+
+
+
+
     public Vector3 move;
     // CharacterController controller;
     [SerializeField] private float walkSpeed = 0f;
@@ -26,29 +33,29 @@ public class PlayerMovement : NetworkBehaviour
     private float verticalVelocity = 0f; // Vertical velocity due to gravity
 
     // Camera bobbing effect variables
-    private Transform cameraTransform;
-    public float bobbingSpeed = 1f;
-    public float bobbingAmount = 2f;
-    public float midpoint = 2.0f;
     public bool pressedAtTheSameTime = false;
     public float speed = 0f;
 
-    //private float timer = 0.0f;
-
-    // Start is called before the first frame update
 
     private NetworkCharacterController _cc;
+    private bool _jumpPressed;
 
     private void Awake()
     {
         _cc = GetComponent<NetworkCharacterController>();
         weapon = GetComponent<WeaponController>();
         audioSource = GetComponent<AudioSource>();
-        //cameraTransform = GetComponentInChildren<Camera>().transform;
-        midpoint = cameraTransform.localPosition.y;
     }
 
- 
+    void Update()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            _jumpPressed = true;
+        }
+    }
+
+
 
     // Update is called once per frame
     public override void FixedUpdateNetwork()
@@ -61,30 +68,37 @@ public class PlayerMovement : NetworkBehaviour
         {
             pressedAtTheSameTime = false;
         }
+        if (GetInput<NetworkInputData>(out var input) == false) return;
 
-        if (GetInput(out NetworkInputData data))
-        {
-            data.direction.Normalize();
-            _cc.Move(5 * data.direction * Runner.DeltaTime);
-        }
+        // compute pressed/released state -------------------------------------------
+        var pressed = input.buttons.GetPressed(ButtonsPrevious);
+        var released = input.buttons.GetReleased(ButtonsPrevious);
 
-        // Check ground status and reset vertical velocity
-        /*if (controller.isGrounded && verticalVelocity < 0)
-        {
-            verticalVelocity = 0f;
-        }*/
+        // store latest input as 'previous' state we had
+        ButtonsPrevious = input.buttons;
+
+        // movement (check for down)
+        var move_vector = default(Vector3);
+        //var jump_vector = default(Vector3);
+
+        if (input.buttons.IsSet(MyButtons.Forward)) { move_vector.z += 1; }
+        if (input.buttons.IsSet(MyButtons.Backward)) { move_vector.z -= 1; }
+
+        if (input.buttons.IsSet(MyButtons.Left)) { move_vector.x -= 1; }
+        if (input.buttons.IsSet(MyButtons.Right)) { move_vector.x += 1; }
+        
+
+        //jumping-----------------------
+       if(input.buttons.IsSet(MyButtons.Jump)) { _cc.Jump(); }
+
+        DoMove(move_vector);
+
 
         // Check for running input
         isRunning = Input.GetKey(KeyCode.LeftShift) && Input.GetKey(KeyCode.W);
 
         // Check for aiming input
         isAiming = Input.GetKey(KeyCode.Mouse1);
-
-        // Calculate movement direction
-        //float x = Input.GetAxis("Horizontal");
-        //float z = Input.GetAxis("Vertical");
-       // move = transform.right * x + transform.forward * z;
-
         
 
 
@@ -103,19 +117,13 @@ public class PlayerMovement : NetworkBehaviour
 
         }
 
-        //controller.Move(move * speed * Time.deltaTime);
-
-
-        
-
-        // Apply gravity
-        //verticalVelocity += gravityValue * Time.deltaTime;
-        //controller.Move(new Vector3(0, verticalVelocity, 0) * Time.deltaTime);
-
-
-
         // Handle audio
         HandleAudio();
+    }
+
+    private void DoMove(Vector3 vector)  // -----------------------------------------------------------------------------------------------------------
+    {
+        _cc.Move(speed * vector * Runner.DeltaTime);
     }
 
     void HandleAudio()

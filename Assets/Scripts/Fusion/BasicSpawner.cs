@@ -4,6 +4,8 @@ using Fusion;
 using Fusion.Sockets;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 
 public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -52,13 +54,20 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
+    public void OnEnable()
+    {
+        var myNetworkRunner = FindObjectOfType<NetworkRunner>();
+        myNetworkRunner.AddCallbacks(this);
+    }
+
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
         if (runner.IsServer)
         {
-            
+
             // Create a unique position for the player
             Vector3 spawnPosition = new Vector3((player.RawEncoded % runner.Config.Simulation.PlayerCount) * 3, 1, 0);
+            //Vector3 spawnPosition = new Vector3(0, 0,0);
             NetworkObject networkPlayerObject = runner.Spawn(_playerPrefab, spawnPosition, Quaternion.identity, player);
             // Keep track of the player avatars for easy access
             _spawnedCharacters.Add(player, networkPlayerObject);
@@ -75,23 +84,25 @@ public class BasicSpawner : MonoBehaviour, INetworkRunnerCallbacks
     }
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
+    {//------------------------------------------------------------------------------------------------------------------
+        var myInput = new NetworkInputData();
+
+        myInput.buttons.Set(MyButtons.Forward, Input.GetKey(KeyCode.W));
+        myInput.buttons.Set(MyButtons.Backward, Input.GetKey(KeyCode.S));
+        myInput.buttons.Set(MyButtons.Left, Input.GetKey(KeyCode.A));
+        myInput.buttons.Set(MyButtons.Right, Input.GetKey(KeyCode.D));
+        myInput.buttons.Set(MyButtons.Jump, Input.GetKey(KeyCode.Space));
+
+        input.Set(myInput);
+    }//-----------------------------------------------------------------------------------------------------------------
+
+    public void OnDisable()
     {
-        var data = new NetworkInputData();
-
-        if (Input.GetKey(KeyCode.W))
-            data.direction += Vector3.forward;
-
-        if (Input.GetKey(KeyCode.S))
-            data.direction += Vector3.back;
-
-        if (Input.GetKey(KeyCode.A))
-            data.direction += Vector3.left;
-
-        if (Input.GetKey(KeyCode.D))
-            data.direction += Vector3.right;
-
-        input.Set(data);
+        var myNetworkRunner = FindObjectOfType<NetworkRunner>();
+        myNetworkRunner.RemoveCallbacks(this);
     }
+
+
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }
