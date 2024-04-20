@@ -1,5 +1,4 @@
 using UnityEngine;
-using Fusion;
 
 public class MouseLook : MonoBehaviour
 {
@@ -16,7 +15,7 @@ public class MouseLook : MonoBehaviour
             return;
         }
 
-        transform.position = Target.position;
+        transform.position = Target.position + new Vector3(0, 3.15f, 0);
 
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");

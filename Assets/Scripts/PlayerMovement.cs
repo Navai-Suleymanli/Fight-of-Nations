@@ -37,7 +37,8 @@ public class PlayerMovement : NetworkBehaviour
 
     public override void Spawned()
     {
-        if (Object.HasInputAuthority)
+        _cc = GetComponent<NetworkCharacterController>();
+        if (HasStateAuthority)
         {
             Camera = Camera.main;
             Camera.GetComponent<MouseLook>().Target = transform;
@@ -46,7 +47,7 @@ public class PlayerMovement : NetworkBehaviour
 
     private void Awake()
     {
-        _cc = GetComponent<NetworkCharacterController>();
+       
         weapon = GetComponent<WeaponController>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -54,25 +55,22 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     public override void FixedUpdateNetwork()
     {
-       /* if ((Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)))
+        if((Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) || (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S)))
         {
             pressedAtTheSameTime = true;
         }
         else
         {
             pressedAtTheSameTime = false;
-        }*/
-
+        }
         if (GetInput<NetworkInputData>(out var input) == false) return;
-
-        // store latest input as 'previous' state we had
 
         // compute pressed/released state -------------------------------------------
         var pressed = input.buttons.GetPressed(ButtonsPrevious);
         var released = input.buttons.GetReleased(ButtonsPrevious);
 
+        // store latest input as 'previous' state we had
         ButtonsPrevious = input.buttons;
-
 
 
         // movement (check for down) //-----------------------------------------------------------------------------------------
@@ -96,7 +94,6 @@ public class PlayerMovement : NetworkBehaviour
 
         //jumping-----------------------
 
-       
         DoMove(move_teze);
 
 
@@ -105,7 +102,7 @@ public class PlayerMovement : NetworkBehaviour
 
         // Check for aiming input
         isAiming = Input.GetKey(KeyCode.Mouse1);
-
+        
 
 
         //***Changing the speed of the player according to the weapon he is carrying***
@@ -118,8 +115,7 @@ public class PlayerMovement : NetworkBehaviour
         {
             speed = !isRunning && !pressedAtTheSameTime ? walkSpeedSniper : (!isAiming && !weapon.isReloading && !pressedAtTheSameTime && !Input.GetKey(KeyCode.S)) ? sprintSpeedSniper : !pressedAtTheSameTime ? walkSpeedSniper : 0;
         }
-        else if (weapon.isMakarov)
-        {
+        else if (weapon.isMakarov) {
             speed = !isRunning && !pressedAtTheSameTime ? walkSpeedMakarov : (!isAiming && !weapon.isReloading && !pressedAtTheSameTime && !Input.GetKey(KeyCode.S)) ? sprintSpeedMakarov : !pressedAtTheSameTime ? walkSpeedMakarov : 0;
 
         }
@@ -179,3 +175,4 @@ public class PlayerMovement : NetworkBehaviour
         }
     }
 }
+
