@@ -1,30 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MouseLook : MonoBehaviour
 {
-    public Transform Target;
-    public float MouseSensitivity = 10f;
+    [SerializeField]
+    [Range(0, 2)]
+    private float sensitivity = 100f;
 
-    private float verticalRotation;
-    private float horizontalRotation;
+    public Camera cam;
+    float xRotation = 0f;
 
-    void LateUpdate()
+    private Vector2 smoothInput = Vector2.zero;
+    private Vector2 currentInput = Vector2.zero;
+    private Vector2 inputVelocity = Vector2.zero;
+
+
+    //light //////
+
+    public Light spotLight;
+    //public GameObject gun;
+
+
+
+    Vector3 followCam()
     {
-        if (Target == null)
-        {
-            return;
-        }
+        return spotLight.transform.position = cam.gameObject.transform.position + new Vector3(0f, 0f, 0.5f);
 
-        transform.position = Target.position + new Vector3(0, 3.15f, 0);
+    }
 
-        float mouseX = Input.GetAxis("Mouse X");
-        float mouseY = Input.GetAxis("Mouse Y");
+    /* Vector3 followCamGun()
+     {
+         return gun.transform.position = gameObject.transform.position + new Vector3(0f, 0.1f, 0.5f);
+     }*/
 
-        verticalRotation -= mouseY * MouseSensitivity;
-        verticalRotation = Mathf.Clamp(verticalRotation, -70f, 70f);
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
-        horizontalRotation += mouseX * MouseSensitivity;
+    void Update()
+    {
+        // Smooth mouse input
+        currentInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+        smoothInput = Vector2.SmoothDamp(smoothInput, currentInput, ref inputVelocity, 0.08f);
 
-        transform.rotation = Quaternion.Euler(verticalRotation, horizontalRotation, 0);
+        xRotation -= smoothInput.y * sensitivity;
+        xRotation = Mathf.Clamp(xRotation, -90f, 60f);
+
+        cam.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+
+        transform.Rotate(Vector3.up * smoothInput.x * sensitivity);
+
+        followCam();
+        // followCamGun();
+
+        spotLight.transform.rotation = Quaternion.Slerp(spotLight.transform.rotation, cam.transform.rotation, 0.1f);
+        //gun.transform.rotation = Quaternion.Slerp(gun.transform.rotation, cam.transform.rotation, 0.1f);
     }
 }

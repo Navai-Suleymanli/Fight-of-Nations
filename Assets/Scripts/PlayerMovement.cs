@@ -8,10 +8,11 @@ public class PlayerMovement : NetworkBehaviour
 {
 
     [Networked] public NetworkButtons ButtonsPrevious { get; set; }  //----------------------------------------------------------------------------
-    public Camera Camera;
 
 
 
+
+    public Vector3 move;
     // CharacterController controller;
     [SerializeField] private float walkSpeed = 0f;
     [SerializeField] private float sprintSpeed = 0f;
@@ -28,29 +29,33 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] AudioClip playerRunningBreath;
     private bool isAudioPlaying = false;
 
+    private float gravityValue = -9.81f; // Gravity value
+    private float verticalVelocity = 0f; // Vertical velocity due to gravity
+
     // Camera bobbing effect variables
     public bool pressedAtTheSameTime = false;
     public float speed = 0f;
 
 
     private NetworkCharacterController _cc;
-
-    public override void Spawned()
-    {
-        _cc = GetComponent<NetworkCharacterController>();
-        if (HasStateAuthority)
-        {
-            Camera = Camera.main;
-            Camera.GetComponent<MouseLook>().Target = transform;
-        }
-    }
+    private bool _jumpPressed;
 
     private void Awake()
     {
-       
+        _cc = GetComponent<NetworkCharacterController>();
         weapon = GetComponent<WeaponController>();
         audioSource = GetComponent<AudioSource>();
     }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            _jumpPressed = true;
+        }
+    }
+
+
 
     // Update is called once per frame
     public override void FixedUpdateNetwork()
@@ -72,29 +77,21 @@ public class PlayerMovement : NetworkBehaviour
         // store latest input as 'previous' state we had
         ButtonsPrevious = input.buttons;
 
-
-        // movement (check for down) //-----------------------------------------------------------------------------------------
+        // movement (check for down)
         var move_vector = default(Vector3);
-        Quaternion cameraRotationY = Quaternion.Euler(0, Camera.transform.rotation.eulerAngles.y, 0);
-
         //var jump_vector = default(Vector3);
-
-
 
         if (input.buttons.IsSet(MyButtons.Forward)) { move_vector.z += 1; }
         if (input.buttons.IsSet(MyButtons.Backward)) { move_vector.z -= 1; }
 
         if (input.buttons.IsSet(MyButtons.Left)) { move_vector.x -= 1; }
         if (input.buttons.IsSet(MyButtons.Right)) { move_vector.x += 1; }
-        if (input.buttons.IsSet(MyButtons.Jump)) { _cc.Jump(); }
-
-
-        Vector3 move_teze = cameraRotationY * move_vector;//-------------------------------------------------
-
+        
 
         //jumping-----------------------
+       if(input.buttons.IsSet(MyButtons.Jump)) { _cc.Jump(); }
 
-        DoMove(move_teze);
+        DoMove(move_vector);
 
 
         // Check for running input

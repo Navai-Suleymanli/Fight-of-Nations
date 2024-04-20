@@ -8344,7 +8344,6 @@ GameObject:
   - component: {fileID: 8074460478081187098}
   - component: {fileID: 6355768573547125000}
   - component: {fileID: 7325664009604923480}
-  - component: {fileID: 3157736946354325661}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -8509,20 +8508,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!114 &3157736946354325661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5943535483015984328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 690341bebfe3d694e8e52fabe318160d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  MouseSensitivity: 10
 --- !u!1 &5963071365726836902
 GameObject:
   m_ObjectHideFlags: 0
@@ -10224,7 +10209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60778e34c06a529478ea8f90fdd5354e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 3951135726656773540}
+  move: {x: 0, y: 0, z: 0}
   walkSpeed: 30
   sprintSpeed: 40
   walkSpeedSniper: 2.5
@@ -10235,6 +10220,9 @@ MonoBehaviour:
   isAiming: 0
   playerBreath: {fileID: 8300000, guid: 42f6f9ac46b16bc4fad48f9c4a3c7b14, type: 3}
   playerRunningBreath: {fileID: 8300000, guid: ea990ad4fac7d984b8a38eefe8c40f75, type: 3}
+  bobbingSpeed: 12
+  bobbingAmount: 0.25
+  midpoint: 2
   pressedAtTheSameTime: 0
   speed: 25
 --- !u!114 &5346672001057866361
@@ -10244,13 +10232,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6772617724637424706}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 690341bebfe3d694e8e52fabe318160d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 0}
-  MouseSensitivity: 10
+  sensitivity: 2
+  cam: {fileID: 3951135726656773540}
+  spotLight: {fileID: 0}
 --- !u!95 &3771027180392776460
 Animator:
   serializedVersion: 5
